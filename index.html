@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EverFall LSPD | Detective Bureau</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">EF</div>
+        <div><div class="brand-title">EVERFALL</div><div class="brand-subtitle">LOS SANTOS POLICE DEPARTMENT</div></div>
+      </div>
+      <div class="section-label">DETECTIVE BUREAU</div>
+      <button class="nav-item active" id="mapNav">⌖ <span>Investigation Map</span></button>
+      <button class="nav-item" id="recordsNav">▤ <span>Case Records</span></button>
+      <div class="sidebar-note">
+        <div class="status-dot"></div>
+        <div><strong>DATABASE PREVIEW</strong><p>Prototype mode · data saved in this browser only</p></div>
+      </div>
+      <div class="sidebar-footer">EVERFALL PD <span>•</span> INTERNAL USE</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow">LSPD / DETECTIVE BUREAU</div><h1 id="pageTitle">Investigation Map</h1></div>
+        <div class="top-actions">
+          <div class="user-chip"><div class="avatar">DB</div><div><strong>Detective Bureau</strong><small>Preview access</small></div></div>
+        </div>
+      </header>
+
+      <section id="mapView" class="view">
+        <div class="toolbar">
+          <div class="search-wrap"><span>⌕</span><input id="searchInput" placeholder="Search cases, suspects, locations..." autocomplete="off"></div>
+          <select id="categoryFilter" aria-label="Filter by case status">
+            <option value="all">All statuses</option><option>Open</option><option>Active</option><option>Closed</option><option>Cold</option>
+          </select>
+          <button class="primary-btn" id="addPinBtn">＋ Add investigation pin</button>
+        </div>
+        <div class="map-layout">
+          <div class="map-frame">
+            <div class="map-top-label"><span class="live-dot"></span> LOS SANTOS & BLAINE COUNTY <span class="map-label-muted">/ TACTICAL OVERVIEW</span></div>
+            <div id="map"></div>
+            <div class="map-legend"><span><i class="legend-dot red"></i> Open</span><span><i class="legend-dot amber"></i> Active</span><span><i class="legend-dot green"></i> Closed</span><span><i class="legend-dot blue"></i> Cold</span></div>
+          </div>
+          <aside class="right-panel">
+            <div class="panel-heading"><div><div class="eyebrow">CASE OVERVIEW</div><h2>Investigation Summary</h2></div><span class="count-pill" id="caseCount">0</span></div>
+            <div class="stats-grid">
+              <div class="stat-card"><span>OPEN</span><strong id="openCount">0</strong></div>
+              <div class="stat-card"><span>ACTIVE</span><strong id="activeCount">0</strong></div>
+              <div class="stat-card"><span>CLOSED</span><strong id="closedCount">0</strong></div>
+            </div>
+            <div class="list-title">RECENT INVESTIGATIONS <button id="clearSearch">RESET</button></div>
+            <div id="caseList" class="case-list"></div>
+            <div class="panel-foot">Select a case to view its map pin and notes.</div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="recordsView" class="view hidden">
+        <div class="records-intro"><div><div class="eyebrow">RECORDS MANAGEMENT</div><h2>Investigation Records</h2><p>Review, search, and manage the investigation pins stored in this browser.</p></div><button class="primary-btn" id="addRecordBtn">＋ New record</button></div>
+        <div class="records-table-wrap"><table><thead><tr><th>CASE</th><th>LOCATION</th><th>LEAD DETECTIVE</th><th>STATUS</th><th>UPDATED</th><th></th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+        <p class="warning-note">Prototype notice: records currently live in this browser only. They are not shared with other detectives or securely backed up yet.</p>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="caseModal">
+    <form class="modal" id="caseForm">
+      <div class="modal-head"><div><div class="eyebrow">DETECTIVE BUREAU</div><h2 id="modalTitle">Add investigation pin</h2></div><button type="button" class="icon-btn" id="closeModal" aria-label="Close">×</button></div>
+      <div class="form-grid">
+        <label>Case number<input name="caseNo" required maxlength="40" placeholder="e.g. EF-26-014"></label>
+        <label>Case status<select name="status"><option>Open</option><option>Active</option><option>Closed</option><option>Cold</option></select></label>
+        <label class="full">Location / address<input name="location" required maxlength="120" placeholder="e.g. Legion Square, Pillbox Hill"></label>
+        <label>Lead detective<input name="detective" maxlength="80" placeholder="Detective name"></label>
+        <label>Suspect / person of interest<input name="suspect" maxlength="100" placeholder="Name or unknown"></label>
+        <label class="full">Investigation notes<textarea name="notes" rows="4" maxlength="3000" placeholder="Relevant details, evidence, follow-up actions..."></textarea></label>
+        <div class="full form-hint">After saving, click the map to place or reposition the pin. The location is approximate until you place it.</div>
+      </div>
+      <div class="modal-actions"><button type="button" class="secondary-btn" id="cancelModal">Cancel</button><button class="primary-btn" type="submit">Save investigation</button></div>
+    </form>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+</html>
