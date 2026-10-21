@@ -379,3 +379,13 @@
 @media(max-width:1300px){.ef-premium-location .ef-profile-overview{grid-template-columns:1fr}.ef-premium-location .ef-profile-hero{max-height:170px}.ef-premium-location .ef-profile-hero>img{max-height:170px}}
 
 @media(min-width:1250px){.rightpanel{width:480px!important;min-width:480px!important}}
+
+/* Directory moved to alphabetical left navigation; original bottom actions remain hidden for compatibility. */
+.intel-topnav{display:none!important}
+.ef-primary-navigation button{font-weight:600}
+.ef-primary-navigation button i{font-size:16px!important}
+.ef-roster-list{display:grid;gap:8px}
+.ef-roster-member{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;border:1px solid #31567c;background:#132b48;padding:10px;border-radius:7px}
+.ef-roster-member strong{overflow-wrap:anywhere}
+.ef-roster-member span{color:#83bfff}
+.ef-roster-member small{grid-column:1/-1;color:#a7bbd2}
