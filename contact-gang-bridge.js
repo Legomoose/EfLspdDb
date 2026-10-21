@@ -1,0 +1,1 @@
+document.addEventListener('click',e=>{const b=e.target.closest('[data-gang-contact]');if(!b)return;e.preventDefault();e.stopImmediatePropagation();const [gi,mi]=b.dataset.gangContact.split(':').map(Number);window.efOpenGangMemberContact?.(gi,mi)},true);
