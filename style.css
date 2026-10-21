@@ -41,7 +41,7 @@
 @media(max-width:850px){.intel-topnav{overflow-x:auto;grid-template-columns:repeat(6,minmax(120px,1fr))}.intel-topnav button{min-width:0}}
 
 /* Retractable side panels and compact Pins / Filters dropdowns */
-.workspace{transition:grid-template-columns .22s ease}
+.workspace{transition:none}
 .leftpanel,.rightpanel{position:relative;min-width:0;overflow:hidden}
 .leftpanel>.panel-inner,.rightpanel>.panel-inner{height:100%;min-height:0;overflow:auto}
 .leftpanel>.panel-inner{display:flex;flex-direction:column;padding-top:34px}
@@ -63,3 +63,6 @@
 .sidebar-dropdown .map-type-filters{margin-top:4px}
 @media(min-width:851px) and (max-width:1250px){.workspace.left-collapsed{grid-template-columns:42px minmax(250px,1fr) 320px}.workspace.right-collapsed{grid-template-columns:240px minmax(250px,1fr) 42px}.workspace.left-collapsed.right-collapsed{grid-template-columns:42px minmax(250px,1fr) 42px}}
 @media(max-width:850px){.workspace.left-collapsed,.workspace.right-collapsed,.workspace.left-collapsed.right-collapsed{display:flex;flex-direction:column}.workspace.left-collapsed .leftpanel,.workspace.right-collapsed .rightpanel{height:42px;min-height:42px;max-height:42px}.leftpanel>.panel-inner{padding-top:34px}}
+
+/* Ensure side panel toggles remain clickable above panel contents */
+.side-toggle{z-index:1200!important;cursor:pointer;pointer-events:auto!important}.leftpanel>.panel-inner,.rightpanel>.panel-inner{min-width:0}
