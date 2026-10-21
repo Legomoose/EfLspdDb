@@ -5,6 +5,16 @@ const gangAt=i=>(database.gangs||[])[i];
 const persist=()=>{saveDb();renderExtra('gangs')};
 const field=(name,label,value='',kind='text')=>`<label>${label}${kind==='textarea'?`<textarea name="${name}" rows="3">${escapeHtml(value)}</textarea>`:`<input name="${name}" type="${kind}" value="${escapeHtml(value)}">`}</label>`;
 const close=()=>document.getElementById('efGangOverlay')?.remove();
+const standardPositions=['Leader','Second-in-Command','Third-in-Command','Member','Associate'];
+const positionsFor=g=>Array.isArray(g.positions)?g.positions:standardPositions;
+function managePositions(gi){
+ const g=gangAt(gi);if(!g)return;
+ modal(`Manage Positions — ${g.title}`,`<p>One position per line, in rank order. Leave empty for no preset positions. Members retain their assigned rank even when you remove a preset.</p><label>Gang Positions<textarea name="positions" rows="9">${escapeHtml(positionsFor(g).join('\n'))}</textarea></label>`,f=>{
+ const lines=String(f.get('positions')||'').split(/\r?\n/).map(v=>v.trim()).filter(Boolean);
+ g.positions=[...new Set(lines)];saveDb();close();renderExtra('gangs');window.refreshGangIntel?.(gi);
+ });
+}
+
 function modal(title,body,submit){
  close();const overlay=document.createElement('div');overlay.id='efGangOverlay';overlay.className='ef-overlay';
  overlay.innerHTML=`<div class="ef-dialog ef-gang-dialog" role="dialog" aria-modal="true" aria-label="${escapeHtml(title)}"><div class="ef-dialog-head"><h2>${escapeHtml(title)}</h2><button type="button" id="efGangClose">✕</button></div><form id="efGangForm">${body}<div class="ef-actions"><button type="button" id="efGangCancel">Cancel</button><button type="submit" class="blue">Save Changes</button></div></form></div>`;
@@ -61,9 +71,9 @@ function editGang(i=null){
 function editMember(gi,mi=null){
  const g=gangAt(gi);if(!g)return;const m=mi===null?{}:(g.members||[])[mi]||{};
  modal(mi===null?`Add Member — ${g.title}`:`Edit Member — ${g.title}`,
- field('name','Member Name *',m.name)+field('alias','Alias / Street Name',m.alias)+`<label>Gang Position<select name="position">${['Leader','Second-in-Command','Third-in-Command','Member','Associate'].map(v=>`<option ${v===(m.position||'Member')?'selected':''}>${v}</option>`).join('')}</select></label>`+field('rank','Gang Rank / Role',m.rank)+field('status','Status (Active, Inactive, Deceased, etc.)',m.status||'Active')+field('notes','Intelligence Notes',m.notes,'textarea'),f=>{
+ field('name','Member Name *',m.name)+field('alias','Alias / Street Name',m.alias)+`<label>Gang Position (optional)<select name="positionChoice"><option value="">No position</option>${positionsFor(g).map(v=>`<option value="${escapeHtml(v)}" ${v===m.position?'selected':''}>${escapeHtml(v)}</option>`).join('')}<option value="__custom">+ Enter a custom position</option></select></label><label>Custom Position (optional)<input name="customPosition" placeholder="Enter a new position, or leave blank" value="${escapeHtml(m.position&&!positionsFor(g).includes(m.position)?m.position:'')}"></label>`+field('rank','Gang Rank / Role',m.rank)+field('status','Status (Active, Inactive, Deceased, etc.)',m.status||'Active')+field('notes','Intelligence Notes',m.notes,'textarea'),f=>{
  const name=String(f.get('name')||'').trim();if(!name){alert('Enter a member name.');return}
- g.members??=[];const updated={...m,name,position:String(f.get('position')||'Member'),alias:String(f.get('alias')||''),rank:String(f.get('rank')||''),status:String(f.get('status')||''),notes:String(f.get('notes')||''),updated:new Date().toISOString()};
+ g.members??=[];const chosen=String(f.get('positionChoice')||'');const custom=String(f.get('customPosition')||'').trim();const position=custom||(chosen==='__custom'?'':chosen);if(position&&!positionsFor(g).includes(position)){g.positions=[...positionsFor(g),position]}const updated={...m,name,position,alias:String(f.get('alias')||''),rank:String(f.get('rank')||''),status:String(f.get('status')||''),notes:String(f.get('notes')||''),updated:new Date().toISOString()};
  const existing=window.efContacts?.get().find(c=>c.id===m.contactId)||window.efContacts?.get().find(c=>c.name.trim().toLowerCase()===name.toLowerCase());
  const contactId=existing?.id||('contact-'+Date.now()+'-'+Math.random().toString(36).slice(2,7));
  updated.contactId=contactId;
@@ -77,7 +87,7 @@ window.efSyncContactToGangs=contact=>{for(let gi=0;gi<(database.gangs||[]).lengt
 window.efOpenGangMemberContact=(gi,mi)=>{const member=gangAt(gi)?.members?.[mi];if(!member)return;let contact=window.efContacts?.get().find(c=>c.id===member.contactId);if(!contact){member.contactId='contact-'+Date.now()+'-'+Math.random().toString(36).slice(2,7);contact={id:member.contactId,name:member.name,alias:member.alias||'',type:'Associate',gang:gangAt(gi)?.title||'',addedBy:'Gang Roster',affiliations:[{gangId:String(gi),gang:gangAt(gi)?.title||'',position:member.position||'Member',status:member.status||'Active'}]};window.efContacts?.upsert(contact);saveDb();}document.getElementById('efIntelOverlay')?.remove();window.efContacts?.open(member.contactId)};
 window.renderGangMembers=gi=>{
  const g=gangAt(gi);if(!g)return '';const members=g.members||[];
- return `<section class="ef-gang-members"><div class="ef-gang-members-head"><h3>Gang Members <span class="gang-count">${members.length}</span></h3><button class="blue" data-gang-addmember="${gi}" type="button">+ Add Member</button></div>${g.territory?`<p><strong>Territory:</strong> ${escapeHtml(g.territory)}</p>`:''}${members.length?`<div class="ef-gang-member-grid">${members.map((m,mi)=>`<div class="db-card"><h3>${escapeHtml(m.name)}</h3><p>${escapeHtml([m.position||'Member',m.alias,m.rank,m.status].filter(Boolean).join(' · '))}</p>${m.notes?`<p>${escapeHtml(m.notes)}</p>`:''}<button data-gang-editmember="${gi}:${mi}">Edit</button> <button data-gang-deletemember="${gi}:${mi}">Remove</button></div>`).join('')}</div>`:'<p>No members recorded yet. Select + Add Member to create one.</p>'}</section>`;
+ return `<section class="ef-gang-members"><div class="ef-gang-members-head"><h3>Gang Members <span class="gang-count">${members.length}</span></h3><button type="button" data-gang-positions="${gi}">Manage Positions</button><button class="blue" data-gang-addmember="${gi}" type="button">+ Add Member</button></div>${g.territory?`<p><strong>Territory:</strong> ${escapeHtml(g.territory)}</p>`:''}${members.length?`<div class="ef-gang-member-grid">${members.map((m,mi)=>`<div class="db-card"><h3>${escapeHtml(m.name)}</h3><p>${escapeHtml([m.position,m.alias,m.rank,m.status].filter(Boolean).join(' · '))}</p>${m.notes?`<p>${escapeHtml(m.notes)}</p>`:''}<button data-gang-editmember="${gi}:${mi}">Edit</button> <button data-gang-deletemember="${gi}:${mi}">Remove</button></div>`).join('')}</div>`:'<p>No members recorded yet. Select + Add Member to create one.</p>'}</section>`;
 };
 const previousRenderExtra=renderExtra;
 renderExtra=function(section){
@@ -96,6 +106,7 @@ document.addEventListener('click',e=>{
  if(b.id==='addEntryBtn'&&currentSection==='gangs'){e.preventDefault();e.stopImmediatePropagation();editGang();return}
  if(b.dataset.gangEdit!==undefined){e.preventDefault();e.stopImmediatePropagation();editGang(Number(b.dataset.gangEdit));return}
  if(b.dataset.gangDelete!==undefined){e.preventDefault();e.stopImmediatePropagation();const i=Number(b.dataset.gangDelete);if(confirm('Delete this gang and its member roster?')){database.gangs.splice(i,1);persist()}return}
+ if(b.dataset.gangPositions!==undefined){e.preventDefault();e.stopImmediatePropagation();managePositions(Number(b.dataset.gangPositions));return}
  if(b.dataset.gangAddmember!==undefined){e.preventDefault();e.stopImmediatePropagation();editMember(Number(b.dataset.gangAddmember));return}
  if(b.dataset.gangEditmember!==undefined){e.preventDefault();e.stopImmediatePropagation();const [gi,mi]=b.dataset.gangEditmember.split(':').map(Number);editMember(gi,mi);return}
  if(b.dataset.gangDeletemember!==undefined){e.preventDefault();e.stopImmediatePropagation();const [gi,mi]=b.dataset.gangDeletemember.split(':').map(Number);if(confirm('Remove this member from the gang?')){const removed=gangAt(gi)?.members?.splice(mi,1)?.[0];if(removed?.contactId){const contact=window.efContacts?.get().find(c=>c.id===removed.contactId);if(contact){contact.affiliations=(contact.affiliations||[]).filter(a=>a.gangId!==String(gi));contact.gang=contact.affiliations[0]?.gang||'';window.efContacts?.save();}}saveDb();renderExtra('gangs');window.refreshGangIntel?.(gi)}return}
