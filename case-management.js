@@ -25,7 +25,7 @@ document.getElementById('casePhotoGallery').onclick=e=>{const b=e.target.closest
 document.getElementById('caseAddVideo').onclick=()=>{const el=document.getElementById('caseVideoInput');try{const u=new URL(el.value);if(!['http:','https:'].includes(u.protocol))throw Error();videoLinks.push(u.href);el.value='';refreshVideos()}catch{alert('Enter a valid http or https video link.')}};
 document.getElementById('caseVideos').onclick=e=>{const b=e.target.closest('[data-removevideo]');if(b){videoLinks.splice(+b.dataset.removevideo,1);refreshVideos()}};
 document.getElementById('caseFileForm').onsubmit=e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f).entries());if(files.some(c=>c.number.toLowerCase()===d.number.trim().toLowerCase()&&c.id!==editing))return alert('Case number already exists.');const obj={id:editing||('case-'+Date.now()),number:d.number.trim(),title:d.title.trim(),status:d.status,detective:d.detective,location:d.location,suspect:d.suspect,gang:d.gang,description:d.description,photos:[...photos],videos:[...videoLinks],linked:[...document.querySelectorAll('#caseLinkedPins input:checked')].map(x=>x.value),updated:new Date().toISOString()};const prev=[...files];if(editing)files=files.map(x=>x.id===editing?obj:x);else files.unshift(obj);if(!store()){files=prev;return}closeEditor();renderRecords();render()};
-document.querySelectorAll('[data-section="reports"]').forEach(b=>b.addEventListener('click',e=>{e.stopImmediatePropagation();oldShowSection('cases');renderRecords();openEditor()},true));
+
 document.getElementById('manageDetectives').onclick=()=>{const value=prompt('Detective roster (one detective per line):',roster.join('\n'));if(value===null)return;roster=[...new Set(value.split(/\n/).map(x=>x.trim()).filter(Boolean))];store();alert('Detective roster updated.')};
 document.getElementById('caseFileSearch').oninput=()=>renderRecords();
 document.getElementById('caseFileFilter').onchange=()=>renderRecords();
@@ -38,12 +38,12 @@ document.getElementById('recordsBody').addEventListener('click',e=>{const b=e.ta
  if(!point){alert('No linked map pin or recognised postal found for this case. Link a pin in Edit to navigate to its exact position.');return}
  showSection('map');
  map.invalidateSize();
- map.setView(point,1.8,{animate:false});
+ map.setView(point,1,{animate:false});
  if(placed){selectedId=placed.id;renderDetail();}
  else {showPostalPopup(point,match[0]);}
  render();
  return;
- }if(b.dataset.fileopen)openEditor(f);if(b.dataset.filedelete&&confirm(`Delete ${f.number}? Pins will be kept.`)){files=files.filter(x=>x.id!==id);store();renderRecords();render()}if(b.dataset.filemap){const c=cases.find(x=>f.linked.includes(x.id));if(!c)return alert('This case has no linked placed pins.');oldShowSection('map');map.setView([c.lat,c.lng],Math.max(map.getZoom(),1.8));render()}},true);
+ }if(b.dataset.fileopen)openEditor(f);if(b.dataset.filedelete&&confirm(`Delete ${f.number}? Pins will be kept.`)){files=files.filter(x=>x.id!==id);store();renderRecords();render()}if(b.dataset.filemap){const c=cases.find(x=>f.linked.includes(x.id));if(!c)return alert('This case has no linked placed pins.');oldShowSection('map');map.setView([c.lat,c.lng],Math.max(map.getZoom(),1));render()}},true);
 const originalRender=render;
 render=function(){originalRender();markerLayer.eachLayer(m=>{const p=m.getLatLng();const c=cases.find(x=>x.lat===p.lat&&x.lng===p.lng);if(!c)return;const associated=files.filter(f=>f.linked.includes(c.id));if(!associated.length)return;const f=associated[0];m.unbindTooltip();m.bindTooltip(`<div class="ef-case-bubble"><strong>${esc(f.number)}</strong><b>${esc(f.title)}</b><span>${esc(f.status)} · ${esc(f.detective||'Unassigned')}</span><span>${esc(f.location||c.location)}</span><small>${f.photos.length} photos · ${f.videos.length} videos · ${associated.length} linked case(s)</small></div>`,{direction:'top',offset:[0,-22],opacity:1,className:'case-map-tooltip'});m.off('click');m.on('click',()=>openEditor(f))})};
 

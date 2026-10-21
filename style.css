@@ -228,3 +228,6 @@
 /* Clickable postal number in the investigation table */
 .ef-postal-jump{background:transparent!important;border:1px solid transparent!important;color:#77bdff!important;padding:5px 8px!important;border-radius:5px!important;cursor:pointer!important;font-weight:600!important;text-decoration:none!important}
 .ef-postal-jump:hover,.ef-postal-jump:focus-visible{background:#16395c!important;border-color:#3d78ac!important;text-decoration:underline!important}
+
+/* Preserve natural satellite image interpolation when zooming */
+.leaflet-image-layer { image-rendering: auto !important; }
