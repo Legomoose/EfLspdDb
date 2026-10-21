@@ -155,3 +155,10 @@
 #caseModal .modalactions{position:sticky;bottom:-22px;z-index:20;background:#091d34;padding:14px 0 18px;margin-top:12px;border-top:1px solid #315d84;box-shadow:0 -12px 18px #091d34}
 #caseModal .modalactions button{min-width:132px;font-weight:700}
 #caseModal .modalactions button[type=submit]{background:#1674d4;color:#fff}
+
+/* Keep Save visible: scroll form fields, never the footer. */
+#caseModal #caseForm{display:flex;flex-direction:column;overflow:hidden;max-height:calc(100dvh - 30px);padding:22px;}
+#caseModal #caseForm .modalhead{flex:0 0 auto;}
+#caseModal #caseForm .formgrid{min-height:0;overflow-y:auto;overflow-x:hidden;flex:1 1 auto;padding-right:8px;}
+#caseModal #caseForm .modalactions{position:relative;bottom:auto;flex:0 0 auto;margin:0;padding:14px 0 0;box-shadow:none;background:#091d34;}
+#caseModal #caseForm .modalactions button[type=submit]{background:#1674d4;color:#fff;min-width:165px;}
