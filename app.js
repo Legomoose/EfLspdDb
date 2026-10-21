@@ -11,7 +11,7 @@ function fmtDate(v){return v?new Date(v).toLocaleDateString('en-GB',{day:'2-digi
 function toast(message){$('toast').textContent=message;$('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),3100)}
 const MAP_WIDTH=2048,MAP_HEIGHT=3072;
 const map=L.map('map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:2,zoomSnap:.25,zoomControl:true,attributionControl:false});const bounds=[[-MAP_HEIGHT,0],[0,MAP_WIDTH]];L.imageOverlay('assets/oulsen-nogrid.webp',bounds).addTo(map);map.fitBounds(bounds);
-function worldToMap(x,y){return[-(1902.3-0.200*y),872.8+0.196*x]}
+function worldToMap(x,y){return[-(1934.3-0.200*y),942.8+0.196*x]}
 let postals=Array.isArray(window.EVERFALL_POSTALS)?window.EVERFALL_POSTALS:[];
 function postalLocation(code){const p=postals.find(p=>String(p.code)===String(code).trim().padStart(3,'0'));return p?worldToMap(p.x,p.y):null}
 function nearestPostal(ll){let best='',dist=Infinity;for(const p of postals){const [lat,lng]=worldToMap(p.x,p.y),d=(lat-ll.lat)**2+(lng-ll.lng)**2;if(d<dist){best=p.code;dist=d}}return best}
