@@ -1,1 +1,0 @@
-Pin placement: pointerup capture handler added to map container; preserves 1.8 postal zoom. Test: Add Pin > click satellite map > form > Save > refresh. Browser workflow not yet verified.
