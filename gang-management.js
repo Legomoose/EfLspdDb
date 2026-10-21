@@ -14,11 +14,14 @@ function modal(title,body,submit){
  overlay.querySelector('form').onsubmit=e=>{e.preventDefault();submit(new FormData(e.target));};
  overlay.querySelector('input')?.focus();
 }
+function gangLogoHtml(g){const colour=/^#[0-9a-fA-F]{6}$/.test(g.colour||'')?g.colour:'#3978d8';const image=typeof g.logoImage==='string'&&/^data:image\/(?:png|jpeg|webp|gif);base64,/.test(g.logoImage)?g.logoImage:'';return image?`<img class="ef-gang-uploaded-logo" src="${image}" alt="Gang logo">`:`<span class="ef-gang-card-logo" style="background:${colour}">${escapeHtml(g.emoji||'🏴')}</span>`;}
+window.efGangLogoHtml=gangLogoHtml;
 function editGang(i=null){
  const g=i===null?{}:gangAt(i)||{};
  const manualPins=cases.filter(p=>p.kind==='general'&&p.id);
  const pinChoices=manualPins.map(p=>`<option value="${escapeHtml(p.id)}" ${String(g.pinId||'')===String(p.id)?'selected':''}>${escapeHtml(p.caseNo||p.title||p.markerCategory||'Map pin')} — ${escapeHtml(p.location||'No postal')}</option>`).join('');
  const color=g.colour||'#3978d8';
+ let logoImage=g.logoImage||"";
  const emojis=['🏴','💀','👑','🐍','🦂','🐺','🦅','🔥','⚡','💎','🃏','🔱','🛡️','🚩','🏍️','💰','🦇','🌹'];
  modal(i===null?'Create Gang':'Edit Gang',
  field('title','Gang Name *',g.title)+
@@ -26,6 +29,7 @@ function editGang(i=null){
  field('location','Gang Location / Postal',g.location||'')+field('territory','Territory / Areas Controlled',g.territory||'')+field('style','Style of Gang',g.style||'')+`<label>Threat Level<select name="threat">${['Unknown','Low','Moderate','High','Critical'].map(v=>`<option ${v===(g.threat||'Unknown')?'selected':''}>${v}</option>`).join('')}</select></label>`+
  `<label>Assign Existing Map Pin<select name="pinId"><option value="">No pin assigned</option>${pinChoices}</select></label><small>Choose a pin already placed on the map. Assigning it links that pin to this gang without moving it.</small>`+
  `<label>Gang Hex Colour<div class="ef-gang-color-row"><input name="colour" id="efGangHex" type="text" maxlength="7" pattern="#[0-9a-fA-F]{6}" value="${escapeHtml(color)}" placeholder="#3978D8" required><input type="color" id="efGangColorPicker" value="${/^#[0-9a-fA-F]{6}$/.test(color)?escapeHtml(color):'#3978d8'}"></div></label>`+
+ `<label>Custom Gang Logo (PNG, JPG, WEBP or GIF)<input type="file" id="efGangLogoUpload" accept="image/png,image/jpeg,image/webp,image/gif"></label><small>Optional. Images are resized for local storage. Maximum original file size: 5 MB.</small><button type="button" id="efGangRemoveLogo">Remove Custom Logo</button>`+
  `<label>Gang Logo Emoji<input name="emoji" id="efGangEmoji" maxlength="12" value="${escapeHtml(g.emoji||'🏴')}" placeholder="🏴"></label><div class="ef-gang-emoji-picker">${emojis.map(em=>`<button type="button" class="ef-emoji-option" data-emoji="${em}">${em}</button>`).join('')}</div><div class="ef-gang-logo-preview"><span id="efGangLogoPreview" style="background:${escapeHtml(color)}">${escapeHtml(g.emoji||'🏴')}</span><span>Gang logo preview</span></div>`,
  f=>{
  const title=String(f.get('title')||'').trim();if(!title){alert('Enter a gang name.');return}
@@ -36,7 +40,7 @@ function editGang(i=null){
  const emoji=String(f.get('emoji')||'🏴').trim()||'🏴';
  database.gangs??=[];
  const gi=i===null?database.gangs.length:i;
- const updated={...g,title,description:String(f.get('description')||''),location,territory:String(f.get('territory')||''),style:String(f.get('style')||''),threat:String(f.get('threat')||'Unknown'),colour,emoji,pinId,members:g.members||[],updated:new Date().toISOString()};
+ const updated={...g,logoImage,title,description:String(f.get('description')||''),location,territory:String(f.get('territory')||''),style:String(f.get('style')||''),threat:String(f.get('threat')||'Unknown'),colour,emoji,pinId,members:g.members||[],updated:new Date().toISOString()};
  if(i===null)database.gangs.push(updated);else database.gangs[i]=updated;
  // Remove only the link to this gang from the previously assigned pin.
  if(g.pinId&&g.pinId!==pinId){const old=cases.find(p=>p.id===g.pinId);if(old&&String(old.linkedGang)===String(gi))old.linkedGang='';}
@@ -46,7 +50,10 @@ function editGang(i=null){
  });
  const overlay=document.getElementById('efGangOverlay');
  const hex=overlay.querySelector('#efGangHex'),picker=overlay.querySelector('#efGangColorPicker'),emojiInput=overlay.querySelector('#efGangEmoji'),preview=overlay.querySelector('#efGangLogoPreview');
- const refresh=()=>{if(/^#[0-9a-fA-F]{6}$/.test(hex.value)){picker.value=hex.value;preview.style.background=hex.value}preview.textContent=emojiInput.value||'🏴'};
+ const upload=overlay.querySelector('#efGangLogoUpload');
+ upload.onchange=async()=>{const file=upload.files?.[0];if(!file)return;if(!['image/png','image/jpeg','image/webp','image/gif'].includes(file.type)||file.size>5*1024*1024){alert('Choose a PNG, JPG, WEBP or GIF under 5 MB.');upload.value='';return}try{const img=await createImageBitmap(file);const c=document.createElement('canvas');const scale=Math.min(1,256/Math.max(img.width,img.height));c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));c.getContext('2d').drawImage(img,0,0,c.width,c.height);const encoded=c.toDataURL('image/webp',.85);if(encoded.length>300000){alert('Logo is too large to store in this browser. Try a smaller image.');return}logoImage=encoded;refresh()}catch(err){alert('Unable to read this image. Please try a PNG or JPG.')}};
+ overlay.querySelector('#efGangRemoveLogo').onclick=()=>{logoImage='';upload.value='';refresh()};
+ const refresh=()=>{if(/^#[0-9a-fA-F]{6}$/.test(hex.value)){picker.value=hex.value;preview.style.background=hex.value}preview.innerHTML=logoImage?`<img src="${logoImage}" alt="Gang logo">`:escapeHtml(emojiInput.value||'🏴')};
  picker.oninput=()=>{hex.value=picker.value;refresh()};
  hex.oninput=refresh;emojiInput.oninput=refresh;
  overlay.querySelectorAll('[data-emoji]').forEach(btn=>btn.onclick=()=>{emojiInput.value=btn.dataset.emoji;refresh()});
@@ -82,7 +89,7 @@ renderExtra=function(section){
  if(root.querySelector('.gang-profile'))return;
  root.querySelectorAll('[data-dbedit]').forEach(btn=>{btn.dataset.gangEdit=btn.dataset.dbedit;btn.removeAttribute('data-dbedit')});
  root.querySelectorAll('[data-dbdelete]').forEach(btn=>{btn.dataset.gangDelete=btn.dataset.dbdelete;btn.removeAttribute('data-dbdelete')});
- root.querySelectorAll('.db-card').forEach(card=>{const g=card.querySelector('[data-gang-open]');if(!g)return;const idx=Number(g.dataset.gangOpen);const gang=gangAt(idx);if(gang){const title=card.querySelector('h3');if(title){title.style.display='flex';title.style.alignItems='center';title.style.gap='9px';title.insertAdjacentHTML('afterbegin',`<span class="ef-gang-card-logo" style="background:${/^#[0-9a-fA-F]{6}$/.test(gang.colour||'')?gang.colour:'#3978d8'}">${escapeHtml(gang.emoji||'🏴')}</span>`);title.insertAdjacentHTML('afterend',`<p>${(gang.members||[]).length} member(s)${gang.location||gang.territory?' · '+escapeHtml(gang.location||gang.territory):''}${gang.pinId?' · Map pin linked':''}</p>`)} }});
+ root.querySelectorAll('.db-card').forEach(card=>{const g=card.querySelector('[data-gang-open]');if(!g)return;const idx=Number(g.dataset.gangOpen);const gang=gangAt(idx);if(gang){const title=card.querySelector('h3');if(title){title.style.display='flex';title.style.alignItems='center';title.style.gap='9px';title.insertAdjacentHTML('afterbegin',gangLogoHtml(gang));title.insertAdjacentHTML('afterend',`<p>${(gang.members||[]).length} member(s)${gang.location||gang.territory?' · '+escapeHtml(gang.location||gang.territory):''}${gang.pinId?' · Map pin linked':''}</p>`)} }});
 };
 document.addEventListener('click',e=>{
  const b=e.target.closest('button');if(!b)return;

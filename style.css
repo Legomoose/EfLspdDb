@@ -263,3 +263,5 @@
 .ef-intel-person-actions button:hover{background:#315785}
 .ef-intel-person-actions .ef-intel-remove{border-color:#8b4853;color:#ffb7bd;background:#3a202c}
 .ef-intel-person-actions .ef-intel-remove:hover{background:#64303d}
+
+.ef-gang-uploaded-logo{width:42px;height:42px;object-fit:contain;border-radius:8px;background:#1b3150;flex-shrink:0}.ef-intel-logo .ef-gang-uploaded-logo{width:100%;height:100%;object-fit:contain}.ef-gang-logo-preview img{width:100%;height:100%;object-fit:contain;border-radius:8px}.ef-gang-dialog input[type=file]{padding:10px}.ef-gang-dialog #efGangRemoveLogo{justify-self:start;padding:8px 12px;background:#243c5b;color:#e7f0ff;border:1px solid #54739a;border-radius:6px;cursor:pointer}
