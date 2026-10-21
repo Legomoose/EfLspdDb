@@ -11,24 +11,6 @@ function fmtDate(v){return v?new Date(v).toLocaleDateString('en-GB',{day:'2-digi
 function toast(message){$('toast').textContent=message;$('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),3100)}
 const MAP_WIDTH=2048,MAP_HEIGHT=3072;
 const map=L.map('map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:4,zoomSnap:.25,zoomControl:true,attributionControl:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false});const bounds=[[-MAP_HEIGHT,0],[0,MAP_WIDTH]];L.imageOverlay('assets/oulsen-nogrid.webp',bounds).addTo(map);map.fitBounds(bounds);
-// Cayo Perico is displayed east of the mainland on the SAME pan/zoom map.
-// This is a reference image cropped from the supplied screenshot, not a georeferenced satellite layer.
-const CAYO_BOUNDS=[[-1750,2300],[-650,3400]];
-const cayoOverlay=L.imageOverlay('assets/cayo-reference.webp',CAYO_BOUNDS,{opacity:0.94,interactive:false}).addTo(map);
-const cayoLabels=L.layerGroup().addTo(map);
-const CAYO_LOCATIONS=[
- {name:'Cayo Airstrip',category:'Airstrip',icon:'plane',color:'#64baff',lat:-875,lng:2720},
- {name:'Cayo Airstrip Garage',category:'Garage',icon:'warehouse',color:'#e8f0ff',lat:-900,lng:2740},
- {name:'Cayo North Docks',category:'Docks',icon:'anchor',color:'#58d5ca',lat:-930,lng:3080},
- {name:'Cayo Main Compound Area',category:'Property',icon:'house',color:'#65dc8d',lat:-1350,lng:3120},
- {name:'Cayo Interior Property',category:'Property',icon:'house',color:'#65dc8d',lat:-1080,lng:2910}
-];
-function renderCayoLocations(){cayoLabels.clearLayers();if(!document.getElementById('serverLocationsToggle')?.checked)return;if(map.getZoom()<0.5)return;
-for(const loc of CAYO_LOCATIONS){const html=`<span class="server-blip-icon" style="color:${loc.color}"><i class="fa-solid fa-${loc.icon}"></i></span>`;const m=L.marker([loc.lat,loc.lng],{icon:L.divIcon({className:'server-blip',html,iconSize:[26,26],iconAnchor:[13,13]})});m.bindTooltip(`<strong>${loc.name}</strong><span class="server-location-subtitle">${loc.category} · approximate screenshot placement</span>`,{className:'case-map-tooltip',direction:'top'}).addTo(cayoLabels)}}
-document.getElementById('goCayo')?.addEventListener('click',()=>map.fitBounds(CAYO_BOUNDS,{padding:[25,25]}));
-document.getElementById('goMainland')?.addEventListener('click',()=>map.fitBounds(bounds));
-document.getElementById('serverLocationsToggle')?.addEventListener('change',renderCayoLocations);
-map.on('zoomend',renderCayoLocations);renderCayoLocations();
 function worldToMap(x,y){return[-(1886.5-0.200*y),840.5+0.196*x]}
 let postals=Array.isArray(window.EVERFALL_POSTALS)?window.EVERFALL_POSTALS:[];
 // Image-to-world alignment checked against the original satellite image and user screenshot.
@@ -72,22 +54,6 @@ $('postalPinBtn').onclick=()=>{placementMode=true;pinKind='general';placingForId
 $('customPinBtn').onclick=()=>{pinKind='general';placementMode=true;placingForId=null;toast('Click the exact location on the map to create your pin. Press Esc to cancel.');};
 const markerLayer=L.layerGroup().addTo(map);
 // Screenshot-derived, approximate reference locations. Independent of browser-saved cases.
-const SERVER_LOCATIONS=[{"name":"Bolingbroke Prison","category":"Prison","icon":"shield","color":"#52b9ed","postal":"365"},{"name":"Sandy Shores Medical","category":"Hospital","icon":"star-of-life","color":"#00b789","postal":"299"},{"name":"Sandy Shores Fuel","category":"Fuel Station","icon":"square-xmark","color":"#f04444","postal":"297"},{"name":"Sandy Shores Garage","category":"Garage","icon":"warehouse","color":"#ffffff","postal":"283"},{"name":"Harmony Clothing","category":"Clothing Shop","icon":"shirt","color":"#f59a50","postal":"246"},{"name":"Harmony Fuel","category":"Fuel Station","icon":"square-xmark","color":"#f04444","postal":"248"},{"name":"Route 68 Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"243"},{"name":"Grapeseed Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"115"},{"name":"Paleto Bay Clothing","category":"Clothing Shop","icon":"shirt","color":"#f59a50","postal":"063"},{"name":"Paleto Bay Fuel","category":"Fuel Station","icon":"square-xmark","color":"#f04444","postal":"045"},{"name":"Paleto Bay Garage","category":"Garage","icon":"warehouse","color":"#ffffff","postal":"029"},{"name":"Paleto Bay Business","category":"Business","icon":"sack-dollar","color":"#f5c33d","postal":"041"},{"name":"Paleto Bay Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"070"},{"name":"Great Ocean Highway Fuel","category":"Fuel Station","icon":"square-xmark","color":"#f04444","postal":"426"},{"name":"Chumash Clothing","category":"Clothing Shop","icon":"shirt","color":"#f59a50","postal":"433"},{"name":"Chumash Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"434"},{"name":"Banham Canyon Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"430"},{"name":"Vinewood Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"596"},{"name":"Vinewood Hills Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"513"},{"name":"Rockford Hills Clothing","category":"Clothing Shop","icon":"shirt","color":"#f59a50","postal":"618"},{"name":"Downtown Casino","category":"Casino","icon":"gem","color":"#ffffff","postal":"609"},{"name":"Downtown Business","category":"Business","icon":"sack-dollar","color":"#f5c33d","postal":"622"},{"name":"Vespucci Clothing","category":"Clothing Shop","icon":"shirt","color":"#f59a50","postal":"703"},{"name":"Vespucci Garage","category":"Garage","icon":"warehouse","color":"#ffffff","postal":"701"},{"name":"Del Perro Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"681"},{"name":"Little Seoul Business","category":"Business","icon":"sack-dollar","color":"#f5c33d","postal":"720"},{"name":"Pillbox Hospital","category":"Hospital","icon":"star-of-life","color":"#00b789","postal":"751"},{"name":"Mission Row Garage","category":"Garage","icon":"warehouse","color":"#ffffff","postal":"755"},{"name":"Strawberry Clothing","category":"Clothing Shop","icon":"shirt","color":"#f59a50","postal":"836"},{"name":"Davis Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"847"},{"name":"Davis Business","category":"Business","icon":"sack-dollar","color":"#f5c33d","postal":"847"},{"name":"Maze Bank Arena Garage","category":"Garage","icon":"warehouse","color":"#ffffff","postal":"861"},{"name":"Los Santos Airport Garage","category":"Garage","icon":"warehouse","color":"#ffffff","postal":"902"},{"name":"Elysian Island Garage","category":"Garage","icon":"warehouse","color":"#ffffff","postal":"918"},{"name":"Terminal Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"946"},{"name":"Port Security Property","category":"Residential Property","icon":"house","color":"#56d765","postal":"928"},{"name":"El Burro Fuel","category":"Fuel Station","icon":"square-xmark","color":"#f04444","postal":"807"},{"name":"El Burro Blast Furnace","category":"Furnace","icon":"fire-flame-simple","color":"#fa8c38","postal":"808"}];
-const serverLocationLayer=L.layerGroup().addTo(map);
-const serverToggle=document.getElementById('serverLocationsToggle');
-function renderServerLocations(){
- serverLocationLayer.clearLayers();
- if(!serverToggle?.checked || map.getZoom()<0.5)return;
- for(const loc of SERVER_LOCATIONS){const pt=postalLocation(loc.postal);if(!pt)continue;
- const html=`<span class="server-blip-icon" style="color:${loc.color}"><i class="fa-solid fa-${loc.icon}"></i></span>`;
- const marker=L.marker(pt,{interactive:true,icon:L.divIcon({className:'server-blip',html,iconSize:[26,26],iconAnchor:[13,13]})});
- marker.bindTooltip(`<strong>${safe(loc.name)}</strong><span class="server-location-subtitle">${safe(loc.category)} · approx. postal ${safe(loc.postal)}</span>`,{direction:'top',offset:[0,-12],className:'case-map-tooltip'});
- marker.addTo(serverLocationLayer);
- }
-}
-serverToggle?.addEventListener('change',renderServerLocations);
-map.on('zoomend',renderServerLocations);
-renderServerLocations();
 
 // Hide investigation/location markers at wide map zoom levels to reduce clutter.
 const PIN_MIN_VISIBLE_ZOOM=0.5;
