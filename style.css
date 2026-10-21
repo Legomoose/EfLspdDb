@@ -294,3 +294,7 @@
 /* Stable single-image markers: the selected glyph is baked into the shield SVG. */
 .leaflet-marker-icon.ef-composed-marker{background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
 .leaflet-marker-icon.ef-composed-marker>img.ef-composed-pin{display:block!important;position:static!important;transform:none!important;opacity:1!important;visibility:visible!important;max-width:none!important;max-height:none!important;filter:drop-shadow(0 2px 3px #0009)}
+
+/* All map pins have the same outline and anchor, even with uploaded images. */
+#markerPreview>img{display:block!important;object-fit:contain!important;max-width:none!important;max-height:none!important;margin:auto}
+.leaflet-marker-icon.ef-composed-marker img.ef-composed-pin{object-fit:contain!important;display:block!important;opacity:1!important}
