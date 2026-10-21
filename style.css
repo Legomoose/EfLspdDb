@@ -66,3 +66,10 @@
 
 /* Ensure side panel toggles remain clickable above panel contents */
 .side-toggle{z-index:1200!important;cursor:pointer;pointer-events:auto!important}.leftpanel>.panel-inner,.rightpanel>.panel-inner{min-width:0}
+
+/* Extra colourable map icons; pin colours remain editable. */
+.custom-marker .marker-symbol{display:flex;align-items:center;justify-content:center;width:100%;height:100%;filter:drop-shadow(0 2px 3px #000b);-webkit-text-stroke:.5px #ffffffaa}
+.markeroptions label{min-width:115px}
+
+/* Consistent teardrop markers instead of small round dots */
+.custom-marker .marker-symbol{display:flex;align-items:center;justify-content:center;width:100%;height:100%;line-height:1}
