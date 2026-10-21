@@ -162,3 +162,9 @@
 #caseModal #caseForm .formgrid{min-height:0;overflow-y:auto;overflow-x:hidden;flex:1 1 auto;padding-right:8px;}
 #caseModal #caseForm .modalactions{position:relative;bottom:auto;flex:0 0 auto;margin:0;padding:14px 0 0;box-shadow:none;background:#091d34;}
 #caseModal #caseForm .modalactions button[type=submit]{background:#1674d4;color:#fff;min-width:165px;}
+
+/* Make actual Leaflet map pins match the editor preview, not hollow dots. */
+.custom-marker.cinematic-marker{background:transparent!important;border:0!important;overflow:visible!important;}
+.custom-marker.cinematic-marker .case-shield-pin.map-pin-icon{display:block!important;position:relative!important;overflow:visible!important;}
+.custom-marker.cinematic-marker .case-shield-pin.map-pin-icon svg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;overflow:visible!important;}
+.custom-marker.cinematic-marker .case-shield-pin.map-pin-icon>i{position:absolute!important;left:50%!important;top:39%!important;transform:translate(-50%,-50%)!important;display:block!important;font-size:calc(var(--pin-size, 42px) * .42)!important;color:#fff!important;text-shadow:0 1px 3px #000!important;z-index:2!important;line-height:1!important;}
