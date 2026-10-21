@@ -33,3 +33,33 @@
 
 /* Header branding: LSPD primary identity */
 .identity strong{font-size:16px;letter-spacing:1.1px}.identity span{letter-spacing:3px}
+
+/* Original compact, single-row bottom navigation */
+.intel-topnav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));min-height:40px;overflow-x:hidden}
+.intel-topnav button{min-width:0;flex:none;white-space:nowrap;padding:9px 5px;font-size:10px;gap:6px}
+.intel-topnav button i{font-size:13px}
+@media(max-width:850px){.intel-topnav{overflow-x:auto;grid-template-columns:repeat(6,minmax(120px,1fr))}.intel-topnav button{min-width:0}}
+
+/* Retractable side panels and compact Pins / Filters dropdowns */
+.workspace{transition:grid-template-columns .22s ease}
+.leftpanel,.rightpanel{position:relative;min-width:0;overflow:hidden}
+.leftpanel>.panel-inner,.rightpanel>.panel-inner{height:100%;min-height:0;overflow:auto}
+.leftpanel>.panel-inner{display:flex;flex-direction:column;padding-top:34px}
+.rightpanel>.panel-inner{display:flex;flex-direction:column;padding-top:18px}
+.side-toggle{position:absolute;z-index:900;top:7px;width:26px;height:25px;border:1px solid #37628a;border-radius:5px;background:#173e62;color:#a9d8ff;display:grid;place-items:center}
+.left-toggle{right:8px}.right-toggle{left:8px}
+.workspace.left-collapsed{grid-template-columns:42px minmax(250px,1fr) 400px}
+.workspace.right-collapsed{grid-template-columns:290px minmax(250px,1fr) 42px}
+.workspace.left-collapsed.right-collapsed{grid-template-columns:42px minmax(250px,1fr) 42px}
+.workspace.left-collapsed .leftpanel>.panel-inner,.workspace.right-collapsed .rightpanel>.panel-inner{display:none}
+.workspace.left-collapsed .left-toggle{right:7px}.workspace.right-collapsed .right-toggle{left:7px}
+.sidebar-dropdown{border:1px solid #264c71;border-radius:6px;margin-top:10px;background:#0a2039}
+.sidebar-dropdown summary{display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;padding:11px;color:#85c5fb;font-size:12px;font-weight:700;letter-spacing:.4px}
+.sidebar-dropdown summary::-webkit-details-marker{display:none}
+.sidebar-dropdown .dropdown-arrow{margin-left:auto;transition:transform .15s}
+.sidebar-dropdown[open] .dropdown-arrow{transform:rotate(180deg)}
+.sidebar-dropdown .category-list{padding:0 5px 8px}
+.sidebar-dropdown .dropdown-content{padding:0 8px 9px}
+.sidebar-dropdown .map-type-filters{margin-top:4px}
+@media(min-width:851px) and (max-width:1250px){.workspace.left-collapsed{grid-template-columns:42px minmax(250px,1fr) 320px}.workspace.right-collapsed{grid-template-columns:240px minmax(250px,1fr) 42px}.workspace.left-collapsed.right-collapsed{grid-template-columns:42px minmax(250px,1fr) 42px}}
+@media(max-width:850px){.workspace.left-collapsed,.workspace.right-collapsed,.workspace.left-collapsed.right-collapsed{display:flex;flex-direction:column}.workspace.left-collapsed .leftpanel,.workspace.right-collapsed .rightpanel{height:42px;min-height:42px;max-height:42px}.leftpanel>.panel-inner{padding-top:34px}}

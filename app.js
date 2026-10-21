@@ -137,3 +137,24 @@ $('addEntryBtn').onclick=()=>addEntry(currentSection);
 function tick(){const d=new Date();$('clockTime').textContent=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});$('clockDate').textContent=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})}tick();setInterval(tick,30000);render();
 
 
+
+
+// Side panels: toggle visibility without changing map coordinates or zoom.
+(function(){
+ const workspace=document.querySelector('.workspace');
+ if(!workspace)return;
+ function setup(buttonId,cssClass,iconExpanded,iconCollapsed,label){
+  const button=document.getElementById(buttonId);
+  if(!button)return;
+  button.addEventListener('click',()=>{
+   const collapsed=workspace.classList.toggle(cssClass);
+   button.innerHTML='<i class="fa-solid fa-'+(collapsed?iconCollapsed:iconExpanded)+'"></i>';
+   button.setAttribute('aria-label',(collapsed?'Expand ':'Collapse ')+label);
+   button.title=(collapsed?'Expand ':'Collapse ')+label;
+   button.setAttribute('aria-expanded',String(!collapsed));
+   if(typeof map!=='undefined'&&map.invalidateSize){setTimeout(()=>map.invalidateSize(),260);}
+  });
+ }
+ setup('toggleLeftPanel','left-collapsed','angles-left','angles-right','map controls');
+ setup('toggleRightPanel','right-collapsed','angles-right','angles-left','case overview');
+})();
