@@ -10,7 +10,7 @@ function saveDb(){localStorage.setItem(DB_KEY,JSON.stringify(database))}
 function fmtDate(v){return v?new Date(v).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'—'}
 function toast(message){$('toast').textContent=message;$('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),3100)}
 const MAP_WIDTH=2048,MAP_HEIGHT=3072;
-const map=L.map('map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:1,zoomSnap:.25,zoomControl:true,attributionControl:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false});const bounds=[[-MAP_HEIGHT,0],[0,MAP_WIDTH]];L.imageOverlay('assets/oulsen-nogrid.webp',bounds).addTo(map);map.fitBounds(bounds);
+const map=L.map('map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:4,zoomSnap:.25,zoomControl:true,attributionControl:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false});const bounds=[[-MAP_HEIGHT,0],[0,MAP_WIDTH]];L.imageOverlay('assets/oulsen-nogrid.webp',bounds).addTo(map);map.fitBounds(bounds);
 function worldToMap(x,y){return[-(1886.5-0.200*y),840.5+0.196*x]}
 let postals=Array.isArray(window.EVERFALL_POSTALS)?window.EVERFALL_POSTALS:[];
 // Image-to-world alignment checked against the original satellite image and user screenshot.
@@ -48,7 +48,7 @@ map.on('click',e=>{
 function nearestPostal(ll){let best='',dist=Infinity;for(const p of postals){const [lat,lng]=postalLocation(p.code),d=(lat-ll.lat)**2+(lng-ll.lng)**2;if(d<dist){best=p.code;dist=d}}return best}
 let postalMarker=null;
 function showPostalPopup(pt,postal){if(postalMarker)map.removeLayer(postalMarker);postalMarker=L.marker(pt,{icon:L.divIcon({className:'postal-search-marker',html:'<div class="postal-dot"><i class="fa-solid fa-location-dot"></i></div>',iconSize:[36,44],iconAnchor:[18,40]})}).addTo(map);postalMarker.bindPopup('<div class="postal-popup-content"><span>POSTAL</span><strong>'+safe(postal)+'</strong></div>',{className:'postal-themed-popup',offset:[0,-32],closeButton:true,autoPan:true}).openPopup()}
-$('postalSearchBtn').onclick=()=>{const pt=postalLocation($('postalInput').value);if(!pt)return toast('Postal not found.');if(postalMarker){map.removeLayer(postalMarker);postalMarker=null;}map.setView(pt,1,{animate:false});toast('Showing area around postal '+$('postalInput').value.trim().padStart(3,'0'))};
+$('postalSearchBtn').onclick=()=>{const pt=postalLocation($('postalInput').value);if(!pt)return toast('Postal not found.');if(postalMarker){map.removeLayer(postalMarker);postalMarker=null;}map.setView(pt,1.8,{animate:false});toast('Showing area around postal '+$('postalInput').value.trim().padStart(3,'0'))};
 $('postalInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('postalSearchBtn').click()}});
 $('postalPinBtn').onclick=()=>{placementMode=true;pinKind='general';placingForId=null;toast('Click the exact location on the map to create your pin. Press Esc to cancel.');};
 $('customPinBtn').onclick=()=>{pinKind='general';placementMode=true;placingForId=null;toast('Click the exact location on the map to create your pin. Press Esc to cancel.');};

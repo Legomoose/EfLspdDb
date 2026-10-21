@@ -228,6 +228,5 @@
 /* Clickable postal number in the investigation table */
 .ef-postal-jump{background:transparent!important;border:1px solid transparent!important;color:#77bdff!important;padding:5px 8px!important;border-radius:5px!important;cursor:pointer!important;font-weight:600!important;text-decoration:none!important}
 .ef-postal-jump:hover,.ef-postal-jump:focus-visible{background:#16395c!important;border-color:#3d78ac!important;text-decoration:underline!important}
-
-/* Preserve natural satellite image interpolation when zooming */
-.leaflet-image-layer { image-rendering: auto !important; }
+/* Requested records and detective management improvements */
+.ef-heading-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.ef-report-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:15px}.ef-report-tile{text-align:left;display:flex;flex-direction:column;gap:8px;padding:17px;border:1px solid #345d89;background:#102845;color:#e9f4ff;border-radius:9px;cursor:pointer;min-height:108px}.ef-report-tile:hover{background:#1b426e;border-color:#5ba4ee}.ef-report-tile strong{color:#83c1ff;font-size:14px}.ef-report-tile span{font-weight:600}.ef-report-tile small{color:#a6c2df}.ef-primary{background:#1c6fc5!important;color:white!important;border:1px solid #438ee0!important;padding:10px 14px;border-radius:6px;cursor:pointer}.ef-enhance-dialog{max-height:88vh;overflow:auto}.ef-enhance-form{padding:16px}.ef-vehicle-tile .ef-actions{margin-top:15px}.ef-hint{color:#a8c1df}.ef-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:15px}
