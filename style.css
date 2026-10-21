@@ -28,3 +28,5 @@
 .postal-themed-popup .leaflet-popup-content{margin:8px 28px 8px 18px;min-width:78px}.postal-popup-content{display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2}.postal-popup-content span{color:#67b6ff;font-size:9px;font-weight:700;letter-spacing:1.2px}.postal-popup-content strong{color:#f0f7ff;font-size:18px;font-weight:750;letter-spacing:.7px}
 .postal-themed-popup .leaflet-popup-tip{background:#06172d;border-right:1px solid #2588ee;border-bottom:1px solid #2588ee}.postal-themed-popup .leaflet-popup-close-button{color:#8fbce7!important;font-size:15px!important;top:1px!important;right:3px!important}
 @media(max-width:850px){.intel-topnav button{min-width:130px}.leftfoot{display:none}}
+
+#postalCalibrateBtn{background:#102c4c;color:#9dd0ff;border:1px solid #2e6595;border-radius:4px;padding:6px 9px;cursor:pointer;font-size:12px}#postalCalibrateBtn:hover,#postalCalibrateBtn.calibration-active{background:#1460aa;color:#fff;border-color:#5aafff}

@@ -11,10 +11,41 @@ function fmtDate(v){return v?new Date(v).toLocaleDateString('en-GB',{day:'2-digi
 function toast(message){$('toast').textContent=message;$('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),3100)}
 const MAP_WIDTH=2048,MAP_HEIGHT=3072;
 const map=L.map('map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:2,zoomSnap:.25,zoomControl:true,attributionControl:false});const bounds=[[-MAP_HEIGHT,0],[0,MAP_WIDTH]];L.imageOverlay('assets/oulsen-nogrid.webp',bounds).addTo(map);map.fitBounds(bounds);
-function worldToMap(x,y){return[-(1966.5-0.200*y),1015.5+0.196*x]}
+function worldToMap(x,y){return[-(1886.5-0.200*y),840.5+0.196*x]}
 let postals=Array.isArray(window.EVERFALL_POSTALS)?window.EVERFALL_POSTALS:[];
-function postalLocation(code){const postal=String(code).trim().padStart(3,'0');const p=postals.find(p=>String(p.code)===postal);if(!p)return null;const pt=worldToMap(p.x,p.y);if(postal==='761')return [pt[0]+22,pt[1]-49];return pt}
-function nearestPostal(ll){let best='',dist=Infinity;for(const p of postals){const [lat,lng]=worldToMap(p.x,p.y),d=(lat-ll.lat)**2+(lng-ll.lng)**2;if(d<dist){best=p.code;dist=d}}return best}
+// Image-to-world alignment checked against the original satellite image and user screenshot.
+const POSTAL_CALIBRATION_KEY='eflspddb_postal_image_calibration_v2';
+let postalCalibrations=read(POSTAL_CALIBRATION_KEY,{}),calibratingPostal=null;
+function postalLocation(code){
+ const postal=String(code).trim().padStart(3,'0');
+ const p=postals.find(p=>String(p.code)===postal);if(!p)return null;
+ const saved=postalCalibrations[postal];
+ if(Array.isArray(saved)&&saved.length===2&&saved.every(Number.isFinite))return saved;
+ return worldToMap(p.x,p.y);
+}
+const calibrationButton=document.createElement('button');
+calibrationButton.id='postalCalibrateBtn';calibrationButton.type='button';
+calibrationButton.title='Fine-tune this postal by clicking its printed number on the satellite image';
+calibrationButton.innerHTML='<i class="fa-solid fa-crosshairs"></i> Calibrate';
+$('postalPinBtn').after(calibrationButton);
+calibrationButton.onclick=()=>{
+ const postal=String($('postalInput').value).trim().padStart(3,'0');
+ if(!postals.some(p=>String(p.code)===postal))return toast('Enter a valid postal first.');
+ calibratingPostal=postal;calibrationButton.classList.add('calibration-active');
+ toast('Calibration: click the printed '+postal+' number on the map. Press Esc to cancel.');
+};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&calibratingPostal){calibratingPostal=null;calibrationButton.classList.remove('calibration-active');toast('Calibration cancelled.')}});
+map.on('click',e=>{
+ if(!calibratingPostal)return;
+ const postal=calibratingPostal;calibratingPostal=null;calibrationButton.classList.remove('calibration-active');
+ postalCalibrations[postal]=[e.latlng.lat,e.latlng.lng];
+ try{localStorage.setItem(POSTAL_CALIBRATION_KEY,JSON.stringify(postalCalibrations))}catch{return toast('Could not save postal calibration in this browser.');}
+ // Prevent this click from also placing an investigation/general pin.
+ if(e.originalEvent)e.originalEvent._efCalibrationClick=true;
+ showPostalPopup(postalCalibrations[postal],postal);
+ toast('Postal '+postal+' aligned to the map image and saved in this browser.');
+});
+function nearestPostal(ll){let best='',dist=Infinity;for(const p of postals){const [lat,lng]=postalLocation(p.code),d=(lat-ll.lat)**2+(lng-ll.lng)**2;if(d<dist){best=p.code;dist=d}}return best}
 let postalMarker=null;
 function showPostalPopup(pt,postal){if(postalMarker)map.removeLayer(postalMarker);postalMarker=L.marker(pt,{icon:L.divIcon({className:'postal-search-marker',html:'<div class="postal-dot"><i class="fa-solid fa-location-dot"></i></div>',iconSize:[36,44],iconAnchor:[18,40]})}).addTo(map);postalMarker.bindPopup('<div class="postal-popup-content"><span>POSTAL</span><strong>'+safe(postal)+'</strong></div>',{className:'postal-themed-popup',offset:[0,-32],closeButton:true,autoPan:true}).openPopup()}
 $('postalSearchBtn').onclick=()=>{const pt=postalLocation($('postalInput').value);if(!pt)return toast('Postal not found.');map.setView(pt,1.5);showPostalPopup(pt,$('postalInput').value.trim().padStart(3,'0'))};
@@ -42,7 +73,7 @@ $('caseForm').addEventListener('change',()=>{updateBusinessFields();updatePrevie
 $('caseForm').onsubmit=e=>{e.preventDefault();const f=e.target;const d={kind:pinKind,caseNo:f.elements.caseNo.value.trim(),status:f.elements.status.value,location:f.elements.location.value.trim(),detective:f.elements.detective.value.trim()||'Unassigned',suspect:f.elements.suspect.value.trim()||'Unknown',notes:f.elements.notes.value.trim(),markerCategory:f.elements.markerCategory.value,businessOwner:f.elements.businessOwner.value.trim(),businessStatus:f.elements.businessStatus.value,businessAssociates:f.elements.businessAssociates.value.trim(),markerType:f.elements.markerType.value,markerColor:f.elements.markerColor.value,markerEmoji:f.elements.markerEmoji.value,markerImage:f.elements.markerType.value==='image'?tempImage:'',markerSize:f.elements.markerSize.value,locked:f.elements.locked.checked,updated:new Date().toISOString()};if(!d.caseNo||!d.location)return;if(cases.some(c=>c.caseNo.toLowerCase()===d.caseNo.toLowerCase()&&c.id!==editingId))return toast('That case / marker name already exists.');if(editingId){const c=cases.find(c=>c.id===editingId);Object.assign(c,d);if(pendingLocation){c.lat=pendingLocation.lat;c.lng=pendingLocation.lng}}else{editingId=crypto.randomUUID?crypto.randomUUID():String(Date.now());cases.unshift({id:editingId,...d,lat:pendingLocation?.lat??null,lng:pendingLocation?.lng??null})}if(!saveCases())return;selectedId=editingId;closeModal();render();if(!pendingLocation){placingForId=editingId;showSection('map');toast('Saved! Click the map to place your marker.')}else toast(pinKind==='general'?'General marker saved.':'Investigation saved.')};
 $('closeModal').onclick=closeModal;$('cancelModal').onclick=closeModal;$('caseModal').onclick=e=>{if(e.target===$('caseModal'))closeModal()};$('addPinBtn').onclick=()=>$('pinChoice').classList.toggle('hidden');$('newGeneralPin').onclick=()=>{$('pinChoice').classList.add('hidden');openModal(null,'general')};$('newInvestigationPin').onclick=()=>{$('pinChoice').classList.add('hidden');openModal(null,'investigation')};$('addRecordBtn').onclick=()=>openModal();$('editSelectedBtn').onclick=()=>{const c=cases.find(c=>c.id===selectedId);if(c)openModal(c)};
 $('recordsBody').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.select){selectCase(b.dataset.select);return}if(b.dataset.edit){openModal(cases.find(c=>c.id===b.dataset.edit));return}if(b.dataset.place){const c=cases.find(c=>c.id===b.dataset.place);if(c.locked)return toast('This marker is locked. Unlock it in Edit first.');placingForId=c.id;showSection('map');toast('Click the map to place the marker.');return}if(b.dataset.delete){const c=cases.find(c=>c.id===b.dataset.delete);if(c.locked)return toast('Unlock this marker before deleting.');if(confirm('Delete '+c.caseNo+'? This cannot be undone.')){cases=cases.filter(x=>x.id!==c.id);if(selectedId===c.id)selectedId=null;saveCases();render()}}};
-map.on('click',e=>{if(placementMode){placementMode=false;openModal(null,pinKind);pendingLocation={lat:e.latlng.lat,lng:e.latlng.lng};$('caseForm').elements.location.value='Near postal '+nearestPostal(e.latlng);return}if(placingForId){const c=cases.find(c=>c.id===placingForId);if(c&&!c.locked){c.lat=e.latlng.lat;c.lng=e.latlng.lng;c.updated=new Date().toISOString();saveCases();render();toast('Marker placed.')}placingForId=null}});
+map.on('click',e=>{if(e.originalEvent&&e.originalEvent._efCalibrationClick)return;if(placementMode){placementMode=false;openModal(null,pinKind);pendingLocation={lat:e.latlng.lat,lng:e.latlng.lng};$('caseForm').elements.location.value='Near postal '+nearestPostal(e.latlng);return}if(placingForId){const c=cases.find(c=>c.id===placingForId);if(c&&!c.locked){c.lat=e.latlng.lat;c.lng=e.latlng.lng;c.updated=new Date().toISOString();saveCases();render();toast('Marker placed.')}placingForId=null}});
 for(const id of ['searchInput','officerFilter'])$(id).addEventListener('input',render);$('categoryFilter').addEventListener('change',render);if($('markerCategoryFilter'))$('markerCategoryFilter').addEventListener('change',render);
 $('categoryList').onclick=e=>{const b=e.target.closest('[data-cat]');if(!b)return;const cat=b.dataset.cat;const c=cases.find(c=>(c.markerCategory===cat||(cat==='Location of Interest'&&c.markerCategory==='Person of Interest'))&&typeof c.lat==='number');if(c)selectCase(c.id);else toast('No positioned '+cat.toLowerCase()+' markers yet.')};
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{detailTab=b.dataset.tab;document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));renderDetail()});
