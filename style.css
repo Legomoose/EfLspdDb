@@ -273,3 +273,10 @@
 .ef-location-popup .ef-location-case span{font-size:12px}
 .ef-location-popup .ef-location-case small{opacity:.75}
 .ef-location-empty{opacity:.7;font-size:12px}
+
+/* Persistent click-to-open case list: do not let Leaflet's default popup theme hide controls. */
+.leaflet-popup.ef-location-leaflet-popup .leaflet-popup-content-wrapper{background:#0d203b;color:#e8f3ff;border:2px solid #1877d5;border-radius:12px}
+.leaflet-popup.ef-location-leaflet-popup .leaflet-popup-tip{background:#0d203b}
+.leaflet-popup.ef-location-leaflet-popup .leaflet-popup-content{margin:12px 14px}
+.leaflet-popup.ef-location-leaflet-popup .leaflet-popup-close-button{color:#e8f3ff!important}
+.leaflet-popup.ef-location-leaflet-popup .ef-location-case{pointer-events:auto;cursor:pointer}
