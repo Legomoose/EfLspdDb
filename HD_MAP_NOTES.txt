@@ -1,1 +1,0 @@
-Sharper preview: map textures rebuilt at 4096 x 6144 pixels instead of 2048 x 3072. Postal positioning is still approximate and must be calibrated before operational use. Extract all files together. To run locally use python -m http.server 8000 and visit http://localhost:8000.
