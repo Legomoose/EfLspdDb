@@ -265,3 +265,11 @@
 .ef-intel-person-actions .ef-intel-remove:hover{background:#64303d}
 
 .ef-gang-uploaded-logo{width:42px;height:42px;object-fit:contain;border-radius:8px;background:#1b3150;flex-shrink:0}.ef-intel-logo .ef-gang-uploaded-logo{width:100%;height:100%;object-fit:contain}.ef-gang-logo-preview img{width:100%;height:100%;object-fit:contain;border-radius:8px}.ef-gang-dialog input[type=file]{padding:10px}.ef-gang-dialog #efGangRemoveLogo{justify-self:start;padding:8px 12px;background:#243c5b;color:#e7f0ff;border:1px solid #54739a;border-radius:6px;cursor:pointer}
+/* Linked cases shown beneath each existing location marker */
+.ef-location-popup{min-width:215px;max-width:300px;display:flex;flex-direction:column;gap:5px}
+.ef-location-popup h4{margin:8px 0 3px;border-top:1px solid #365476;padding-top:9px}
+.ef-location-popup .ef-location-case{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;width:100%;padding:8px;border:1px solid #375a80;border-radius:6px;background:#192f4c;color:#e8f3ff;cursor:pointer}
+.ef-location-popup .ef-location-case:hover{background:#284c79}
+.ef-location-popup .ef-location-case span{font-size:12px}
+.ef-location-popup .ef-location-case small{opacity:.75}
+.ef-location-empty{opacity:.7;font-size:12px}
