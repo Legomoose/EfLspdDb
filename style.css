@@ -233,3 +233,12 @@
 
 /* Detective Directory: independent from investigation Contacts */
 .ef-directory-head{display:flex;align-items:center;gap:12px;text-align:left}.ef-directory-avatar{width:48px;height:48px;min-width:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#254a7b;color:#9bc4ff;font-size:20px}.ef-directory-photo{width:48px;height:48px;min-width:48px;border-radius:50%;object-fit:cover}.ef-detective-tile{text-align:left}.ef-directory-detail h3{margin:14px 0 8px}.ef-directory-detail p{margin:3px 0}.ef-heading-row #efDirectorySearch{min-width:230px;max-width:390px;width:100%}@media(max-width:650px){.ef-heading-row{flex-wrap:wrap}}
+
+/* Gang editor and member roster */
+.ef-gang-dialog{width:min(560px,calc(100vw - 24px));max-height:90vh;overflow:auto}
+.ef-gang-dialog form{display:grid;gap:14px;padding:16px}
+.ef-gang-dialog form label{display:grid;gap:6px;color:#c5d9f5;font-weight:600}
+.ef-gang-dialog input,.ef-gang-dialog textarea{width:100%;padding:11px;border-radius:6px;border:1px solid #38597e;background:#0b1a30;color:#edf5ff;font:inherit}
+.ef-gang-members{margin-top:22px;border-top:1px solid #365171;padding-top:14px}
+.ef-gang-members-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ef-gang-member-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
