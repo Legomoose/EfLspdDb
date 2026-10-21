@@ -30,3 +30,6 @@
 @media(max-width:850px){.intel-topnav button{min-width:130px}.leftfoot{display:none}}
 
 #postalCalibrateBtn{background:#102c4c;color:#9dd0ff;border:1px solid #2e6595;border-radius:4px;padding:6px 9px;cursor:pointer;font-size:12px}#postalCalibrateBtn:hover,#postalCalibrateBtn.calibration-active{background:#1460aa;color:#fff;border-color:#5aafff}
+
+/* Header branding: LSPD primary identity */
+.identity strong{font-size:16px;letter-spacing:1.1px}.identity span{letter-spacing:3px}
