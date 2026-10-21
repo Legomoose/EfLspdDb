@@ -61,19 +61,27 @@ map.on('zoomend',()=>render());
 function markerSvgGlyph(name,color='#ffffff'){
  const d=window.EF_PIN_SVGS?.[name]||window.EF_PIN_SVGS?.['shield-halved'];
  if(!d)return '';
- // An IMG data URI avoids old CSS rules that incorrectly stretch nested SVGs.
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${d[0]}"><path fill="#ffffff" d="${d[1]}"/></svg>`;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${d[0]}"><path fill="${color}" d="${d[1]}"/></svg>`;
  return `<img class="ef-icon-image" src="data:image/svg+xml,${encodeURIComponent(svg)}" alt="" draggable="false">`;
+}
+// Compose the outline and the selected glyph into ONE image so legacy SVG
+// and marker CSS cannot hide or stretch the inner icon.
+function composedMarkerImage(symbol,color){
+ const d=window.EF_PIN_SVGS?.[symbol]||window.EF_PIN_SVGS?.['shield-halved'];
+ const glyph=d?`<svg x="14" y="10" width="20" height="23" viewBox="${d[0]}" preserveAspectRatio="xMidYMid meet"><path fill="#ffffff" d="${d[1]}"/></svg>`:'';
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56"><path d="M24 2 C11 2 3 11 3 23 C3 37 17 46 24 54 C31 46 45 37 45 23 C45 11 37 2 24 2 Z" fill="${color}" stroke="#071322" stroke-width="3"/><path d="M24 6 C13 6 7 13 7 23 C7 33 16 42 24 49 C32 42 41 33 41 23 C41 13 35 6 24 6 Z" fill="#071526" fill-opacity=".88"/>${glyph}</svg>`;
+ return 'data:image/svg+xml,'+encodeURIComponent(svg);
 }
 function markerIcon(c,isSelected=false){
  const size=Number(c.markerSize)||42;
  const color=/^#[0-9a-fA-F]{6}$/.test(c.markerColor||'')?c.markerColor:'#348dff';
  const height=Math.round(size*1.18);
- if(c.markerType==='image'&&c.markerImage)return L.divIcon({className:'custom-marker cinematic-marker',html:`<img src="${safe(c.markerImage)}" style="width:${size}px;height:${size}px;object-fit:contain" alt="">`,iconSize:[size,size],iconAnchor:[size/2,size]});
+ if(c.markerType==='image'&&c.markerImage)return L.divIcon({className:'custom-marker ef-composed-marker',html:`<img class="ef-composed-pin" src="${safe(c.markerImage)}" style="width:${size}px;height:${size}px;object-fit:contain" alt="">`,iconSize:[size,size],iconAnchor:[size/2,size]});
  const allowed=MARKER_ICON_OPTIONS.map(x=>x[0]);
  const symbol=allowed.includes(c.markerSymbol)?c.markerSymbol:'shield-halved';
- const html=`<span class="case-shield-pin map-pin-icon ef-svg-marker" style="width:${size}px;height:${height}px;--pin-colour:${color};--pin-size:${size}px"><svg class="ef-pin-outline" viewBox="0 0 48 56" preserveAspectRatio="none" aria-hidden="true"><path d="M24 2 C11 2 3 11 3 23 C3 37 17 46 24 54 C31 46 45 37 45 23 C45 11 37 2 24 2 Z" fill="${color}" stroke="#071322" stroke-width="3"/><path d="M24 6 C13 6 7 13 7 23 C7 33 16 42 24 49 C32 42 41 33 41 23 C41 13 35 6 24 6 Z" fill="#071526" fill-opacity=".88"/></svg><span class="ef-svg-glyph">${markerSvgGlyph(symbol)}</span></span>`;
- return L.divIcon({className:'custom-marker cinematic-marker',html,iconSize:[size,height],iconAnchor:[size/2,height-2],popupAnchor:[0,-height+6]});
+ const src=composedMarkerImage(symbol,color);
+ const html=`<img class="ef-composed-pin" src="${src}" width="${size}" height="${height}" alt="" draggable="false">`;
+ return L.divIcon({className:'custom-marker ef-composed-marker',html,iconSize:[size,height],iconAnchor:[size/2,height-2],popupAnchor:[0,-height+6]});
 }
 function displayMarkerCategory(c){const cat=String(c.markerCategory||'').trim();return c.kind==='general'&&(!cat||cat==='Active Investigation')?'General Location':(cat|| (c.kind==='general'?'General Location':'Investigation'))}
 function mapType(c){const cat=String(displayMarkerCategory(c)).toLowerCase();if(cat.includes('gang')||cat.includes('territory'))return 'gang';if(cat==='business'||cat.includes('business'))return 'business';if(cat.includes('police')||cat.includes('pd station')||cat.includes('government'))return 'pd';if(c.kind!=='general'||cat.includes('detective')||cat.includes('investigation')||cat.includes('crime scene')||cat.includes('evidence')||(cat.includes('person of interest')||cat.includes('location of interest'))||cat.includes('resolved'))return 'detective';return 'other'}

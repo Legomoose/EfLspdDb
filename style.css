@@ -290,3 +290,7 @@
 .ef-loc-assigned-icon .case-shield-pin{position:relative;display:inline-block;transform:none!important}
 .ef-loc-assigned-icon .ef-svg-glyph{display:flex;align-items:center;justify-content:center}
 .ef-loc-assigned-icon img{max-width:52px;max-height:52px;object-fit:contain}
+
+/* Stable single-image markers: the selected glyph is baked into the shield SVG. */
+.leaflet-marker-icon.ef-composed-marker{background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
+.leaflet-marker-icon.ef-composed-marker>img.ef-composed-pin{display:block!important;position:static!important;transform:none!important;opacity:1!important;visibility:visible!important;max-width:none!important;max-height:none!important;filter:drop-shadow(0 2px 3px #0009)}
