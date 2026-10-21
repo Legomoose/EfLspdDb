@@ -60,16 +60,19 @@ const PIN_MIN_VISIBLE_ZOOM=0.5;
 map.on('zoomend',()=>render());
 function markerIcon(c,isSelected=false){
  const size=Number(c.markerSize)||42;
- const color=(c.markerColor==='#f45365'&&c.markerType==='pin'?'#348dff':c.markerColor)||'#348dff';
- let html;
- if(c.markerType==='image'&&c.markerImage){html=`<img src="${safe(c.markerImage)}" style="width:${size}px;height:${size}px;object-fit:contain" alt="">`;}
- else if(c.markerType==='emoji'){html=`<span class="emoji" style="font-size:${Math.round(size*.72)}px">${safe(c.markerEmoji||'🔎')}</span>`;}
- else{
-   const allowed=MARKER_ICON_OPTIONS.map(x=>x[0]);
-   const symbol=allowed.includes(c.markerSymbol)?c.markerSymbol:'shield-halved';
-   html=`<span class="case-shield-pin map-pin-icon" style="width:${size}px;height:${Math.round(size*1.18)}px;--pin-colour:${safe(color)};--pin-size:${size}px"><svg viewBox="0 0 48 56" aria-hidden="true" preserveAspectRatio="none"><path d="M24 2 C11 2 3 11 3 23 C3 37 17 46 24 54 C31 46 45 37 45 23 C45 11 37 2 24 2 Z" fill="${safe(color)}" stroke="#071322" stroke-width="3"/><path d="M24 6 C13 6 7 13 7 23 C7 33 16 42 24 49 C32 42 41 33 41 23 C41 13 35 6 24 6 Z" fill="#071526" fill-opacity=".88" stroke="${safe(color)}" stroke-opacity=".5" stroke-width="1"/></svg><i class="fa-solid fa-${symbol}" aria-hidden="true" style="color:#ffffff"></i></span>`;
+ const color=/^#[0-9a-fA-F]{6}$/.test(c.markerColor||'')?c.markerColor:'#348dff';
+ if(c.markerType==='image'&&c.markerImage){
+  return L.divIcon({className:'custom-marker ef-map-marker',html:`<img src="${safe(c.markerImage)}" style="width:${size}px;height:${size}px;object-fit:contain" alt="">`,iconSize:[size,size],iconAnchor:[size/2,size]});
  }
- return L.divIcon({className:'custom-marker cinematic-marker',html,iconSize:[size,Math.round(size*1.18)],iconAnchor:[size/2,Math.round(size*1.12)],popupAnchor:[0,-size]});
+ const allowed=MARKER_ICON_OPTIONS.map(x=>x[0]);
+ const symbol=allowed.includes(c.markerSymbol)?c.markerSymbol:'shield-halved';
+ const h=Math.round(size*1.24);
+ const html=`<div class="ef-real-pin" style="width:${size}px;height:${h}px;--ef-color:${color};--ef-icon-size:${Math.round(size*.4)}px">
+ <svg class="ef-real-pin-shape" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 60" width="${size}" height="${h}" aria-hidden="true">
+ <path d="M24 2C11 2 3 11 3 24c0 15 13 25 21 34 8-9 21-19 21-34C45 11 37 2 24 2Z" fill="${color}" stroke="#071322" stroke-width="3"/>
+ <path d="M24 7C14 7 8 14 8 24c0 11 9 20 16 28 7-8 16-17 16-28C40 14 34 7 24 7Z" fill="#10213a" stroke="${color}" stroke-width="1"/>
+ </svg><span class="ef-real-pin-glyph"><i class="fa-solid fa-${symbol}" aria-hidden="true"></i></span></div>`;
+ return L.divIcon({className:'custom-marker ef-map-marker',html,iconSize:[size,h],iconAnchor:[size/2,h-2],popupAnchor:[0,-h+8]});
 }
 function displayMarkerCategory(c){const cat=String(c.markerCategory||'').trim();return c.kind==='general'&&(!cat||cat==='Active Investigation')?'General Location':(cat|| (c.kind==='general'?'General Location':'Investigation'))}
 function mapType(c){const cat=String(displayMarkerCategory(c)).toLowerCase();if(cat.includes('gang')||cat.includes('territory'))return 'gang';if(cat==='business'||cat.includes('business'))return 'business';if(cat.includes('police')||cat.includes('pd station')||cat.includes('government'))return 'pd';if(c.kind!=='general'||cat.includes('detective')||cat.includes('investigation')||cat.includes('crime scene')||cat.includes('evidence')||(cat.includes('person of interest')||cat.includes('location of interest'))||cat.includes('resolved'))return 'detective';return 'other'}

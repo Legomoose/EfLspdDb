@@ -168,3 +168,11 @@
 .custom-marker.cinematic-marker .case-shield-pin.map-pin-icon{display:block!important;position:relative!important;overflow:visible!important;}
 .custom-marker.cinematic-marker .case-shield-pin.map-pin-icon svg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;overflow:visible!important;}
 .custom-marker.cinematic-marker .case-shield-pin.map-pin-icon>i{position:absolute!important;left:50%!important;top:39%!important;transform:translate(-50%,-50%)!important;display:block!important;font-size:calc(var(--pin-size, 42px) * .42)!important;color:#fff!important;text-shadow:0 1px 3px #000!important;z-index:2!important;line-height:1!important;}
+
+/* Pin renderer v2: explicit height, stable layout, no legacy circle styling */
+.custom-marker.ef-map-marker{background:none!important;border:0!important;overflow:visible!important;}
+.ef-real-pin{position:relative;display:block;overflow:visible;filter:drop-shadow(0 3px 3px #000b)}
+.ef-real-pin-shape{position:absolute;inset:0;display:block!important;overflow:visible!important}
+.ef-real-pin-glyph{position:absolute;left:0;top:8%;width:100%;height:62%;display:flex;align-items:center;justify-content:center;color:#fff!important;font-size:var(--ef-icon-size);line-height:1;z-index:3;text-shadow:0 1px 2px #000}
+.ef-real-pin-glyph i{color:#fff!important;display:block!important;font-size:inherit!important;line-height:1!important}
+.custom-marker.ef-map-marker:hover .ef-real-pin{filter:drop-shadow(0 0 6px var(--ef-color)) drop-shadow(0 3px 3px #000b)}
