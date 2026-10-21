@@ -333,3 +333,49 @@
 .ef-vehicle-preview img{max-width:100%;max-height:180px;object-fit:contain;border-radius:6px}
 @media(min-width:1250px){.rightpanel{width:420px!important;min-width:420px!important}}
 @media(max-width:900px){.leftpanel{width:205px!important;min-width:205px!important}.rightpanel{width:320px!important;min-width:320px!important}}
+
+#categoryList button[data-cat] b{display:inline-flex;align-items:center;justify-content:center;min-width:23px}
+.ef-icon-editor-button{width:100%;margin:10px 0 4px;border:1px solid #315a88;background:#0c2847;color:#9bc9ff;border-radius:6px;padding:9px;cursor:pointer}
+.ef-sidebar-editor-overlay{position:fixed;inset:0;background:#000b;z-index:100000;display:flex;align-items:center;justify-content:center;padding:20px}
+.ef-sidebar-editor{width:min(620px,96vw);max-height:88vh;display:flex;flex-direction:column;background:#0c1d35;color:#e9f3ff;border:1px solid #3b6391;border-radius:12px;padding:20px;box-shadow:0 20px 80px #000a}
+.ef-sidebar-editor-header{display:flex;justify-content:space-between;align-items:center}.ef-sidebar-editor-header button{font-size:28px;color:#fff;background:transparent;border:0;cursor:pointer}
+.ef-sidebar-editor-list{overflow-y:auto;display:grid;gap:7px;padding:10px 0}
+.ef-icon-row{display:grid;grid-template-columns:1.3fr 1.4fr 50px;gap:10px;align-items:center;padding:7px;border:1px solid #294360;border-radius:7px}
+.ef-icon-row select{min-width:0;background:#142c4a;color:#fff;border:1px solid #456b94;border-radius:5px;padding:7px}
+.ef-icon-row input{width:44px;height:33px;background:transparent;border:0;cursor:pointer}
+.ef-sidebar-editor footer{display:flex;justify-content:flex-end;gap:12px;padding-top:14px}
+.ef-sidebar-editor footer button{padding:9px 16px;border-radius:6px;cursor:pointer}
+
+/* Full-width dashboard header matching the approved visual mockup. */
+.header.ef-new-header{height:66px!important;min-height:66px;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px;padding:0 22px!important;background:#051529!important;border-bottom:1px solid #1c3c62!important}
+.ef-header-identity{display:flex;align-items:center;gap:12px;flex:0 0 260px;min-width:0}
+.ef-header-identity img{width:42px;height:48px;object-fit:contain}
+.ef-header-identity>div{display:flex;flex-direction:column;gap:2px}
+.ef-header-identity strong{color:#f1f7ff;font-size:21px;letter-spacing:.4px;line-height:1.05}
+.ef-header-identity small{color:#80b8f5;letter-spacing:1.5px;font-size:10px}
+.ef-header-search{display:flex;align-items:center;gap:12px;height:38px;flex:1;max-width:610px;min-width:130px;background:#071d37;border:1px solid #295b92;border-radius:6px;padding:0 14px;color:#d8e8ff}
+.ef-header-search input{flex:1;width:100%;min-width:0;border:0;outline:0;background:transparent;color:#e4f1ff;font-size:12px}
+.ef-header-search input::placeholder{color:#a6c2e3}
+.ef-header-right{display:flex;align-items:center;gap:12px;justify-content:flex-end;flex:0 0 230px}
+.ef-header-right button{border:0;background:transparent;color:#e8f3ff;cursor:pointer}
+#efThemeToggle{font-size:16px;margin-right:6px}
+.ef-header-avatar{width:33px;height:33px;border-radius:50%;display:grid;place-items:center;background:#1e508e;color:#a9d2ff;font-size:16px}
+.ef-header-account{display:flex;flex-direction:column;gap:3px;white-space:nowrap}
+.ef-header-account strong{font-size:12px;color:#eaf2ff}
+.ef-header-account small{font-size:10px;color:#8db5e8}
+.ef-header-light{background:#15365b!important}
+@media(max-width:850px){.header.ef-new-header{height:66px!important;flex-wrap:nowrap!important;gap:8px;padding:0 9px!important}.ef-header-identity{flex-basis:140px}.ef-header-identity img{width:30px}.ef-header-identity strong{font-size:15px}.ef-header-identity small{font-size:8px}.ef-header-right{flex-basis:45px}.ef-header-account,.ef-header-avatar,#efThemeToggle{display:none!important}}
+
+/* Unified location intelligence profile — screenshot-inspired design */
+.ef-docked-location .ef-premium-location{padding:8px!important;color:#d9eaff}
+.ef-premium-location .ef-profile-top{display:flex;align-items:flex-start;gap:13px;padding:9px 0 16px}
+.ef-premium-location .ef-profile-avatar{flex:0 0 88px;height:91px;background:#081b31;border:1px solid #26507c;border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ef-premium-location .ef-profile-avatar>img{width:100%;height:100%;object-fit:cover}
+.ef-premium-location .ef-profile-avatar .ef-composed-pin{width:46px!important;height:56px!important;object-fit:contain}
+.ef-premium-location .ef-profile-headline{flex:1;min-width:0}.ef-premium-location .ef-profile-headline h2{margin:1px 0 7px;font-size:20px;line-height:1.2;color:#f1f7ff}.ef-premium-location .ef-profile-headline span{color:#4da6ff;font-size:12px}.ef-premium-location .ef-profile-headline p{font-size:12px;margin:7px 0;color:#b9d6f4}.ef-premium-location .ef-profile-x{background:#091e38;border:1px solid #27486d;border-radius:4px;color:#d9eaff;padding:6px 9px;cursor:pointer}
+.ef-premium-location .ef-profile-toolbar{display:flex;align-items:center;gap:7px;padding-bottom:13px;border-bottom:1px solid #244367}.ef-premium-location .ef-profile-toolbar button{border:1px solid #315b87;border-radius:5px;background:#102b4c;color:#cce2fc;padding:9px 11px;white-space:nowrap;cursor:pointer;font-size:11px}.ef-premium-location .ef-profile-toolbar button.blue{background:#1460c4;color:white}.ef-premium-location .ef-profile-toolbar .ef-edit-gold{border-color:#c9951d;color:#fbd66b;background:#29261e}.ef-premium-location .ef-profile-toolbar .ef-delete-red{border-color:#d33453;color:#ff667e;background:#301b2a}.ef-profile-flex{flex:1}
+.ef-premium-location .ef-profile-tabs{display:flex;overflow-x:auto;gap:2px;margin:9px 0 11px}.ef-premium-location .ef-profile-tabs button{white-space:nowrap;font-size:11px!important;padding:10px 8px!important}
+.ef-premium-location .ef-profile-card{background:#091e37;border:1px solid #163a60;border-radius:7px;padding:13px;margin-bottom:11px}.ef-premium-location .ef-profile-card h3{font-size:13px;color:#e8f4ff;margin:0 0 13px;padding:0}.ef-premium-location .ef-profile-card h3 i{color:#62b2ff;margin-right:7px}.ef-premium-location .ef-profile-overview{display:grid;grid-template-columns:1fr 1.08fr;gap:12px}.ef-premium-location .ef-profile-overview dl{display:grid;grid-template-columns:68px 1fr;gap:11px 6px;margin:5px 0;align-content:start;font-size:11px}.ef-premium-location .ef-profile-overview dt{color:#a9c9ed}.ef-premium-location .ef-profile-overview dd{margin:0;color:#eef5ff;overflow-wrap:anywhere}.ef-premium-location .ef-status-chip{display:inline-block;background:#096a53;color:#70f0c2;padding:4px 12px;border-radius:20px}.ef-premium-location .ef-profile-hero{min-height:175px;max-height:210px;overflow:hidden;border-radius:6px;border:1px solid #284e77}.ef-premium-location .ef-profile-hero>img{width:100%;height:100%;max-height:210px;object-fit:cover}.ef-premium-location .ef-profile-no-photo{height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#648cb7;background:#0b2845}.ef-premium-location .ef-profile-no-photo i{font-size:28px}.ef-premium-location .ef-profile-description{padding-top:12px}.ef-premium-location .ef-profile-description small{color:#a8c9ed}.ef-premium-location .ef-profile-description p{background:#0b2746;border:1px solid #1d4268;border-radius:5px;padding:10px;margin:7px 0 0;font-size:12px;line-height:1.5}.ef-premium-location .ef-profile-fields{display:grid;grid-template-columns:1fr 1fr;gap:7px}.ef-premium-location .ef-profile-fields>div{display:flex;justify-content:space-between;gap:8px;padding:10px;border:1px solid #1c3c60;border-radius:5px;font-size:11px}.ef-premium-location .ef-profile-fields small{color:#a5c8f3}.ef-premium-location .ef-profile-activity{display:flex;flex-direction:column;gap:7px}.ef-premium-location .ef-inline-action{float:right;font-size:11px;padding:7px;border:0;border-radius:4px}.ef-premium-location .ef-profile-edit-fields{display:grid;grid-template-columns:1fr 1fr;gap:9px}.ef-premium-location .ef-loc-editor{margin:10px 0;padding:13px}.ef-premium-location .ef-loc-editor label{display:block;margin:10px 0}.ef-premium-location .ef-loc-editor input:not([type=checkbox]):not([type=file]){width:100%;background:#102b4c;color:white;border:1px solid #365a83;border-radius:5px;padding:8px}
+@media(max-width:1300px){.ef-premium-location .ef-profile-overview{grid-template-columns:1fr}.ef-premium-location .ef-profile-hero{max-height:170px}.ef-premium-location .ef-profile-hero>img{max-height:170px}}
+
+@media(min-width:1250px){.rightpanel{width:480px!important;min-width:480px!important}}
