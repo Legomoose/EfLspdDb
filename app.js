@@ -73,31 +73,27 @@ $('caseForm').addEventListener('change',()=>{updateBusinessFields();updatePrevie
 $('caseForm').onsubmit=e=>{e.preventDefault();const f=e.target;const d={kind:pinKind,caseNo:f.elements.caseNo.value.trim(),status:f.elements.status.value,location:f.elements.location.value.trim(),detective:f.elements.detective.value.trim()||'Unassigned',suspect:f.elements.suspect.value.trim()||'Unknown',notes:f.elements.notes.value.trim(),markerCategory:f.elements.markerCategory.value,businessOwner:f.elements.businessOwner.value.trim(),businessStatus:f.elements.businessStatus.value,businessAssociates:f.elements.businessAssociates.value.trim(),markerType:f.elements.markerType.value,markerColor:f.elements.markerColor.value,markerEmoji:f.elements.markerEmoji.value,markerImage:f.elements.markerType.value==='image'?tempImage:'',markerSize:f.elements.markerSize.value,locked:f.elements.locked.checked,updated:new Date().toISOString()};if(!d.caseNo||!d.location)return;if(cases.some(c=>c.caseNo.toLowerCase()===d.caseNo.toLowerCase()&&c.id!==editingId))return toast('That case / marker name already exists.');if(editingId){const c=cases.find(c=>c.id===editingId);Object.assign(c,d);if(pendingLocation){c.lat=pendingLocation.lat;c.lng=pendingLocation.lng}}else{editingId=crypto.randomUUID?crypto.randomUUID():String(Date.now());cases.unshift({id:editingId,...d,lat:pendingLocation?.lat??null,lng:pendingLocation?.lng??null})}if(!saveCases())return;selectedId=editingId;const locationWasSelected=!!pendingLocation;closeModal();render();if(!locationWasSelected){placingForId=editingId;showSection('map');toast('Saved! Click the map to place your marker.')}else toast(pinKind==='general'?'General marker saved.':'Investigation saved.')};
 $('closeModal').onclick=closeModal;$('cancelModal').onclick=closeModal;$('caseModal').onclick=e=>{if(e.target===$('caseModal'))closeModal()};$('addPinBtn').onclick=()=>$('pinChoice').classList.toggle('hidden');$('newGeneralPin').onclick=()=>{$('pinChoice').classList.add('hidden');pinKind='general';placementMode=true;placingForId=null;showSection('map');toast('Click the map where you want your general pin. Press Esc to cancel.')};$('newInvestigationPin').onclick=()=>{$('pinChoice').classList.add('hidden');pinKind='investigation';placementMode=true;placingForId=null;showSection('map');toast('Click the map where you want your investigation pin. Press Esc to cancel.')};$('addRecordBtn').onclick=()=>openModal();$('editSelectedBtn').onclick=()=>{const c=cases.find(c=>c.id===selectedId);if(c)openModal(c)};
 $('recordsBody').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.select){selectCase(b.dataset.select);return}if(b.dataset.edit){openModal(cases.find(c=>c.id===b.dataset.edit));return}if(b.dataset.place){const c=cases.find(c=>c.id===b.dataset.place);if(c.locked)return toast('This marker is locked. Unlock it in Edit first.');placingForId=c.id;showSection('map');toast('Click the map to place the marker.');return}if(b.dataset.delete){const c=cases.find(c=>c.id===b.dataset.delete);if(c.locked)return toast('Unlock this marker before deleting.');if(confirm('Delete '+c.caseNo+'? This cannot be undone.')){cases=cases.filter(x=>x.id!==c.id);if(selectedId===c.id)selectedId=null;saveCases();render()}}};
-// Capture placement clicks on the map container before Leaflet's map-click dispatch.
-// This avoids losing placement clicks to map layers or duplicate click handlers.
-function placePinAt(latlng){
- if(placementMode){
-  placementMode=false;placingForId=null;
-  openModal(null,pinKind);
-  pendingLocation={lat:latlng.lat,lng:latlng.lng};
-  $('caseForm').elements.location.value='Map location (selected)';
-  return true;
- }
- if(placingForId){
-  const c=cases.find(c=>c.id===placingForId);
-  if(c&&!c.locked){c.lat=latlng.lat;c.lng=latlng.lng;c.updated=new Date().toISOString();saveCases();render();toast('Marker placed.');}
-  placingForId=null;return true;
- }
- return false;
-}
-map.getContainer().addEventListener('click',e=>{
- if(!placementMode&&!placingForId)return;
- if(e.target.closest('.leaflet-control, .leaflet-marker-icon, .leaflet-popup, .maptoolbar, button, input'))return;
+// Single, reliable placement handler. Capture pointer release on the map itself,
+// before Leaflet's drag/click processing; ignore toolbar, controls and existing pins.
+// Also retain a Leaflet click fallback for keyboard or non-pointer input.
+let placementPointerHandled=false;
+function handlePlacementPointer(e){
+ if((!placementMode&&!placingForId)||calibratingPostal)return;
+ if(e.button!==undefined&&e.button!==0)return;
+ if(e.target.closest('.leaflet-control, .leaflet-marker-icon, .leaflet-popup, button, input'))return;
  const ll=map.mouseEventToLatLng(e);
- if(placePinAt(ll)){e.preventDefault();e.stopPropagation();}
-},true);
-// Keyboard-accessible / programmatic Leaflet click fallback.
-map.on('click',e=>{if(calibratingPostal||(e.originalEvent&&e.originalEvent._efCalibrationClick))return;placePinAt(e.latlng)});
+ if(placePinAt(ll)){
+  placementPointerHandled=true;
+  queueMicrotask(()=>{placementPointerHandled=false});
+  e.preventDefault();e.stopPropagation();
+ }
+}
+map.getContainer().addEventListener('pointerup',handlePlacementPointer,true);
+map.on('click',e=>{
+ if(placementPointerHandled){placementPointerHandled=false;return;}
+ if(calibratingPostal||(e.originalEvent&&e.originalEvent._efCalibrationClick))return;
+ placePinAt(e.latlng);
+});
 for(const id of ['searchInput','officerFilter'])$(id).addEventListener('input',render);$('categoryFilter').addEventListener('change',render);if($('markerCategoryFilter'))$('markerCategoryFilter').addEventListener('change',render);
 $('categoryList').onclick=e=>{const b=e.target.closest('[data-cat]');if(!b)return;const cat=b.dataset.cat;const c=cases.find(c=>(c.markerCategory===cat||(cat==='Location of Interest'&&c.markerCategory==='Person of Interest'))&&typeof c.lat==='number');if(c)selectCase(c.id);else toast('No positioned '+cat.toLowerCase()+' markers yet.')};
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{detailTab=b.dataset.tab;document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));renderDetail()});
