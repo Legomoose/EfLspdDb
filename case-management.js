@@ -18,37 +18,14 @@ function refreshPhotos(){document.getElementById('casePhotoGallery').innerHTML=p
 function refreshVideos(){document.getElementById('caseVideos').innerHTML=videoLinks.map((v,i)=>`<div class="ef-video"><a href="${esc(v)}" target="_blank" rel="noopener noreferrer">${esc(v)}</a><button type="button" data-removevideo="${i}">Remove</button></div>`).join('')}
 function openEditor(f=null){editing=f?.id||null;document.getElementById('deleteCaseFile').hidden=!f;photos=[...(f?.photos||[])];videoLinks=[...(f?.videos||[])];linked=[...(f?.linked||[])];const form=document.getElementById('caseFileForm');form.reset();for(const k of ['number','title','status','detective','location','suspect','description'])if(f?.[k]!==undefined&&form.elements[k])form.elements[k].value=f[k];document.getElementById('caseEditorTitle').textContent=f?'Edit Investigation Case':'New Investigation Case';const ds=document.getElementById('caseDetectiveSelect');ds.innerHTML='<option value="Unassigned">Unassigned</option>'+roster.map(d=>`<option value="${esc(d)}">${esc(d)}</option>`).join('');ds.value=f?.detective||'Unassigned';const gs=document.getElementById('caseGangSelect');gs.innerHTML='<option value="">None</option>'+(database.gangs||[]).map((g,i)=>`<option value="${esc(g.title)}">${esc(g.title)}</option>`).join('');gs.value=f?.gang||'';refreshLinked();refreshPhotos();refreshVideos();document.getElementById('caseEditor').classList.remove('hidden')}
 function closeEditor(){document.getElementById('caseEditor').classList.add('hidden')}
-const FILE_BIN='eflspddb_deleted_case_files_v1';
-function deleteCaseToBin(id){
- const f=files.find(x=>x.id===id);if(!f)return false;
- const bin=get(FILE_BIN,[]);
- if(!bin.some(x=>x.case?.id===id))bin.push({case:f,deletedAt:new Date().toISOString()});
- const before=[...files];files=files.filter(x=>x.id!==id);
- try{localStorage.setItem(FILE_BIN,JSON.stringify(bin));if(!store())throw Error('Could not save case files');}
- catch(e){files=before;alert('Could not move case to Recycle Bin: '+e.message);return false}
- closeEditor();renderRecords();render();return true;
-}
-function askDeleteCase(id){
- const f=files.find(x=>x.id===id);if(!f)return;
- document.getElementById('ef7eDeleteOverlay')?.remove();
- const wrap=document.createElement('div');wrap.id='ef7eDeleteOverlay';wrap.className='ef-overlay';
- wrap.innerHTML=`<div class="ef-dialog ef7e-confirm" role="dialog" aria-modal="true" aria-labelledby="ef7eDeleteTitle">
- <div class="ef-dialog-head"><h2 id="ef7eDeleteTitle">Delete Investigation</h2><button type="button" id="ef7eClose" aria-label="Close">✕</button></div>
- <p>Delete investigation <strong id="ef7eCaseNumber"></strong>?</p>
- <p>This case will move to the <strong>local Recycle Bin</strong>. Linked map pins will remain untouched.</p>
- <label>Type <strong>DELETE</strong> to confirm<input id="ef7eConfirmInput" autocomplete="off" placeholder="DELETE"></label>
- <div class="ef-actions"><button type="button" id="ef7eCancel">Cancel</button><button type="button" id="ef7eConfirmDelete" disabled>Delete Case</button></div></div>`;
- document.body.append(wrap);
- wrap.querySelector('#ef7eCaseNumber').textContent=f.number;
- const input=wrap.querySelector('#ef7eConfirmInput'),button=wrap.querySelector('#ef7eConfirmDelete');
- input.oninput=()=>button.disabled=input.value.trim()!=='DELETE';
- const close=()=>wrap.remove();
- wrap.querySelector('#ef7eClose').onclick=close;wrap.querySelector('#ef7eCancel').onclick=close;
- wrap.onclick=e=>{if(e.target===wrap)close()};
- button.onclick=()=>{if(input.value.trim()!=='DELETE')return;if(deleteCaseToBin(id))close()};
- input.focus();
-}
-document.getElementById('deleteCaseFile').onclick=()=>{if(editing)askDeleteCase(editing)};
+document.getElementById('deleteCaseFile').onclick=()=>{
+ if(!editing)return;
+ const f=files.find(x=>x.id===editing);if(!f)return;
+ if(!confirm('Delete case '+f.number+'? Linked map pins will be kept. This case file will be removed from this browser.'))return;
+ const previous=[...files];files=files.filter(x=>x.id!==editing);
+ if(!store()){files=previous;return}
+ closeEditor();renderRecords();render();
+};
 document.getElementById('closeCaseEditor').onclick=closeEditor;document.getElementById('cancelCase').onclick=closeEditor;
 document.getElementById('caseEditor').addEventListener('click',e=>{if(e.target.id==='caseEditor')closeEditor()});
 document.getElementById('casePhotos').onchange=async e=>{for(const file of [...e.target.files]){if(file.size>250000){alert(`${file.name}: Maximum 250 KB per photo for browser-only storage.`);continue}const data=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)});photos.push({name:file.name,data})}refreshPhotos();e.target.value=''};
@@ -56,7 +33,7 @@ document.getElementById('casePhotoGallery').onclick=e=>{const b=e.target.closest
 document.getElementById('caseAddVideo').onclick=()=>{const el=document.getElementById('caseVideoInput');try{const u=new URL(el.value);if(!['http:','https:'].includes(u.protocol))throw Error();videoLinks.push(u.href);el.value='';refreshVideos()}catch{alert('Enter a valid http or https video link.')}};
 document.getElementById('caseVideos').onclick=e=>{const b=e.target.closest('[data-removevideo]');if(b){videoLinks.splice(+b.dataset.removevideo,1);refreshVideos()}};
 document.getElementById('caseFileForm').onsubmit=e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f).entries());if(files.some(c=>c.number.toLowerCase()===d.number.trim().toLowerCase()&&c.id!==editing))return alert('Case number already exists.');const obj={id:editing||('case-'+Date.now()),number:d.number.trim(),title:d.title.trim(),status:d.status,detective:d.detective,location:d.location,suspect:d.suspect,gang:d.gang,description:d.description,photos:[...photos],videos:[...videoLinks],linked:[...document.querySelectorAll('#caseLinkedPins input:checked')].map(x=>x.value),updated:new Date().toISOString()};const prev=[...files];if(editing)files=files.map(x=>x.id===editing?obj:x);else files.unshift(obj);if(!store()){files=prev;return}closeEditor();renderRecords();render()};
-window.EFCaseFiles={list:()=>files.map(f=>({...f})),restoreDeleted:obj=>{if(!obj||files.some(f=>f.id===obj.id||f.number===obj.number))return false;files.unshift(obj);if(!store()){files=files.filter(f=>f.id!==obj.id);return false}renderRecords();render();return true},open:id=>openEditor(files.find(f=>f.id===id)),create:()=>openEditor(),setRoster:names=>{roster=[...new Set(names.filter(Boolean))];store()},getRoster:()=>[...roster]};
+window.EFCaseFiles={list:()=>files.map(f=>({...f})),open:id=>openEditor(files.find(f=>f.id===id)),create:()=>openEditor(),setRoster:names=>{roster=[...new Set(names.filter(Boolean))];store()},getRoster:()=>[...roster]};
 document.getElementById('manageDetectives').onclick=()=>window.EFManageDetectives?.();
 document.getElementById('caseFileSearch').oninput=()=>renderRecords();
 document.getElementById('caseFileFilter').onchange=()=>renderRecords();
@@ -74,7 +51,7 @@ document.getElementById('recordsBody').addEventListener('click',e=>{const b=e.ta
  else {showPostalPopup(point,match[0]);}
  render();
  return;
- }if(b.dataset.fileopen)openEditor(f);if(b.dataset.filedelete)askDeleteCase(id);if(b.dataset.filemap){const c=cases.find(x=>f.linked.includes(x.id));if(!c)return alert('This case has no linked placed pins.');oldShowSection('map');map.setView([c.lat,c.lng],Math.max(map.getZoom(),1.8));render()}},true);
+ }if(b.dataset.fileopen)openEditor(f);if(b.dataset.filedelete&&confirm(`Delete ${f.number}? Pins will be kept.`)){files=files.filter(x=>x.id!==id);store();renderRecords();render()}if(b.dataset.filemap){const c=cases.find(x=>f.linked.includes(x.id));if(!c)return alert('This case has no linked placed pins.');oldShowSection('map');map.setView([c.lat,c.lng],Math.max(map.getZoom(),1.8));render()}},true);
 const originalRender=render;
 render=function(){originalRender();markerLayer.eachLayer(m=>{const p=m.getLatLng();const c=cases.find(x=>x.lat===p.lat&&x.lng===p.lng);if(!c)return;const associated=files.filter(f=>f.linked.includes(c.id));if(!associated.length)return;const f=associated[0];m.unbindTooltip();m.bindTooltip(`<div class="ef-case-bubble"><strong>${esc(f.number)}</strong><b>${esc(f.title)}</b><span>${esc(f.status)} · ${esc(f.detective||'Unassigned')}</span><span>${esc(f.location||c.location)}</span><small>${f.photos.length} photos · ${f.videos.length} videos · ${associated.length} linked case(s)</small></div>`,{direction:'top',offset:[0,-22],opacity:1,className:'case-map-tooltip'});m.off('click');m.on('click',()=>openEditor(f))})};
 
