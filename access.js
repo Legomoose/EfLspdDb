@@ -63,6 +63,7 @@ form.addEventListener('submit',async event=>{
   const logout=document.createElement('button');logout.type='button';logout.textContent='Log out';logout.onclick=()=>lock('You have been logged out.');
   bar.append(label,logout);document.body.appendChild(bar);
   window.dispatchEvent(new CustomEvent('efdb-auth-login',{detail:user}));
+  if(user.must_change_code)window.dispatchEvent(new Event('efdb-change-required'));
  }catch(err){hint.textContent=err.message||'Login failed';}
  finally{btn.disabled=false;}
 });

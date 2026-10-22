@@ -11,13 +11,13 @@ if(toggle&&header){
  const refresh=()=>{
   const user=window.EFDBAuth?.user;
   document.getElementById('efHeaderUserName').textContent=user?.name||'Detective';
-  document.getElementById('efHeaderUserRole').textContent=user?.role?user.role.charAt(0).toUpperCase()+user.role.slice(1):'Signed out';
-  name.textContent=user?`${user.name} · ${user.role}`:'Not signed in';
-  manage.hidden=!['owner','admin'].includes(user?.role);
+  document.getElementById('efHeaderUserRole').textContent=user?.role?(window.EFDBRoleTitle?.(user.role)||user.role):'Signed out';
+  name.textContent=user?`${user.name} · ${window.EFDBRoleTitle?.(user.role)||user.role}`:'Not signed in';
+  manage.hidden=!['owner','admin','director','deputy_director','supervisory_detective'].includes(user?.role);
   if(!user)menu.hidden=true;
  };
  toggle.addEventListener('click',e=>{e.stopImmediatePropagation();if(!window.EFDBAuth?.loggedIn)return;menu.hidden=!menu.hidden;refresh();},true);
- manage.addEventListener('click',()=>{menu.hidden=true;const button=[...document.querySelectorAll('#efAuthBar button')].find(b=>b.textContent.trim()==='Manage Accounts');button?.click();});
+ manage.addEventListener('click',()=>{menu.hidden=true;window.EFDBOpenAdmin?.();});
  logout.addEventListener('click',()=>{menu.hidden=true;window.EFDBAuth?.logout();});
  document.addEventListener('click',e=>{if(!header.contains(e.target))menu.hidden=true;});
  window.addEventListener('efdb-auth-login',refresh);

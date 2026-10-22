@@ -1,60 +1,27 @@
-(function(){
-'use strict';
-const css=document.createElement('style');
-css.textContent=`.ef-auth-bar{position:fixed;right:16px;bottom:16px;z-index:9000;background:#11243b;border:1px solid #44658b;color:white;padding:9px 12px;border-radius:10px;display:flex;gap:12px;align-items:center;font:13px Arial}.ef-auth-bar button,.ef-admin button{background:#2669af;border:0;border-radius:6px;color:white;padding:7px 10px;cursor:pointer}.ef-auth-warning{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9998;background:#613b0b;color:#fff;padding:12px 18px;border-radius:9px;font:14px Arial}.ef-admin{position:fixed;inset:6vh 9vw;z-index:9500;background:#0e1c30;color:white;border:1px solid #45617d;border-radius:14px;box-shadow:0 20px 100px #000b;overflow:auto;padding:24px;font:14px Arial}.ef-admin input,.ef-admin select{background:#142c47;color:white;padding:9px;border:1px solid #52718e;border-radius:6px;margin:5px}.ef-admin table{width:100%;border-collapse:collapse}.ef-admin td,.ef-admin th{padding:10px;text-align:left;border-bottom:1px solid #34465d}.ef-admin .danger{background:#a43d4b}.ef-admin .code{background:#243f53;padding:12px;margin:12px 0;font-size:19px;letter-spacing:2px}.ef-admin .notice{color:#f7c46d}`;
-document.head.appendChild(css);
-let launch;
-window.addEventListener('efdb-auth-login',ev=>{
- const role=ev.detail.role;
- if(!['owner','admin'].includes(role))return;
- const bar=document.getElementById('efAuthBar');
- launch=document.createElement('button');launch.textContent='Manage Accounts';launch.onclick=openAdmin;
- bar?.insertBefore(launch,bar.lastChild);
-});
-window.addEventListener('efdb-auth-logout',()=>document.querySelector('.ef-admin')?.remove());
-async function openAdmin(){
- const api=window.EFDBAuth;
- const panel=document.createElement('section');panel.className='ef-admin';
- const h=document.createElement('h2');h.textContent='EFLSPDDB · Account Management';
- const close=document.createElement('button');close.textContent='Close';close.onclick=()=>panel.remove();
- const notice=document.createElement('p');notice.className='notice';notice.textContent='New codes are shown once. Save them securely before closing.';
- const form=document.createElement('form');
- const name=document.createElement('input');name.placeholder='Detective name';name.required=true;name.maxLength=80;
- const role=document.createElement('select');
- for(const r of (api.user.role==='owner'?['detective','admin']:['detective'])){const o=document.createElement('option');o.value=r;o.textContent=r;role.appendChild(o);}
- const create=document.createElement('button');create.type='submit';create.textContent='Create account';
- const result=document.createElement('div');
- form.append(name,role,create);
- const table=document.createElement('table');
- panel.append(h,close,notice,form,result,table);document.body.appendChild(panel);
- async function reload(){
-  try{
-   const data=await api.request('/accounts',{action:'list'});
-   table.replaceChildren();
-   const header=document.createElement('tr');
-   for(const t of ['Name','Role','Status','Action']){const th=document.createElement('th');th.textContent=t;header.appendChild(th);}table.appendChild(header);
-   for(const acct of data.accounts){
-    const tr=document.createElement('tr');
-    for(const t of [acct.display_name,acct.role,acct.active?'Active':'Disabled']){const td=document.createElement('td');td.textContent=t;tr.appendChild(td);}
-    const td=document.createElement('td');
-    if(api.user.role==='owner'&&acct.role!=='owner'&&acct.active){
-      const b=document.createElement('button');b.textContent='Disable';b.className='danger';
-      b.onclick=async()=>{if(!confirm('Disable '+acct.display_name+'?'))return;try{await api.request('/accounts',{action:'disable',id:acct.id});await reload();}catch(e){result.textContent=e.message;}};
-      td.appendChild(b);
-    }tr.appendChild(td);table.appendChild(tr);
-   }
-  }catch(e){result.textContent='Unable to load accounts: '+e.message;}
- }
- form.onsubmit=async e=>{
-  e.preventDefault();create.disabled=true;result.textContent='';
-  try{
-   const data=await api.request('/accounts',{action:'create',name:name.value.trim(),role:role.value});
-   const label=document.createElement('p');label.textContent='New code for '+data.account.name+' (copy now):';
-   const code=document.createElement('div');code.className='code';code.textContent=data.account.code;
-   const copy=document.createElement('button');copy.type='button';copy.textContent='Copy code';copy.onclick=()=>navigator.clipboard.writeText(data.account.code);
-   result.replaceChildren(label,code,copy);name.value='';await reload();
-  }catch(err){result.textContent=err.message;}finally{create.disabled=false;}
- };
- reload();
+(()=>{'use strict';
+const titles={owner:'Officer of Operations',admin:'Supervisory Detective',director:'Director',deputy_director:'Deputy Director',supervisory_detective:'Supervisory Detective',detective:'Detective',junior_detective:'Junior Detective',probationary_detective:'Probationary Detective'};
+window.EFDBRoleTitle=r=>titles[r]||r;
+const ranks=['director','deputy_director','supervisory_detective','detective','junior_detective','probationary_detective'];
+const permissionNames={view_investigations:'View investigations',create_investigations:'Create investigations',edit_investigations:'Edit investigations',delete_investigations:'Delete investigations',manage_gangs_contacts:'Manage gangs & contacts',upload_evidence:'Upload evidence',create_accounts:'Create detective accounts',reset_passcodes:'Reset passcodes',manage_roles:'Manage user roles'};
+const css=document.createElement('style');css.textContent=`.ef4-modal{position:fixed;inset:5vh 7vw;z-index:9500;background:#111f36;border:1px solid #49668e;color:#e8f2ff;border-radius:14px;box-shadow:0 20px 80px #000b;padding:22px;overflow:auto;font:14px Arial;resize:both;min-width:320px;min-height:240px}.ef4-modal button{background:#2e66ad;color:white;border:1px solid #6484a8;padding:8px 12px;border-radius:6px;cursor:pointer;margin:3px}.ef4-modal input,.ef4-modal select,.ef4-modal textarea{background:#0b192c;color:white;border:1px solid #536c8d;border-radius:5px;padding:9px;margin:4px;max-width:100%}.ef4-modal table{width:100%;border-collapse:collapse}.ef4-modal td,.ef4-modal th{padding:8px;border-bottom:1px solid #394960;text-align:left}.ef4-modal .ef4-danger{background:#8d2c3a}.ef4-modal .ef4-secret{font-size:23px;letter-spacing:2px;padding:12px;background:#183955}.ef4-modal .ef4-tabs{display:flex;gap:8px;margin:12px 0}.ef4-modal .ef4-msg{color:#f4cf84;margin:12px 0;white-space:pre-wrap}.ef4-modal .ef4-photo{max-width:140px;max-height:140px;object-fit:cover;border-radius:9px}.ef4-modal .ef4-flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.ef4-modal label{display:inline-flex;flex-direction:column;margin:4px}.ef4-modal .ef4-check{accent-color:#61a9ff;width:17px;height:17px}`;document.head.append(css);
+function el(tag,text,cls){const x=document.createElement(tag);if(text!=null)x.textContent=text;if(cls)x.className=cls;return x;}
+function btn(text,fn,cls){const b=el('button',text,cls);b.type='button';b.onclick=fn;return b;}
+function field(label,value='',type='text'){const w=el('label');w.append(el('span',label));const i=document.createElement(type==='textarea'?'textarea':'input');if(type!=='textarea')i.type=type;i.value=value||'';w.append(i);return [w,i];}
+function modal(title){const old=document.querySelector('.ef4-modal');old?.remove();const box=el('section',null,'ef4-modal');const top=el('div',null,'ef4-flex');top.append(el('h2',title),btn('Close',()=>box.remove()));box.append(top);document.body.append(box);return box;}
+function message(box,text){let m=box.querySelector('.ef4-msg');if(!m){m=el('div',null,'ef4-msg');box.append(m);}m.textContent=text;return m;}
+function revealCode(box,code,who){const m=message(box,`One-time code for ${who} — copy and store securely:`);const x=el('div',code,'ef4-secret');m.append(x,btn('Copy code',()=>navigator.clipboard.writeText(code)));}
+async function request(path,data){return window.EFDBAuth.request(path,data);}
+async function showProfile(account){const box=modal('Detective Contact Card');try{const r=await request('/accounts',{action:'profile',id:account.id});const p=r.profile;const row=el('div',null,'ef4-flex');if(p.profile_photo_path){const im=document.createElement('img');im.src=p.profile_photo_path;im.alt='Profile photo';im.className='ef4-photo';im.referrerPolicy='no-referrer';row.append(im);}row.append(el('h2',p.name||p.display_name||account.display_name));box.append(row);for(const [key,value] of [['Rank',titles[p.role]||p.role],['Badge',p.badge_number],['Callsign',p.callsign],['Phone',p.phone_number],['Notes',p.profile_notes]])box.append(el('p',`${key}: ${value||'—'}`));}catch(e){message(box,e.message);}}
+async function editProfile(account){const box=modal('Edit Detective Profile — '+account.display_name);const fields={};for(const [key,label] of [['badge_number','Badge number'],['callsign','Callsign'],['phone_number','Phone number'],['profile_notes','Profile notes'],['profile_photo_path','Photo URL (HTTPS)']]){const [w,i]=field(label,account[key],key==='profile_notes'?'textarea':'text');fields[key]=i;box.append(w);}box.append(el('p','Photo URLs are supported. Direct file uploads require Supabase Storage and are not enabled in this release.'));box.append(btn('Save profile',async()=>{try{const data={action:'update_profile',id:account.id};for(const [k,i] of Object.entries(fields))data[k]=i.value.trim();await request('/accounts',data);message(box,'Profile saved.');}catch(e){message(box,e.message);}}));}
+async function openAdmin(){const api=window.EFDBAuth;if(!api?.loggedIn)return;const user=api.user;const box=modal('EFLSPDDB · Account Management');const tabs=el('div',null,'ef4-tabs'),area=el('div');box.append(tabs,area);const sections=[['Accounts',accountsTab]];if(user.role==='owner')sections.push(['Role Permissions',permissionsTab]);for(const [name,fn] of sections)tabs.append(btn(name,()=>{area.replaceChildren();fn(area,box);}));accountsTab(area,box);
+async function accountsTab(area,box){const result=el('div',null,'ef4-msg');area.append(result);let data;try{data=await request('/accounts',{action:'list'});}catch(e){result.textContent=e.message;return;}
+const form=document.createElement('form');form.className='ef4-flex';const [nw,name]=field('Detective name');name.required=true;const [bw,badge]=field('Badge number');const [cw,callsign]=field('Callsign');const [pw,phone]=field('Phone number');const [uw,photo]=field('Photo URL (HTTPS)');const role=document.createElement('select');const current=['owner','director','deputy_director','supervisory_detective','admin','detective','junior_detective','probationary_detective'];const idx=current.indexOf(user.role);for(const r of ranks){if(user.role==='owner'||current.indexOf(r)>idx){const o=document.createElement('option');o.value=r;o.textContent=titles[r];role.append(o);}}const [rw]=field('Role');rw.lastChild.replaceWith(role);const create=el('button','Create account');create.type='submit';form.append(nw,rw,bw,cw,pw,uw,create);area.append(form);
+form.onsubmit=async e=>{e.preventDefault();create.disabled=true;try{const r=await request('/accounts',{action:'create',name:name.value.trim(),role:role.value,badge_number:badge.value,callsign:callsign.value,phone_number:phone.value,profile_notes:''});revealCode(box,r.account.code,name.value);if(photo.value.trim())await request('/accounts',{action:'update_profile',id:r.account.id,profile_photo_path:photo.value.trim()});await accountsTabReload();}catch(err){result.textContent=err.message;}finally{create.disabled=false;}};
+const table=el('table');area.append(table);async function accountsTabReload(){const r=await request('/accounts',{action:'list'});table.replaceChildren();const h=el('tr');for(const v of ['Detective','Rank','Status','Actions'])h.append(el('th',v));table.append(h);for(const a of r.accounts){const tr=el('tr');for(const v of [a.display_name,titles[a.role]||a.role,a.active?'Active':'Disabled'])tr.append(el('td',v));const actions=el('td');actions.append(btn('Contact Card',()=>showProfile(a)),btn('Edit Profile',()=>editProfile(a)));if(a.active&&a.role!=='owner'&&a.id!==user.id){actions.append(btn('Reset Code',async()=>{if(!confirm('Reset code for '+a.display_name+'? All their sessions will end.'))return;try{const r=await request('/accounts',{action:'reset_code',id:a.id});revealCode(box,r.code,a.display_name);}catch(e){result.textContent=e.message;}}));if(user.role==='owner')actions.append(btn('Disable',async()=>{if(!confirm('Disable '+a.display_name+'?'))return;try{await request('/accounts',{action:'disable',id:a.id});await accountsTabReload();}catch(e){result.textContent=e.message;}},'ef4-danger'));}tr.append(actions);table.append(tr);}}await accountsTabReload();}
+async function permissionsTab(area,box){let r;try{r=await request('/permissions',{action:'list'});}catch(e){message(box,e.message);return;}const t=el('table'),head=el('tr');head.append(el('th','Permission'));for(const role of ranks)head.append(el('th',titles[role]));t.append(head);for(const permission of r.available_permissions){const tr=el('tr');tr.append(el('td',permissionNames[permission]||permission));for(const role of ranks){const td=el('td');const input=document.createElement('input');input.type='checkbox';input.className='ef4-check';input.checked=!!r.permissions.find(x=>x.role===role&&x.permission===permission)?.allowed;input.onchange=async()=>{input.disabled=true;try{await request('/permissions',{action:'set',role,permission,allowed:input.checked});}catch(e){input.checked=!input.checked;message(box,e.message);}finally{input.disabled=false;}};td.append(input);tr.append(td);}t.append(tr);}area.append(el('p','Changes save immediately. Officer of Operations always retains full access.'),t);}
 }
+window.EFDBOpenAdmin=openAdmin;
+window.addEventListener('efdb-change-required',()=>{const box=modal('Change Temporary Passcode');const note=el('p','Your temporary passcode must be replaced before you can access the database.');const [oldw,old]=field('Temporary 12-digit code','','password');const [neww,neo]=field('New 12-digit code','','password');const [confw,confirmCode]=field('Confirm new code','','password');box.append(note,oldw,neww,confw);box.querySelector('button').remove();box.append(btn('Change Passcode',async()=>{if(!/^\d{12}$/.test(neo.value)||neo.value!==confirmCode.value){message(box,'New codes must be 12 digits and match.');return;}try{await request('/change-code',{current_code:old.value,code:neo.value});window.EFDBAuth.logout();box.remove();}catch(e){message(box,e.message);}}));});
+window.addEventListener('efdb-auth-login',()=>{const u=window.EFDBAuth.user;if(!u)return;const bar=document.getElementById('efAuthBar');if(bar){bar.style.display='none';}const name=document.getElementById('efHeaderUserRole');if(name)name.textContent=titles[u.role]||u.role;});
+window.addEventListener('efdb-auth-logout',()=>document.querySelector('.ef4-modal')?.remove());
 })();
