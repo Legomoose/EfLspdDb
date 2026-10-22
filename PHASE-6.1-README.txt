@@ -1,0 +1,9 @@
+EFLSPDDB Phase 6.1 — Account Popup Polish
+
+Updates: themed Change Display Name window; themed permanent-delete name confirmation with exact-name safety check.
+
+Upload the contents of this ZIP to the GitHub repository root, replacing existing files. No Worker or Supabase changes required.
+
+Refresh with Ctrl+F5 after Cloudflare Pages deployment.
+
+Existing accounts and map data are not included in this ZIP; they remain in their existing storage.
