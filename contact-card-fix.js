@@ -10,6 +10,7 @@ function showProfile(contact,member,gang){const c=contact||{},m=member||{};const
 }
 // Capture before the directory's delegated click handler and before the old gang handler.
 document.addEventListener('click',e=>{
+ const view=e.target.closest('[data-contactview]');if(view){e.preventDefault();e.stopImmediatePropagation();const c=window.efContacts?.get()?.find(x=>x.id===view.dataset.contactview);if(c)showProfile(c);return;}
  const edit=e.target.closest('[data-contactedit]');if(edit){e.preventDefault();e.stopImmediatePropagation();window.efContacts?.open(edit.dataset.contactedit);return;}
  const card=e.target.closest('.ef-contact-card');if(card&&e.target.closest('.ef-contact-avatar,.ef-contact-info h3')){const id=card.querySelector('[data-contactedit]')?.dataset.contactedit;const c=window.efContacts?.get()?.find(x=>x.id===id);if(c){e.preventDefault();e.stopImmediatePropagation();showProfile(c);return;}}
  const btn=e.target.closest('[data-gang-contact]');if(!btn)return;
