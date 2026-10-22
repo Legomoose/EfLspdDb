@@ -4,7 +4,7 @@ const seedCases=[{id:'EF-26-014',caseNo:'EF-26-014',status:'Open',location:'Legi
 function read(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return v??fallback}catch{return fallback}}
 let cases=read(STORAGE_KEY,seedCases),iconLibrary=read(LIBRARY_KEY,[]),database=read(DB_KEY,{}),selectedId=null,editingId=null,pendingLocation=null,placingForId=null,placementMode=false,detailTab='overview',currentSection='map',tempImage='',pinKind='investigation';
 const colors={Open:'#f05468',Active:'#f4b73f',Closed:'#58d68b',Cold:'#83b7ff'};
-function saveCases(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(cases));return true}catch{toast('Browser storage full. Try a smaller image.');return false}}
+function saveCases(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(cases));window.EF8E?.onLocalSave?.(cases);return true}catch{toast('Browser storage full. Try a smaller image.');return false}}
 function saveLibrary(){try{localStorage.setItem(LIBRARY_KEY,JSON.stringify(iconLibrary));return true}catch{toast('Image library storage is full.');return false}}
 function saveDb(){localStorage.setItem(DB_KEY,JSON.stringify(database))}
 function fmtDate(v){return v?new Date(v).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'—'}
@@ -254,3 +254,6 @@ function syncHistoryTab(){const tab=document.getElementById('historyBottomTab');
 syncHistoryTab();
 
 Object.defineProperty(window,"efPopupDatabase",{configurable:true,get:()=>database});
+
+// Phase 8E guarded sync bridge: never replace a local record without explicit version checks.
+window.EF8EApplyRemote=function(record){if(!record||!record.id)return false;const i=cases.findIndex(x=>x.id===record.id);if(i>=0)cases[i]=record;else cases.unshift(record);localStorage.setItem(STORAGE_KEY,JSON.stringify(cases));render();return true};
