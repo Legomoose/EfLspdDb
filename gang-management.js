@@ -70,24 +70,47 @@ function editGang(i=null){
 }
 function editMember(gi,mi=null){
  const g=gangAt(gi);if(!g)return;const m=mi===null?{}:(g.members||[])[mi]||{};
+ let photo=m.photo||'';
  modal(mi===null?`Add Member — ${g.title}`:`Edit Member — ${g.title}`,
- field('name','Member Name *',m.name)+field('alias','Alias / Street Name',m.alias)+`<label>Gang Position (optional)<select name="positionChoice"><option value="">No position</option>${positionsFor(g).map(v=>`<option value="${escapeHtml(v)}" ${v===m.position?'selected':''}>${escapeHtml(v)}</option>`).join('')}<option value="__custom">+ Enter a custom position</option></select></label><label>Custom Position (optional)<input name="customPosition" placeholder="Enter a new position, or leave blank" value="${escapeHtml(m.position&&!positionsFor(g).includes(m.position)?m.position:'')}"></label>`+field('rank','Gang Rank / Role',m.rank)+field('status','Status (Active, Inactive, Deceased, etc.)',m.status||'Active')+field('notes','Intelligence Notes',m.notes,'textarea'),f=>{
+ field('name','Member Name *',m.name)+field('alias','Alias / Street Name',m.alias)+field('phone','Phone Number',m.phone||'','tel')+
+ field('rank','Gang Rank / Role',m.rank||m.position||'')+
+ field('status','Status (Active, Inactive, Deceased, etc.)',m.status||'Active')+
+ field('notes','Intelligence Notes',m.notes,'textarea')+
+ `<label>Member Photograph (PNG, JPG, WEBP)<input type="file" id="efMemberPhoto" accept="image/png,image/jpeg,image/webp"></label><small>Images are resized and stored locally in this browser. Maximum file size: 5 MB.</small><div class="ef-member-photo-preview" id="efMemberPhotoPreview"></div><button type="button" id="efMemberRemovePhoto">Remove Photograph</button>`,f=>{
  const name=String(f.get('name')||'').trim();if(!name){alert('Enter a member name.');return}
- g.members??=[];const chosen=String(f.get('positionChoice')||'');const custom=String(f.get('customPosition')||'').trim();const position=custom||(chosen==='__custom'?'':chosen);if(position&&!positionsFor(g).includes(position)){g.positions=[...positionsFor(g),position]}const updated={...m,name,position,alias:String(f.get('alias')||''),rank:String(f.get('rank')||''),status:String(f.get('status')||''),notes:String(f.get('notes')||''),updated:new Date().toISOString()};
+ g.members??=[];
+ const updated={...m,name,alias:String(f.get('alias')||''),phone:String(f.get('phone')||'').trim(),rank:String(f.get('rank')||''),position:'',status:String(f.get('status')||''),notes:String(f.get('notes')||''),photo,updated:new Date().toISOString()};
  const existing=window.efContacts?.get().find(c=>c.id===m.contactId)||window.efContacts?.get().find(c=>c.name.trim().toLowerCase()===name.toLowerCase());
  const contactId=existing?.id||('contact-'+Date.now()+'-'+Math.random().toString(36).slice(2,7));
  updated.contactId=contactId;
  if(mi===null)g.members.push(updated);else g.members[mi]=updated;
- const affiliations=(existing?.affiliations||[]).filter(a=>a.gangId!==String(gi));affiliations.push({gangId:String(gi),gang:g.title,position:updated.position,status:updated.status});
- window.efContacts?.upsert({...existing,id:contactId,name,alias:updated.alias,gang:g.title,type:existing?.type||'Associate',notes:existing?.notes||updated.notes,addedBy:existing?.addedBy||'Gang Roster',affiliations,updated:new Date().toISOString()});
+ const affiliations=(existing?.affiliations||[]).filter(a=>a.gangId!==String(gi));affiliations.push({gangId:String(gi),gang:g.title,position:updated.rank,status:updated.status});
+ window.efContacts?.upsert({...existing,id:contactId,name,alias:updated.alias,phone:updated.phone,photo:updated.photo,gang:g.title,type:existing?.type||'Associate',notes:existing?.notes||updated.notes,addedBy:existing?.addedBy||'Gang Roster',affiliations,updated:new Date().toISOString()});
  close();saveDb();renderExtra('gangs');window.refreshGangIntel?.(gi);
  });
+ const overlay=document.getElementById('efGangOverlay'),upload=overlay.querySelector('#efMemberPhoto'),preview=overlay.querySelector('#efMemberPhotoPreview');
+ const showPhoto=()=>{preview.replaceChildren();if(photo){const img=document.createElement('img');img.src=photo;img.alt='Member photograph';preview.appendChild(img)}else preview.textContent='No photograph selected';};
+ showPhoto();
+ upload.onchange=async()=>{
+  const file=upload.files?.[0];if(!file)return;
+  if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>5*1024*1024){alert('Choose a PNG, JPG or WEBP image under 5 MB.');upload.value='';return;}
+  try{
+   const bitmap=await createImageBitmap(file),canvas=document.createElement('canvas');
+   const scale=Math.min(1,512/Math.max(bitmap.width,bitmap.height));canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+   canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close?.();
+   const encoded=canvas.toDataURL('image/webp',.72);
+   if(encoded.length>380000){alert('Photo is too large for local browser storage. Please choose a smaller image.');return;}
+   photo=encoded;showPhoto();
+  }catch(err){alert('Unable to process photograph. Try a different PNG or JPG.');}
+ };
+ overlay.querySelector('#efMemberRemovePhoto').onclick=()=>{photo='';upload.value='';showPhoto()};
 }
+
 window.efSyncContactToGangs=contact=>{for(let gi=0;gi<(database.gangs||[]).length;gi++){const g=database.gangs[gi];for(const m of g.members||[]){if(m.contactId===contact.id){m.name=contact.name;m.alias=contact.alias;}}}saveDb();};
 window.efOpenGangMemberContact=(gi,mi)=>{const member=gangAt(gi)?.members?.[mi];if(!member)return;let contact=window.efContacts?.get().find(c=>c.id===member.contactId);if(!contact){member.contactId='contact-'+Date.now()+'-'+Math.random().toString(36).slice(2,7);contact={id:member.contactId,name:member.name,alias:member.alias||'',type:'Associate',gang:gangAt(gi)?.title||'',addedBy:'Gang Roster',affiliations:[{gangId:String(gi),gang:gangAt(gi)?.title||'',position:member.position||'Member',status:member.status||'Active'}]};window.efContacts?.upsert(contact);saveDb();}document.getElementById('efIntelOverlay')?.remove();window.efContacts?.open(member.contactId)};
 window.renderGangMembers=gi=>{
  const g=gangAt(gi);if(!g)return '';const members=g.members||[];
- return `<section class="ef-gang-members"><div class="ef-gang-members-head"><h3>Gang Members <span class="gang-count">${members.length}</span></h3><button type="button" data-gang-positions="${gi}">Manage Positions</button><button class="blue" data-gang-addmember="${gi}" type="button">+ Add Member</button></div>${g.territory?`<p><strong>Territory:</strong> ${escapeHtml(g.territory)}</p>`:''}${members.length?`<div class="ef-gang-member-grid">${members.map((m,mi)=>`<div class="db-card"><h3>${escapeHtml(m.name)}</h3><p>${escapeHtml([m.position,m.alias,m.rank,m.status].filter(Boolean).join(' · '))}</p>${m.notes?`<p>${escapeHtml(m.notes)}</p>`:''}<button data-gang-editmember="${gi}:${mi}">Edit</button> <button data-gang-deletemember="${gi}:${mi}">Remove</button></div>`).join('')}</div>`:'<p>No members recorded yet. Select + Add Member to create one.</p>'}</section>`;
+ return `<section class="ef-gang-members"><div class="ef-gang-members-head"><h3>Gang Members <span class="gang-count">${members.length}</span></h3><button class="blue" data-gang-addmember="${gi}" type="button">+ Add Member</button></div>${g.territory?`<p><strong>Territory:</strong> ${escapeHtml(g.territory)}</p>`:''}${members.length?`<div class="ef-gang-member-grid">${members.map((m,mi)=>`<div class="db-card">${m.photo&&/^data:image\/(?:png|jpeg|webp);base64,/.test(m.photo)?`<img class="ef-member-card-photo" src="${m.photo}" alt="Member photo">`:``}<h3>${escapeHtml(m.name)}</h3><p>${escapeHtml([m.alias,m.rank||m.position,m.status].filter(Boolean).join(' · '))}</p>${m.phone?`<p>Phone: ${escapeHtml(m.phone)}</p>`:``}${m.notes?`<p>${escapeHtml(m.notes)}</p>`:''}<button data-gang-editmember="${gi}:${mi}">Edit</button> <button data-gang-deletemember="${gi}:${mi}">Remove</button></div>`).join('')}</div>`:'<p>No members recorded yet. Select + Add Member to create one.</p>'}</section>`;
 };
 const previousRenderExtra=renderExtra;
 renderExtra=function(section){
