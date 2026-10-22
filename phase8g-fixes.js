@@ -4,11 +4,13 @@ const $=s=>document.querySelector(s), esc=v=>String(v??'').replace(/[&<>"']/g,c=
 const get=(k,def=[])=>{try{const v=JSON.parse(localStorage.getItem(k));return Array.isArray(v)?v:def}catch{return def}};
 const canCommand=()=>['owner','director'].includes(window.EFDBAuth?.user?.role);
 const remote=(dataset,action,extra={})=>window.EFDBAuth.request('/live-records',{dataset,action,...extra});
-// Sidebar identity is the single logo; the top bar retains its existing height and user controls.
+// Production branding: LSPD DB in the original top-left header; search in sidebar.
 const identity=$('.ef-header-identity'),brand=$('.ef-brand'),headerSearch=$('.ef-header-search');
-if(identity)identity.remove();if(headerSearch)headerSearch.remove();
-if(brand){brand.innerHTML='<img src="assets/lspd-logo.png" alt="LSPD shield" class="ef8g-logo"><span><strong>EFLSPDDB</strong><small>INTELLIGENCE MAP</small></span>';
- const search=document.createElement('button');search.type='button';search.className='ef8g-sidebar-search';search.innerHTML='<i class="fa-solid fa-magnifying-glass"></i><span>Search database...</span><kbd>Ctrl K</kbd>';brand.after(search);search.addEventListener('click',openSearch);}
+if(headerSearch)headerSearch.remove();
+if(identity){identity.innerHTML='<img src="assets/lspd-logo.png" alt="LSPD shield"><div><strong>LSPD DB</strong><small>INTELLIGENCE MAP</small></div>';}
+if(brand){brand.remove();}
+const panel=$('.leftpanel .panel-inner');
+if(panel){const search=document.createElement('button');search.type='button';search.className='ef8g-sidebar-search';search.innerHTML='<i class="fa-solid fa-magnifying-glass"></i><span>Search database...</span><kbd>Ctrl K</kbd>';panel.prepend(search);search.addEventListener('click',openSearch);}
 // One searchable dialog: clicking a result navigates to its existing section/editor.
 function openSearch(){document.getElementById('ef8gSearchOverlay')?.remove();const o=document.createElement('div');o.id='ef8gSearchOverlay';o.className='ef8g-overlay';o.innerHTML='<div class="ef8g-dialog" role="dialog" aria-modal="true" aria-label="Search database"><div class="ef8g-search-head"><i class="fa-solid fa-magnifying-glass"></i><input id="ef8gQuery" placeholder="Search cases, detectives, gangs, contacts, vehicles and locations..." autocomplete="off"><button id="ef8gClose" aria-label="Close search">×</button></div><div id="ef8gResults" class="ef8g-results"></div></div>';document.body.append(o);o.onclick=e=>{if(e.target===o)o.remove()};$('#ef8gClose').onclick=()=>o.remove();const input=$('#ef8gQuery');input.oninput=draw;input.onkeydown=e=>{if(e.key==='Escape')o.remove();if(e.key==='Enter')$('#ef8gResults button')?.click()};input.focus();draw();
  function draw(){const q=input.value.trim().toLowerCase(),results=$('#ef8gResults');if(!q){results.textContent='Type to search your database.';return}const items=[];
