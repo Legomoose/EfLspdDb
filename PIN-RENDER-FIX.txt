@@ -1,0 +1,1 @@
+Fixes expanded pin selection falling back to shield on preview and map. Preserves existing data and other website features. For icons with bundled SVG artwork the SVG is used; unsupported vector names use their corresponding expanded-pack emoji instead of a shield. Upload all files to GitHub, commit, and hard refresh.

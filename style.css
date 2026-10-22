@@ -468,3 +468,8 @@ html,body{height:100%;overflow:hidden}
 [data-marker-panel="symbol"] > .compact-marker-toolbar{display:none!important}
 [data-marker-panel="symbol"] > .ef-pin-library{margin-top:0}
 [data-marker-panel="symbol"] .ef-pack-grid{max-height:360px}
+
+.detailbottom{display:flex;gap:10px;align-items:stretch}
+.detailbottom .ef-delete-pin{flex:0 0 auto;background:#5e1c29;color:#fff;border:1px solid #e05d70;border-radius:6px;padding:10px 16px;font-weight:700;cursor:pointer}
+.detailbottom .ef-delete-pin:hover:not(:disabled){background:#a82b40}
+.detailbottom .ef-delete-pin:disabled{opacity:.35;cursor:not-allowed}
