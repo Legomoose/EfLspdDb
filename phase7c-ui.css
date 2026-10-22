@@ -19,3 +19,5 @@
 #efQuickSearchResults{position:absolute;top:100%;left:0;right:0;background:#11221b;border:1px solid #31562e;color:#d3e6d0;padding:9px;z-index:3000}
 #efQuickSearchResults[hidden]{display:none}
 @media(max-width:760px){.workspace>.leftpanel{width:220px!important;min-width:220px!important}#caseModal.ef-editor-expanded .modal{width:100%!important}}
+
+#deleteCaseFile.ef-case-delete{background:#50262a;color:#ffced0;border:1px solid #a44851;padding:10px 16px;border-radius:5px}#deleteCaseFile.ef-case-delete:hover{background:#753036}#deleteCaseFile[hidden]{display:none!important}

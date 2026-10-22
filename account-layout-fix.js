@@ -19,7 +19,7 @@ if(toggle&&header){
  };
  toggle.addEventListener('click',e=>{e.stopImmediatePropagation();if(!window.EFDBAuth?.loggedIn)return;menu.hidden=!menu.hidden;refresh();},true);
  manage.addEventListener('click',()=>{menu.hidden=true;window.EFDBOpenAdmin?.();});
- settings.addEventListener('click',()=>{menu.hidden=true;window.EFDBOpenSettings?.();});
+ settings.addEventListener('click',()=>{menu.hidden=true;if(typeof window.EFDBOpenSettings==='function')window.EFDBOpenSettings();else if(typeof showSection==='function')showSection('settings');});
  logout.addEventListener('click',()=>{menu.hidden=true;window.EFDBAuth?.logout();});
  document.addEventListener('click',e=>{if(!header.contains(e.target))menu.hidden=true;});
  window.addEventListener('efdb-auth-login',refresh);
