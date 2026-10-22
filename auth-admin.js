@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const titles={owner:'Officer of Operations',admin:'Supervisory Detective',director:'Director',deputy_director:'Deputy Director',supervisory_detective:'Supervisory Detective',detective:'Detective',junior_detective:'Junior Detective',probationary_detective:'Probationary Detective'};
+const titles={owner:'Office of Operations',admin:'Supervisory Detective',director:'Director',deputy_director:'Deputy Director',supervisory_detective:'Supervisory Detective',detective:'Detective',junior_detective:'Junior Detective',probationary_detective:'Probationary Detective'};
 window.EFDBRoleTitle=r=>titles[r]||r;
 const ranks=['director','deputy_director','supervisory_detective','detective','junior_detective','probationary_detective'];
 const permissionNames={view_investigations:'View investigations',create_investigations:'Create investigations',edit_investigations:'Edit investigations',delete_investigations:'Delete investigations',manage_gangs_contacts:'Manage gangs & contacts',upload_evidence:'Upload evidence',create_accounts:'Create detective accounts',reset_passcodes:'Reset passcodes',manage_roles:'Manage user roles'};
