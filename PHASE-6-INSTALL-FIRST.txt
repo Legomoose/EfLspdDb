@@ -1,0 +1,11 @@
+EFLSPDDB Phase 6
+
+1. FIRST deploy the separate Phase-6 Cloudflare Worker file. Do not change Worker secrets.
+2. THEN upload the contents of the website ZIP to the GitHub repository root and commit.
+3. Hard refresh and log out/in.
+4. Office of Operations: Manage Accounts > Accounts > Change Name on your own row, enter Clay Spenser.
+5. To show your callsign, Edit Profile on your own row, set callsign to 1A-3 (or your actual callsign), then log out and back in.
+6. Reactivate generates a NEW temporary passcode; copy it once.
+7. Permanently Delete is only offered for disabled non-owner accounts and requires name confirmation.
+
+Note: account deletion removes the login record; existing browser-local investigations are untouched. If your database has additional foreign keys referencing accounts, permanent deletion may be blocked until those references are handled.

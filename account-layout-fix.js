@@ -11,8 +11,8 @@ if(toggle&&header){
  const refresh=()=>{
   const user=window.EFDBAuth?.user;
   document.getElementById('efHeaderUserName').textContent=user?.name||'Detective';
-  document.getElementById('efHeaderUserRole').textContent=user?.role?(window.EFDBRoleTitle?.(user.role)||user.role):'Signed out';
-  name.textContent=user?`${user.name} · ${window.EFDBRoleTitle?.(user.role)||user.role}`:'Not signed in';
+  document.getElementById('efHeaderUserRole').textContent=user?.role?((window.EFDBRoleTitle?.(user.role)||user.role)+(user.callsign?' · '+user.callsign:'')):'Signed out';
+  name.textContent=user?`${user.name} · ${window.EFDBRoleTitle?.(user.role)||user.role}${user.callsign?' · '+user.callsign:''}`:'Not signed in';
   manage.hidden=!['owner','admin','director','deputy_director','supervisory_detective'].includes(user?.role);
   if(!user)menu.hidden=true;
  };
