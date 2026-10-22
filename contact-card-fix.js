@@ -16,7 +16,7 @@ document.addEventListener('click',e=>{
  const btn=e.target.closest('[data-gang-contact]');if(!btn)return;
  e.preventDefault();e.stopImmediatePropagation();
  const [gi,mi]=btn.dataset.gangContact.split(':').map(Number);
- const g=window.database?.gangs?.[gi],m=g?.members?.[mi];if(!m)return;
+ const db=typeof database!=='undefined'?database:window.database;const g=db?.gangs?.[gi],m=g?.members?.[mi];if(!m)return;
  const all=window.efContacts?.get()||[];
  const c=all.find(x=>x.id===m.contactId)||all.find(x=>x.name?.trim().toLowerCase()===m.name?.trim().toLowerCase());
  showProfile(c,m,g);
