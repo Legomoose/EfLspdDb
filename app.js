@@ -119,8 +119,53 @@ $('imageLibrary').onchange=e=>{const entry=iconLibrary[Number(e.target.value)];i
 function updateBusinessFields(){const el=$('businessFields');if(el)el.classList.toggle('hidden',!(pinKind==='general'&&$('caseForm').elements.markerCategory.value==='Business'))}
 $('caseForm').addEventListener('change',()=>{updateBusinessFields();updatePreview()});$('caseForm').addEventListener('input',e=>{if(e.target.name==='markerEmoji'||e.target.name==='markerColor'||e.target.name==='markerSymbol')updatePreview()});
 $('caseForm').onsubmit=e=>{e.preventDefault();const f=e.target;const d={kind:pinKind,caseNo:f.elements.caseNo.value.trim(),status:f.elements.status.value,location:f.elements.location.value.trim(),detective:f.elements.detective.value.trim()||'Unassigned',suspect:f.elements.suspect.value.trim()||'Unknown',notes:f.elements.notes.value.trim(),markerCategory:f.elements.markerCategory.value,linkedGang:(f.elements.linkedGang?.value||''),businessOwner:(f.elements.businessOwner?.value.trim()||''),businessStatus:(f.elements.businessStatus?.value||''),businessAssociates:(f.elements.businessAssociates?.value.trim()||''),markerType:f.elements.markerType.value,markerColor:f.elements.markerColor.value,markerEmoji:f.elements.markerEmoji.value,markerSymbol:f.elements.markerSymbol.value,markerImage:f.elements.markerType.value==='image'?tempImage:'',markerSize:f.elements.markerSize.value,locked:f.elements.locked.checked,updated:new Date().toISOString()};if(!d.caseNo)return;if(!d.location&&pendingLocation)d.location='Postal '+nearestPostal(pendingLocation);if(!d.location)d.location='Map location';if(cases.some(c=>c.caseNo.toLowerCase()===d.caseNo.toLowerCase()&&c.id!==editingId))return toast('That case / marker name already exists.');if(editingId){const c=cases.find(c=>c.id===editingId);Object.assign(c,d);if(pendingLocation){c.lat=pendingLocation.lat;c.lng=pendingLocation.lng}}else{editingId=crypto.randomUUID?crypto.randomUUID():String(Date.now());cases.unshift({id:editingId,...d,lat:pendingLocation?.lat??null,lng:pendingLocation?.lng??null})}if(!saveCases())return;selectedId=editingId;const locationWasSelected=!!pendingLocation;closeModal();render();if(!locationWasSelected){placingForId=editingId;showSection('map');toast('Saved! Click the map to place your marker.')}else toast(pinKind==='general'?'General marker saved.':'Investigation saved.')};
-$('closeModal').onclick=closeModal;$('cancelModal').onclick=closeModal;$('caseModal').onclick=e=>{if(e.target===$('caseModal'))closeModal()};$('addPinBtn').onclick=()=>$('pinChoice').classList.toggle('hidden');$('newGeneralPin').onclick=()=>{$('pinChoice').classList.add('hidden');pinKind='general';placementMode=true;placingForId=null;showSection('map');toast('Click the map where you want your general pin. Press Esc to cancel.')};$('newInvestigationPin').onclick=()=>{$('pinChoice').classList.add('hidden');pinKind='investigation';placementMode=true;placingForId=null;showSection('map');toast('Click the map where you want your investigation pin. Press Esc to cancel.')};$('addRecordBtn').onclick=()=>openModal();$('editSelectedBtn').onclick=()=>{const c=cases.find(c=>c.id===selectedId);if(c)openModal(c)};$('deleteSelectedPinBtn').onclick=()=>{const c=cases.find(c=>c.id===selectedId);if(!c)return;if(c.locked)return toast('This pin is locked. Unlock it in Edit first.');if(!confirm('Move pin '+c.caseNo+' to the local Recycle Bin?'))return;if(!window.EFDBRecycleCase?.(c))return toast('Could not save Recycle Bin entry; deletion cancelled.');cases=cases.filter(x=>x.id!==c.id);selectedId=null;saveCases();render();toast('Pin deleted.');};
-$('recordsBody').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.select){selectCase(b.dataset.select);return}if(b.dataset.edit){openModal(cases.find(c=>c.id===b.dataset.edit));return}if(b.dataset.place){const c=cases.find(c=>c.id===b.dataset.place);if(c.locked)return toast('This marker is locked. Unlock it in Edit first.');placingForId=c.id;showSection('map');toast('Click the map to place the marker.');return}if(b.dataset.delete){const c=cases.find(c=>c.id===b.dataset.delete);if(c.locked)return toast('Unlock this marker before deleting.');if(confirm('Move '+c.caseNo+' to the local Recycle Bin?')){if(!window.EFDBRecycleCase?.(c))return toast('Could not save Recycle Bin entry; deletion cancelled.');cases=cases.filter(x=>x.id!==c.id);if(selectedId===c.id)selectedId=null;saveCases();render()}}};
+// Phase 8G: delete only after the local Recycle Bin can be saved; never silently leave a shared pin online.
+window.EFDBDeletePin=async function(c){
+ if(!c||!cases.some(x=>x.id===c.id))return;
+ if(c.locked)return toast('Unlock this marker in Edit before deleting.');
+ const yes=await window.EFDBConfirmPinDelete(c.caseNo||c.id);
+ if(!yes)return;
+ const button=$('deleteSelectedPinBtn');if(button)button.disabled=true;
+ const BIN='eflspddb_deleted_cases_v1';
+ const originalBin=localStorage.getItem(BIN);
+ const originalCases=localStorage.getItem(STORAGE_KEY);
+ try{
+  // Write the recovery copy before removing the active record. Existing recycle entries are reused.
+  if(!window.EFDBRecycleCase?.(c))throw Error('Recycle Bin could not save this pin. Check browser storage space and try again.');
+  // Remote records must be deleted on the server as well, otherwise automatic sync restores them.
+  if(window.EFDBAuth?.loggedIn){
+   const result=await window.EFDBAuth.request('/live-records',{dataset:'cases',action:'list'});
+   const record=(result.records||[]).find(x=>x.record_id===c.id);
+   if(record){await window.EFDBAuth.request('/live-records',{dataset:'cases',action:'delete',id:c.id,version:record.version});}
+  }else{throw Error('Your session has expired. Log in before deleting pins.');}
+  const next=cases.filter(x=>x.id!==c.id);
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(next));
+  cases=next;if(selectedId===c.id)selectedId=null;
+  window.EF8E?.onLocalSave?.(cases);
+  render();toast('Pin moved to Recycle Bin and removed from shared records.');
+ }catch(err){
+  // Preserve the active pin if any part of deletion failed. Never claim a successful delete.
+  try{if(originalBin===null)localStorage.removeItem(BIN);else localStorage.setItem(BIN,originalBin);}catch{}
+  try{if(originalCases===null)localStorage.removeItem(STORAGE_KEY);else localStorage.setItem(STORAGE_KEY,originalCases);}catch{}
+  toast('Deletion not completed: '+(err?.message||'unknown error'));
+  console.error('LSPD DB pin deletion failed',err);
+ }finally{if(button)button.disabled=false;}
+};
+window.EFDBConfirmPinDelete=function(label){return new Promise(resolve=>{
+ const overlay=document.createElement('div');overlay.className='ef8g-confirm-backdrop';overlay.setAttribute('role','presentation');
+ const card=document.createElement('div');card.className='ef8g-confirm-card';card.setAttribute('role','dialog');card.setAttribute('aria-modal','true');card.setAttribute('aria-labelledby','ef8g-confirm-title');
+ const heading=document.createElement('h2');heading.id='ef8g-confirm-title';heading.textContent='Move pin to Recycle Bin?';
+ const body=document.createElement('p');body.textContent='Move '+label+' to the Recycle Bin? Shared pins will also be removed from the server. You can restore a local copy from Settings.';
+ const actions=document.createElement('div');actions.className='ef8g-confirm-actions';
+ const cancel=document.createElement('button');cancel.type='button';cancel.className='secondary';cancel.textContent='Cancel';
+ const approve=document.createElement('button');approve.type='button';approve.className='ef8g-confirm-danger';approve.textContent='Move to Recycle Bin';
+ const done=value=>{document.removeEventListener('keydown',onKey);overlay.remove();resolve(value)};
+ const onKey=e=>{if(e.key==='Escape')done(false)};
+ cancel.onclick=()=>done(false);approve.onclick=()=>done(true);overlay.onclick=e=>{if(e.target===overlay)done(false)};
+ actions.append(cancel,approve);card.append(heading,body,actions);overlay.append(card);document.body.append(overlay);document.addEventListener('keydown',onKey);cancel.focus();
+});};
+$('closeModal').onclick=closeModal;$('cancelModal').onclick=closeModal;$('caseModal').onclick=e=>{if(e.target===$('caseModal'))closeModal()};$('addPinBtn').onclick=()=>$('pinChoice').classList.toggle('hidden');$('newGeneralPin').onclick=()=>{$('pinChoice').classList.add('hidden');pinKind='general';placementMode=true;placingForId=null;showSection('map');toast('Click the map where you want your general pin. Press Esc to cancel.')};$('newInvestigationPin').onclick=()=>{$('pinChoice').classList.add('hidden');pinKind='investigation';placementMode=true;placingForId=null;showSection('map');toast('Click the map where you want your investigation pin. Press Esc to cancel.')};$('addRecordBtn').onclick=()=>openModal();$('editSelectedBtn').onclick=()=>{const c=cases.find(c=>c.id===selectedId);if(c)openModal(c)};$('deleteSelectedPinBtn').onclick=()=>{const c=cases.find(c=>c.id===selectedId);if(c)window.EFDBDeletePin(c);};
+$('recordsBody').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.select){selectCase(b.dataset.select);return}if(b.dataset.edit){openModal(cases.find(c=>c.id===b.dataset.edit));return}if(b.dataset.place){const c=cases.find(c=>c.id===b.dataset.place);if(c.locked)return toast('This marker is locked. Unlock it in Edit first.');placingForId=c.id;showSection('map');toast('Click the map to place the marker.');return}if(b.dataset.delete){const c=cases.find(c=>c.id===b.dataset.delete);if(c)window.EFDBDeletePin(c)}};
 function placePinAt(ll){
  if((!placementMode&&!placingForId)||calibratingPostal)return false;
  if(placingForId){

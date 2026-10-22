@@ -40,7 +40,7 @@ function render(){const host=root();if(!host||document.getElementById('extraTitl
  setTimeout(()=>{document.dispatchEvent(new MouseEvent('click',{bubbles:true}));const panel=document.getElementById('efSharedPanel');if(panel)host.querySelector('#ef7bShared')?.append(panel)},10);
 }
 function audit(action,c){const log=get('eflspddb_local_case_audit_v1',[]);log.push({action,caseId:c.id,caseNo:c.caseNo,at:new Date().toISOString(),actor:window.EFDBAuth?.user?.name||'Unknown'});save('eflspddb_local_case_audit_v1',log.slice(-5000))}
-window.EFDBRecycleCase=function(c){if(!c||!c.id)return false;const bin=get(BIN,[]);if(bin.some(r=>r.case?.id===c.id))return false;bin.push({case:c,deletedAt:new Date().toISOString()});try{save(BIN,bin);audit('soft_delete',c);return true}catch{return false}};
+window.EFDBRecycleCase=function(c){if(!c||!c.id)return false;const bin=get(BIN,[]);if(!bin.some(r=>r.case?.id===c.id))bin.push({case:c,deletedAt:new Date().toISOString()});try{save(BIN,bin);audit('soft_delete',c);return true}catch{return false}};
 // Settings section is rendered by app.js, so enhance only after it has been opened.
 document.addEventListener('click',e=>{if(e.target.closest('[data-section="settings"]'))setTimeout(render,20)});
 window.addEventListener('efdb-auth-login',()=>{document.querySelector('.ef-new-header')?.classList.toggle('ef-header-light',localStorage.getItem('ef7b_light')==='true')});

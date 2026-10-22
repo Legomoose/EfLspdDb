@@ -481,3 +481,10 @@ html,body{height:100%;overflow:hidden}
 
 /* Phase 6.1: account confirmation polish */
 .ef4-modal .ef4-danger:disabled{opacity:.4;cursor:not-allowed}.ef4-modal.ef5-child .ef5-description{margin:4px 0 14px}.ef4-modal.ef5-child .ef5-warning{margin:10px 0}.ef4-modal.ef5-child .ef5-actions{margin-top:18px}
+
+/* Phase 8G: themed confirmation dialog for map-pin deletion. */
+.ef8g-confirm-backdrop{position:fixed;inset:0;z-index:99999;background:rgba(1,9,22,.83);display:flex;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(3px)}
+.ef8g-confirm-card{width:min(440px,100%);background:linear-gradient(155deg,#102944,#07192f);border:1px solid #3972a2;border-radius:12px;padding:24px;box-shadow:0 22px 70px #000b;color:#e4f1ff}
+.ef8g-confirm-card h2{font-size:19px;margin:0 0 12px;color:#f4f9ff}.ef8g-confirm-card p{font-size:13px;line-height:1.6;color:#b8d0e9}
+.ef8g-confirm-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px;flex-wrap:wrap}.ef8g-confirm-actions button{border-radius:6px;padding:10px 14px;font-weight:600}
+.ef8g-confirm-danger{background:#a72d41;color:white;border:1px solid #db576a}.ef8g-confirm-danger:hover{background:#c03950}
