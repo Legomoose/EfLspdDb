@@ -1,0 +1,10 @@
+EFLSPDDB Expanded Icon Pack — October 2026
+
+Extract this ZIP and upload its CONTENTS to the GitHub repository root, replacing existing files.
+Commit to main, wait for Cloudflare Pages deployment, and hard refresh (Ctrl+Shift+R).
+Open Add Investigation Pin > Icons. Scroll to EXPANDED PIN LIBRARY.
+Select emoji or vector icons; use category dropdown or search.
+This update uses the latest Phase 3 website as its base and keeps login and existing map data unchanged.
+Icons are visual equivalents based on the supplied reference screenshot; not pixel-perfect extracted assets.
+Some vector icons may not render if the website font icon set does not contain the chosen name; emoji options are available.
+No server-side shared pin storage is added by this update.
