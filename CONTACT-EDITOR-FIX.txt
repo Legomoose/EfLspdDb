@@ -1,0 +1,1 @@
+Fix: Editing an existing contact no longer fails when an old record contains a field absent from the editor (e.g. type). Existing contact data and Delete button are preserved. Delete still requires confirmation.
