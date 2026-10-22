@@ -428,3 +428,24 @@ html,body{height:100%;overflow:hidden}
 
 /* High Command roster */
 .ef-hc-page{padding:20px}.ef-hc-warning{font-size:12px;color:#e4bd6a;margin:14px 0}.ef-hc-list{display:grid;gap:12px}.ef-hc-member{display:flex;align-items:center;gap:14px;padding:15px;border:1px solid #33445c;border-radius:12px;background:#121e2e}.ef-hc-avatar{font-size:25px;color:#e9b96a}.ef-hc-details{flex:1;display:grid;gap:4px;min-width:0}.ef-hc-details span,.ef-hc-details small{color:#9bacc2}.ef-hc-details p{margin:5px 0 0;white-space:pre-wrap}.ef-hc-controls{display:flex;gap:6px}.ef-hc-controls button{padding:8px 11px}.ef-hc-overlay{position:fixed;inset:0;background:#000b;z-index:999999;display:flex;align-items:center;justify-content:center;padding:20px}.ef-hc-form{width:min(100%,490px);max-height:90vh;overflow:auto;background:#152235;border:1px solid #43536c;padding:25px;border-radius:15px;display:grid;gap:12px;color:#f0f5ff}.ef-hc-form label{display:grid;gap:5px}.ef-hc-form input,.ef-hc-form textarea{width:100%;background:#0c1726;border:1px solid #43536c;color:#fff;border-radius:7px;padding:10px}.ef-hc-formtop,.ef-hc-actions{display:flex;justify-content:space-between;align-items:center;gap:10px}.ef-hc-formtop h2{margin:0}.ef-hc-formtop button{font-size:26px}.ef-hc-actions{justify-content:flex-end}
+
+/* Phase 3.1 account dropdown and genuine drag handles */
+#efAuthBar{display:none!important}
+.ef-header-right{position:relative}
+.ef-account-menu{position:absolute;right:0;top:calc(100% + 13px);z-index:9900;width:235px;padding:8px;background:#10243d;border:1px solid #3d638e;border-radius:10px;box-shadow:0 15px 35px #0009;color:#e8f3ff}
+.ef-account-menu[hidden]{display:none!important}
+.ef-account-menu-name{padding:9px 10px 12px;margin-bottom:5px;border-bottom:1px solid #315174;font-size:12px;color:#a7d3ff;overflow-wrap:anywhere}
+.ef-account-menu button{width:100%;text-align:left;display:flex;gap:9px;align-items:center;border:0;border-radius:6px;padding:10px;color:#edf6ff;background:transparent;cursor:pointer;font-size:12px}
+.ef-account-menu button:hover{background:#234a74}
+.ef-account-menu button[hidden]{display:none!important}
+.workspace>.leftpanel,.workspace>.rightpanel{resize:none!important;overflow:hidden!important;max-width:none!important}
+.workspace>.leftpanel{width:260px!important;min-width:185px!important}
+.workspace>.rightpanel{width:420px!important;min-width:270px!important;direction:ltr!important}
+.workspace.left-collapsed>.leftpanel{width:42px!important;min-width:42px!important;max-width:42px!important}
+.workspace.right-collapsed>.rightpanel{width:42px!important;min-width:42px!important;max-width:42px!important}
+.ef-resize-handle{position:absolute;top:39px;bottom:0;width:9px;z-index:1300;cursor:col-resize;touch-action:none;background:transparent}
+.ef-resize-handle:hover,.ef-resizing .ef-resize-handle{background:#4a9be455}
+.ef-resize-left{right:0}.ef-resize-right{left:0}
+.workspace.left-collapsed .ef-resize-left,.workspace.right-collapsed .ef-resize-right{display:none}
+.ef-resizing{user-select:none!important;cursor:col-resize!important}
+@media(max-width:850px){.ef-header-right{flex-basis:auto!important}.ef-header-account{display:flex!important}.ef-header-avatar{display:grid!important}}
