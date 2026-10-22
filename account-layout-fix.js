@@ -6,8 +6,9 @@ if(toggle&&header){
  const menu=document.createElement('div');menu.id='efAccountMenu';menu.className='ef-account-menu';menu.hidden=true;
  const name=document.createElement('div');name.className='ef-account-menu-name';
  const manage=document.createElement('button');manage.type='button';manage.innerHTML='<i class="fa-solid fa-users-gear"></i> Manage Accounts';
+ const settings=document.createElement('button');settings.type='button';settings.innerHTML='<i class="fa-solid fa-gear"></i> Settings';
  const logout=document.createElement('button');logout.type='button';logout.innerHTML='<i class="fa-solid fa-right-from-bracket"></i> Log Out';
- menu.append(name,manage,logout);header.append(menu);
+ menu.append(name,manage,settings,logout);header.append(menu);
  const refresh=()=>{
   const user=window.EFDBAuth?.user;
   document.getElementById('efHeaderUserName').textContent=user?.name||'Detective';
@@ -18,6 +19,7 @@ if(toggle&&header){
  };
  toggle.addEventListener('click',e=>{e.stopImmediatePropagation();if(!window.EFDBAuth?.loggedIn)return;menu.hidden=!menu.hidden;refresh();},true);
  manage.addEventListener('click',()=>{menu.hidden=true;window.EFDBOpenAdmin?.();});
+ settings.addEventListener('click',()=>{menu.hidden=true;window.EFDBOpenSettings?.();});
  logout.addEventListener('click',()=>{menu.hidden=true;window.EFDBAuth?.logout();});
  document.addEventListener('click',e=>{if(!header.contains(e.target))menu.hidden=true;});
  window.addEventListener('efdb-auth-login',refresh);

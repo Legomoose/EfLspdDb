@@ -5,7 +5,7 @@ const supported=['cases','intelligence','icons']; // other datasets need a verif
 let revisions={};
 function show(msg){const e=document.getElementById('efSharedStatus');if(e)e.textContent=msg;}
 function panel(){
- const host=document.getElementById('extraContent');if(!host||document.getElementById('efSharedPanel'))return;
+ const host=document.getElementById('ef7bShared')||document.getElementById('extraContent');if(!host||document.getElementById('efSharedPanel'))return;
  const d=document.createElement('div');d.id='efSharedPanel';d.className='db-card';
  d.innerHTML='<h3>PHASE 7 · SHARED DATABASE SETUP</h3><p>This is a controlled migration preview. Existing browser data is untouched unless you explicitly choose to download a backup or publish a dataset. Publishing makes it available to other authorised detectives, but this version does not automatically replace their local records.</p><p><strong>Before publishing:</strong> export your backup using the existing Settings button. Large embedded images may exceed the 2 MB server limit.</p><label>Dataset <select id="efSharedDataset"><option value="cases">Cases and map pins</option><option value="intelligence">Intelligence records</option><option value="icons">Custom icons</option></select></label> <button id="efSharedCheck">Check Shared Version</button> <button id="efSharedPublish">Publish Local Dataset</button> <button id="efSharedDownload">Download Shared JSON</button><p id="efSharedStatus" role="status">Requires the Phase 7 SQL and Worker deployment.</p>';
  host.appendChild(d);
