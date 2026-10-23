@@ -23,6 +23,7 @@
       document.body.appendChild(layer);document.addEventListener('keydown',key,true);layer.querySelector('[data-cancel]').focus();
     });
   }
+  window.lspdConfirmDelete=(message)=>dialog(message,false);
   document.addEventListener('click',async e=>{
     if(replaying||active||!e.isTrusted)return;
     const btn=e.target.closest('button,[role="button"]');if(!btn||btn.closest('.lspd-delete-overlay')||btn.disabled)return;
@@ -30,6 +31,8 @@
     const label=(btn.textContent||'').trim().replace(/\s+/g,' ').toLowerCase();
     const destructive=/^(delete|remove|permanently delete)(\b|\s)/i.test(label)||data.some(k=>/^(contactdelete|filedelete|itemdelete|gangdelete|vehicledelete|dbdelete|inteldelete|detremove|purge|delete)$/i.test(k));
     if(!destructive)return;
+    // Gang actions use the same dialog directly in gang-management.js.
+    if(btn.hasAttribute('data-gang-delete')||btn.hasAttribute('data-gang-deletemember'))return;
     // Map pins already have their own authenticated deletion confirmation and must remain untouched.
     if(data.some(k=>/pin(delete|remove)|deletepin|markerdelete|locationdelete/i.test(k)))return;
     if(btn.closest('#map,#locationPanel,#pinDetails,#caseDetailPanel .pin-actions'))return;

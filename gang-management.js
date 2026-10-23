@@ -124,14 +124,14 @@ renderExtra=function(section){
  root.querySelectorAll('[data-dbdelete]').forEach(btn=>{btn.dataset.gangDelete=btn.dataset.dbdelete;btn.removeAttribute('data-dbdelete')});
  root.querySelectorAll('.db-card').forEach(card=>{const g=card.querySelector('[data-gang-open]');if(!g)return;const idx=Number(g.dataset.gangOpen);const gang=gangAt(idx);if(gang){const title=card.querySelector('h3');if(title){title.style.display='flex';title.style.alignItems='center';title.style.gap='9px';title.insertAdjacentHTML('afterbegin',gangLogoHtml(gang));title.insertAdjacentHTML('afterend',`<p>${(gang.members||[]).length} member(s)${gang.location||gang.territory?' · '+escapeHtml(gang.location||gang.territory):''}${gang.pinId?' · Map pin linked':''}</p>`)} }});
 };
-document.addEventListener('click',e=>{
+document.addEventListener('click',async e=>{
  const b=e.target.closest('button');if(!b)return;
  if(b.id==='addEntryBtn'&&currentSection==='gangs'){e.preventDefault();e.stopImmediatePropagation();editGang();return}
  if(b.dataset.gangEdit!==undefined){e.preventDefault();e.stopImmediatePropagation();editGang(Number(b.dataset.gangEdit));return}
- if(b.dataset.gangDelete!==undefined){e.preventDefault();e.stopImmediatePropagation();const i=Number(b.dataset.gangDelete);if(confirm('Delete this gang and its member roster?')){database.gangs.splice(i,1);persist()}return}
+ if(b.dataset.gangDelete!==undefined){e.preventDefault();e.stopImmediatePropagation();const i=Number(b.dataset.gangDelete);if(await window.lspdConfirmDelete('Delete this gang and its member roster?')){database.gangs.splice(i,1);persist()}return}
  if(b.dataset.gangPositions!==undefined){e.preventDefault();e.stopImmediatePropagation();managePositions(Number(b.dataset.gangPositions));return}
  if(b.dataset.gangAddmember!==undefined){e.preventDefault();e.stopImmediatePropagation();editMember(Number(b.dataset.gangAddmember));return}
  if(b.dataset.gangEditmember!==undefined){e.preventDefault();e.stopImmediatePropagation();const [gi,mi]=b.dataset.gangEditmember.split(':').map(Number);editMember(gi,mi);return}
- if(b.dataset.gangDeletemember!==undefined){e.preventDefault();e.stopImmediatePropagation();const [gi,mi]=b.dataset.gangDeletemember.split(':').map(Number);if(confirm('Remove this member from the gang?')){const removed=gangAt(gi)?.members?.splice(mi,1)?.[0];if(removed?.contactId){const contact=window.efContacts?.get().find(c=>c.id===removed.contactId);if(contact){contact.affiliations=(contact.affiliations||[]).filter(a=>a.gangId!==String(gi));contact.gang=contact.affiliations[0]?.gang||'';window.efContacts?.save();}}saveDb();renderExtra('gangs');window.refreshGangIntel?.(gi)}return}
+ if(b.dataset.gangDeletemember!==undefined){e.preventDefault();e.stopImmediatePropagation();const [gi,mi]=b.dataset.gangDeletemember.split(':').map(Number);if(await window.lspdConfirmDelete('Remove this member from the gang?')){const removed=gangAt(gi)?.members?.splice(mi,1)?.[0];if(removed?.contactId){const contact=window.efContacts?.get().find(c=>c.id===removed.contactId);if(contact){contact.affiliations=(contact.affiliations||[]).filter(a=>a.gangId!==String(gi));contact.gang=contact.affiliations[0]?.gang||'';window.efContacts?.save();}}saveDb();renderExtra('gangs');window.refreshGangIntel?.(gi)}return}
 },true);
 })();
