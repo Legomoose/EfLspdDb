@@ -1,1 +1,0 @@
-Contact Directory Edit button fixed; clicking a contact name/photo opens a resizable contact profile card. Gang Contact Profile opens a contact popup rather than navigating. Edit Contact from card opens the existing editor. No data migration or deletion. Records remain browser-local.
