@@ -25,10 +25,37 @@ document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLower
 // Reports are existing case files. Do not delete or migrate reports or change case IDs.
 const reportsButton=$('.ef-primary-navigation [data-section="reports"]');if(reportsButton)reportsButton.remove();
 function mountReports(){const view=$('#recordsView');if(!view)return;let area=$('#ef8gReports');if(!area){area=document.createElement('section');area.id='ef8gReports';area.className='db-card';view.append(area)}const files=window.EFCaseFiles?.list()||[];area.innerHTML='<h3>CASE REPORTS</h3><p>Reports are managed within their investigation cases. Existing records have not been moved or deleted.</p><div class="ef8g-report-list">'+(files.map(f=>'<button type="button" data-case="'+esc(f.id)+'"><strong>'+esc(f.number||'Case')+'</strong> '+esc(f.title||'')+'</button>').join('')||'<p>No case reports yet.</p>')+'</div>';area.querySelectorAll('[data-case]').forEach(b=>b.onclick=()=>window.EFCaseFiles?.open(b.dataset.case))}
-$('.ef-primary-navigation [data-section="cases"]')?.addEventListener('click',()=>setTimeout(mountReports,50));
+// Case Reports duplicate panel disabled; reports live inside each case.
 // Account directory bridge. Idempotent matching by stable account id, then badge, then name.
 const PROFILE_KEY='eflspddb_detective_profiles_v1';
-function syncAccounts(accounts){if(!Array.isArray(accounts))return;const rows=get(PROFILE_KEY);let changed=false;for(const a of accounts){if(!a?.id||!a.display_name)continue;let p=rows.find(x=>x.account_id===a.id)||rows.find(x=>!x.account_id&&a.badge_number&&x.badge===a.badge_number)||rows.find(x=>!x.account_id&&x.name?.trim().toLowerCase()===a.display_name.trim().toLowerCase());if(!p){p={};rows.push(p);changed=true}const values={account_id:a.id,name:a.display_name,rank:(a.role||'detective').replaceAll('_',' '),badge:a.badge_number||p.badge||'',callsign:a.callsign||p.callsign||'',photo:a.profile_photo_path||p.photo||'',active:a.active!==false};for(const [k,v] of Object.entries(values))if(p[k]!==v){p[k]=v;changed=true}}if(changed){localStorage.setItem(PROFILE_KEY,JSON.stringify(rows));window.EFCaseFiles?.setRoster(rows.map(x=>x.name).filter(Boolean))}}
+function syncAccounts(accounts){
+ if(!Array.isArray(accounts))return;
+ const rows=get(PROFILE_KEY);
+ const ids=new Set(accounts.map(a=>a.id).filter(Boolean));
+ const names=new Set(accounts.map(a=>String(a.display_name||'').trim().toLowerCase()).filter(Boolean));
+ // Account-backed profiles not returned by the authoritative account list are stale.
+ const clean=rows.filter(p=>{
+   if(p.account_id||p.accountId)return ids.has(p.account_id||p.accountId);
+   // Do not keep orphaned auto-generated duplicates after a real account exists.
+   return !names.has(String(p.name||'').trim().toLowerCase());
+ });
+ for(const a of accounts){
+   if(!a?.id||!a.display_name)continue;
+   let entry=clean.find(p=>(p.account_id||p.accountId)===a.id)||
+     rows.find(p=>!p.account_id&&!p.accountId&&a.badge_number&&p.badge===a.badge_number)||
+     rows.find(p=>!p.account_id&&!p.accountId&&p.name?.trim().toLowerCase()===a.display_name.trim().toLowerCase())||{};
+   const profile={...entry,account_id:a.id,accountId:a.id,name:a.display_name,
+     rank:(a.role||'detective').replaceAll('_',' '),role:a.role,
+     badge:a.badge_number||'',callsign:a.callsign||'',
+     photo:a.profile_photo_path||'',active:a.active!==false};
+   const idx=clean.findIndex(p=>(p.account_id||p.accountId)===a.id);
+   if(idx>=0)clean[idx]=profile;else clean.push(profile);
+ }
+ try{localStorage.setItem(PROFILE_KEY,JSON.stringify(clean));
+   window.EFCaseFiles?.setRoster(clean.filter(p=>p.active!==false&&p.role!=='high_command').map(p=>p.name));
+ }catch(e){console.warn('Directory sync could not save',e)}
+}
+
 window.EF8GSyncAccounts=syncAccounts;
 async function loadAccounts(){if(!window.EFDBAuth?.loggedIn)return;try{const r=await window.EFDBAuth.request('/accounts',{action:'list'});syncAccounts(r.accounts||[])}catch{/* Account list may be restricted to administrators. */}}
 window.addEventListener('efdb-auth-login',loadAccounts);
@@ -44,3 +71,5 @@ async function deleteHC(entry){if(!hcOnline||!canCommand()||!confirm('Remove thi
 // Capture navigation before original browser-local High Command handler.
 const hcButton=$('.ef-primary-navigation [data-section="high-command"]');if(hcButton)hcButton.addEventListener('click',e=>{e.stopImmediatePropagation();document.querySelectorAll('.ef-primary-navigation button').forEach(b=>b.classList.remove('active'));hcButton.classList.add('active');showHighCommand()},true);
 })();
+
+// Remove legacy reports panel after section redraws.
