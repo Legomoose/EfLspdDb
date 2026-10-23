@@ -15,7 +15,7 @@ renderExtra=function(section){
   document.getElementById('efCreateReport').onclick=()=>window.EFCaseFiles?.create();document.querySelectorAll('[data-report-id]').forEach(b=>b.onclick=()=>window.EFCaseFiles?.open(b.dataset.reportId));return;
  }
  if(section==='directory'){
-  const roster=profiles().filter(d=>d.active!==false&&d.role!=='high_command');
+  const roster=profiles().filter(d=>d.active!==false&&d.role!=='high_command').sort(window.LSPDCompareCallsign);
   document.getElementById('extraTitle').textContent='DETECTIVE DIRECTORY';
   document.getElementById('addEntryBtn').style.display='none';
   document.getElementById('extraContent').innerHTML=`<div class="db-card"><div class="ef-heading-row"><div><h3>PERSONNEL DIRECTORY</h3><p>Detective profiles and case assignments. Contacts remain separate.</p></div><input id="efDirectorySearch" aria-label="Search detectives" placeholder="Search name, badge, rank or callsign..."></div><div class="ef-report-grid" id="efDirectoryGrid"></div></div>`;

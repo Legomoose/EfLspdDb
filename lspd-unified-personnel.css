@@ -20,3 +20,8 @@
 .lspd-hc-modal .lspd-hc-profile{line-height:1.7;color:#d5e4fa}
 @media(max-width:1100px){#extraView #lspdHCGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){#extraView #lspdHCGrid{grid-template-columns:minmax(0,1fr)}#lspdHCSection{padding:12px}#lspdHCSection .lspd-hc-heading{flex-wrap:wrap}}
+
+/* Account card for Clay Spenser belongs in High Command, not Detective Bureau. */
+#lspdHCOwnerGrid{margin:14px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+#lspdHCOwnerGrid:empty{display:none}
+#lspdHCOwnerGrid .lspd-hc-owner-card{min-width:0}
