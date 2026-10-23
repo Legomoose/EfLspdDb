@@ -1,1 +1,0 @@
-Gang member editor update: added phone number and custom photograph upload; removed gang position and custom position fields; retained Gang Rank / Role. Existing gang member records are preserved. Images are saved to local browser storage only, not Supabase.
