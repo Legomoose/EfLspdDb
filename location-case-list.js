@@ -54,7 +54,17 @@
    if(b.hasAttribute('data-loc-close')){close();return}
    if(b.hasAttribute('data-loc-map')){map.setView([pin.lat,pin.lng],Math.max(map.getZoom(),2),{animate:true});return}
    if(b.hasAttribute('data-loc-share')){const message=`${pin.caseNo||'Location'} — ${category}, postal ${postal}`;if(navigator.clipboard?.writeText){navigator.clipboard.writeText(message).then(()=>alert('Location details copied.')).catch(()=>prompt('Copy location details:',message))}else prompt('Copy location details:',message);return}
-   if(b.hasAttribute('data-loc-delete')){if(!confirm('Delete this map location? This cannot be undone.'))return;close();cases=cases.filter(c=>String(c.id)!==String(id));saveCases();render();return}
+   if(b.hasAttribute('data-loc-delete')){
+    // Use the authenticated shared deletion workflow; never remove a pin only locally.
+    // Closing the profile after a successful deletion avoids a stale panel.
+    if(b.disabled)return;
+    if(typeof window.EFDBDeletePin!=='function'){alert('Pin deletion is unavailable. Please refresh and try again.');return;}
+    b.disabled=true;
+    Promise.resolve(window.EFDBDeletePin(pin)).then(()=>{
+      if(!cases.some(c=>String(c.id)===String(id)))close();
+    }).catch(err=>{console.error('Location deletion failed',err);}).finally(()=>{if(b.isConnected)b.disabled=false;});
+    return;
+   }
    if(b.hasAttribute('data-loc-tab')){const tab=b.dataset.locTab;overlay.querySelectorAll('[data-loc-tab]').forEach(t=>t.classList.toggle('selected',t.dataset.locTab===tab));overlay.querySelectorAll('[data-loc-panel]').forEach(t=>t.hidden=t.dataset.locPanel!==tab);return}
    if(b.hasAttribute('data-open-case')){openCase(b.dataset.openCase);return}
    if(b.hasAttribute('data-open-gang')){openGang(b.dataset.openGang);return}
