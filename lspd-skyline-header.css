@@ -1,0 +1,40 @@
+/* LSPD DB approved compact skyline header: controls remain functional. */
+.header.ef-new-header{
+ position:relative!important; isolation:isolate;
+ height:210px!important; min-height:210px!important;
+ padding:18px 24px!important; align-items:flex-start!important;
+ background:#05162c url("assets/lspd-night-skyline-header.webp") center 53% / cover no-repeat!important;
+ border-bottom:1px solid #34557b!important;
+}
+.header.ef-new-header::before{
+ content:""; position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background:linear-gradient(180deg,rgba(1,12,29,.83) 0%,rgba(1,14,34,.45) 39%,rgba(2,14,32,.04) 100%);
+}
+.header.ef-new-header .ef-header-identity{flex:0 0 auto!important;min-width:210px;}
+.header.ef-new-header .ef-header-identity strong{font-size:21px!important}
+.header.ef-new-header .ef-header-search{display:none!important}
+.header.ef-new-header .ef-header-right{
+ flex:0 1 auto!important;width:auto!important;max-width:70%;gap:11px!important;
+ padding:5px 8px 6px 12px;border-radius:7px;
+ background:rgba(3,16,37,.52);backdrop-filter:blur(5px);
+}
+.header.ef-new-header .lspd-header-clock{min-width:105px;margin-right:5px;padding-right:12px}
+.header.ef-new-header .lspd-utc-clock{display:flex;flex-direction:column;justify-content:center;align-items:flex-end;min-width:76px;padding-right:12px;border-right:1px solid rgba(136,173,220,.35);font-variant-numeric:tabular-nums}
+.header.ef-new-header .lspd-utc-clock strong{font-size:15px;color:#e8f2ff}
+.header.ef-new-header .lspd-utc-clock small{font-size:10px;color:#9fc9fc;letter-spacing:.07em}
+@media(max-width:850px){
+ .header.ef-new-header{height:175px!important;min-height:175px!important;padding:12px 13px!important;gap:8px!important}
+ .header.ef-new-header .ef-header-identity{min-width:0;flex:0 1 auto!important}
+ .header.ef-new-header .ef-header-identity strong{font-size:17px!important}
+ .header.ef-new-header .ef-header-right{max-width:68%;gap:6px!important;padding:4px!important}
+ .header.ef-new-header .lspd-utc-clock{min-width:50px;padding-right:5px}
+ .header.ef-new-header .lspd-utc-clock strong{font-size:12px}
+}
+@media(max-width:540px){
+ .header.ef-new-header{height:155px!important;min-height:155px!important}
+ .header.ef-new-header .ef-header-identity img{width:30px;height:35px}
+ .header.ef-new-header .ef-header-identity strong{font-size:14px!important}
+ .header.ef-new-header .ef-header-identity small{font-size:8px!important;letter-spacing:.5px}
+ .header.ef-new-header .lspd-utc-clock{display:none}
+ .header.ef-new-header .lspd-header-clock{min-width:68px!important;margin-right:3px!important;padding-right:5px!important}
+}
