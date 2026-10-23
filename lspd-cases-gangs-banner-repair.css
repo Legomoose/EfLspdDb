@@ -1,0 +1,8 @@
+/* Correct empty Cases state and preserve multi-column populated case tiles. */
+#recordsView #recordsBody tr:has(> td[colspan="6"]){display:block!important;min-height:78px!important;box-sizing:border-box!important;padding:0!important;overflow:hidden!important}
+#recordsView #recordsBody tr > td[colspan="6"]{display:flex!important;align-items:center!important;justify-content:flex-start!important;box-sizing:border-box!important;width:100%!important;max-width:100%!important;min-height:76px!important;margin:0!important;padding:16px 20px!important;white-space:normal!important;text-align:left!important;color:#cbdcf1!important}
+/* Non-:has fallback applied by the repair JS. */
+#recordsView #recordsBody tr.lspd-empty-case-row{display:block!important;min-height:78px!important;box-sizing:border-box!important;padding:0!important;overflow:hidden!important}
+#recordsView #recordsBody tr.lspd-empty-case-row td{display:flex!important;align-items:center!important;width:100%!important;min-height:76px!important;box-sizing:border-box!important;padding:16px 20px!important;text-align:left!important;white-space:normal!important}
+/* Use a precomposed panoramic crop; never stretch the skyline vertically. */
+.header.ef-new-header{height:100px!important;min-height:100px!important;max-height:100px!important;background-image:linear-gradient(90deg,rgba(2,10,27,.65),rgba(2,10,27,.12) 45%,rgba(2,10,27,.68)),url('assets/lspd-skyline-banner-final.webp')!important;background-size:100% 100%,cover!important;background-position:center center!important;background-repeat:no-repeat!important}
