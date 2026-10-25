@@ -22,7 +22,7 @@ window.EFDBAuth={
 };
 function lock(message){
  const old=token;token=null;user=null;warningShown=false;
- gate.classList.remove('hidden');hint.textContent=message||'Enter your assigned 12-digit access code.';
+ gate.classList.remove('hidden');hint.textContent=message||'Enter your assigned 6-digit access code.';
  document.getElementById('efAuthBar')?.remove();document.getElementById('efAuthWarning')?.remove();
  window.dispatchEvent(new Event('efdb-auth-logout'));
  if(old)fetch(API+'/logout',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+old},body:'{}'}).catch(()=>{});
@@ -50,7 +50,7 @@ setInterval(()=>{if(token&&Date.now()-lastActivity<60000)ping();},60000);
 form.addEventListener('submit',async event=>{
  event.preventDefault();
  const code=input.value.trim();
- if(!/^\d{12}$/.test(code)){hint.textContent='Enter your 12-digit numerical access code.';return;}
+ if(!/^(?:\d{6}|\d{12})$/.test(code)){hint.textContent='Enter your 6-digit code (existing 12-digit codes also accepted temporarily).';return;}
  const btn=form.querySelector('button');btn.disabled=true;hint.textContent='Checking access code…';
  try{
   const res=await fetch(API+'/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code})});
@@ -68,5 +68,5 @@ form.addEventListener('submit',async event=>{
  finally{btn.disabled=false;}
 });
 reset?.addEventListener('click',()=>{hint.textContent='Ask an EFLSPDDB administrator to issue or reset your code.';});
-hint.textContent='Enter your assigned 12-digit access code.';
+hint.textContent='Enter your assigned 6-digit access code.';
 })();
