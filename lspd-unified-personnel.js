@@ -11,7 +11,8 @@ function lspdCompareCallsign(a,b){
  return result||String(a?.name||'').localeCompare(String(b?.name||''));
 }
 window.LSPDCompareCallsign=lspdCompareCallsign;
-const canEdit=()=>['owner','director'].includes(window.EFDBAuth?.user?.role);
+const canEdit=()=>['owner','high_command','director'].includes(window.EFDBAuth?.user?.role);
+const caseCount=name=>(window.EFCaseFiles?.list?.()||[]).filter(f=>String(f.detective||'').trim().toLowerCase()===String(name||'').trim().toLowerCase()).length;
 const api=(action,extra={})=>window.EFDBAuth.request('/live-records',{dataset:'high_command',action,...extra});
 const nav=$('.ef-primary-navigation [data-section="high-command"]');if(nav)nav.remove();
 let lastRun=0, hcRows=[], hcOnline=false, accountHCRows=[];
@@ -20,7 +21,7 @@ function moveSpenser(){
  if(!directory||!ownerGrid)return;
  const cards=[...directory.querySelectorAll('.ef8g-detective')];
  const card=cards.find(el=>el.querySelector('.ef8g-detective-name')?.textContent.trim().toLowerCase()==='clay spenser');
- if(card){card.classList.add('lspd-hc-owner-card');ownerGrid.append(card)}
+ if(card){card.classList.add('lspd-hc-owner-card');const meta=card.querySelector('.ef8g-detective-meta');if(meta&&meta.firstChild&&meta.firstChild.nodeType===Node.TEXT_NODE&&meta.firstChild.textContent.trim().toLowerCase()==='owner')meta.firstChild.textContent='Office of Operations';ownerGrid.append(card)}
  // Search re-renders the account cards, so clear the previously moved one if absent.
  else ownerGrid.replaceChildren();
 }
@@ -73,12 +74,12 @@ function drawAccountHC(){
   .sort((a,b)=>lspdCompareCallsign({callsign:a.callsign,name:a.display_name},{callsign:b.callsign,name:b.display_name}));
  for(const a of accounts){
   const card=document.createElement('article');card.className='ef8g-detective lspd-hc-card';card.dataset.hcAccount=a.id;
-  card.innerHTML=`<div class="ef8g-detective-top"><div class="ef8g-detective-avatar"><i class="fa-solid fa-shield-halved"></i></div><div><div class="ef8g-detective-name">${esc(a.display_name)}</div><div class="ef8g-detective-meta">${esc(a.role==='owner'?'Office of Operations':'High Command')}<br>Badge #${esc(a.badge_number||'—')}<br>Callsign: ${esc(a.callsign||'—')}</div></div></div><div class="ef8g-detective-stats"><span>0 Assigned Cases</span><span>Active</span></div><button type="button" data-profile>View Profile</button>`;
+  card.innerHTML=`<div class="ef8g-detective-top"><div class="ef8g-detective-avatar"><i class="fa-solid fa-shield-halved"></i></div><div><div class="ef8g-detective-name">${esc(a.display_name)}</div><div class="ef8g-detective-meta">${esc(a.role==='owner'?'Office of Operations':'High Command')}<br>Badge #${esc(a.badge_number||'—')}<br>Callsign: ${esc(a.callsign||'—')}</div></div></div><div class="ef8g-detective-stats"><span>📁 ${caseCount(a.display_name)} Assigned Cases</span><span>● Active</span></div><button type="button" data-profile>View Profile</button>`;
   card.querySelector('[data-profile]').onclick=()=>profile({name:a.display_name,rank:a.role==='owner'?'Office of Operations':'High Command',callsign:a.callsign,badge:a.badge_number,notes:a.profile_notes});
   grid.append(card);
  }
 }
-function drawHC(){if(!active()||!hcOnline)return;const q=($('#efDirectorySearch')?.value||'').trim().toLowerCase();const rows=hcRows.map((r,i)=>({...r,_idx:i})).filter(r=>!(r.name||'').trim().toLowerCase()==='clay spenser'||!$('#lspdHCOwnerGrid')?.children.length).filter(r=>[r.name,r.rank,r.callsign,r.badge,r.notes].some(v=>String(v||'').toLowerCase().includes(q))).sort(lspdCompareCallsign);
+function drawHC(){if(!active()||!hcOnline)return;const q=($('#efDirectorySearch')?.value||'').trim().toLowerCase();const existingNames=new Set([...accountHCRows.map(a=>a.display_name),...Array.from($('#lspdHCOwnerGrid')?.querySelectorAll('.lspd-hc-owner-card .ef8g-detective-name')||[],e=>e.textContent)].map(n=>String(n||'').trim().toLowerCase()));const rows=hcRows.map((r,i)=>({...r,_idx:i})).filter(r=>!existingNames.has(String(r.name||'').trim().toLowerCase())).filter(r=>[r.name,r.rank,r.callsign,r.badge,r.notes].some(v=>String(v||'').toLowerCase().includes(q))).sort(lspdCompareCallsign);
  const status=$('#lspdHCStatus');const total=rows.length+accountHCRows.filter(a=>a.active!==false).length;status.textContent=total?`${total} High Command account/roster member${total===1?'':'s'}`:(q?'No matching High Command members.':'No High Command members yet.');
  const grid=$('#lspdHCGrid');grid.innerHTML=rows.map(r=>`<article class="ef8g-detective lspd-hc-card"><div class="ef8g-detective-top"><div class="ef8g-detective-avatar"><i class="fa-solid fa-shield-halved"></i></div><div><div class="ef8g-detective-name">${esc(r.name)}</div><div class="ef8g-detective-meta">${esc(r.rank||'High Command')}<br>Badge #${esc(r.badge||'—')}<br>Callsign: ${esc(r.callsign||'—')}</div></div></div><div class="ef8g-detective-stats"><span>High Command</span><span>Shared roster</span></div>${r.notes?`<p class="lspd-hc-note">${esc(r.notes)}</p>`:''}<button type="button" data-hc-view="${r._idx}">View Profile</button>${canEdit()?`<div class="lspd-hc-card-controls"><button type="button" data-hc-edit="${r._idx}">Edit</button><button type="button" data-hc-remove="${r._idx}">Remove</button></div>`:''}</article>`).join('');
  grid.querySelectorAll('[data-hc-view]').forEach(b=>b.onclick=()=>profile(hcRows[+b.dataset.hcView]));grid.querySelectorAll('[data-hc-edit]').forEach(b=>b.onclick=()=>editor(hcRows[+b.dataset.hcEdit]));grid.querySelectorAll('[data-hc-remove]').forEach(b=>b.onclick=()=>remove(hcRows[+b.dataset.hcRemove]));
