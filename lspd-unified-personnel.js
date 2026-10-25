@@ -11,19 +11,12 @@ function lspdCompareCallsign(a,b){
  return result||String(a?.name||'').localeCompare(String(b?.name||''));
 }
 window.LSPDCompareCallsign=lspdCompareCallsign;
-const canEdit=()=>['owner','high_command','director'].includes(window.EFDBAuth?.user?.role);
+const canEdit=()=>['owner','director'].includes(window.EFDBAuth?.user?.role);
 const api=(action,extra={})=>window.EFDBAuth.request('/live-records',{dataset:'high_command',action,...extra});
 const nav=$('.ef-primary-navigation [data-section="high-command"]');if(nav)nav.remove();
-let lastRun=0, hcRows=[], hcOnline=false;
+let lastRun=0, hcRows=[], hcOnline=false, accountHCRows=[];
 function moveSpenser(){
- const directory=document.querySelector('#efDirectoryGrid'), ownerGrid=document.querySelector('#lspdHCOwnerGrid');
- if(directory&&ownerGrid){let profiles=[];try{profiles=JSON.parse(localStorage.getItem('eflspddb_detective_profiles_v1')||'[]')}catch{};
-  for(const card of [...directory.querySelectorAll('.ef8g-detective')]){
-   const name=card.querySelector('.ef8g-detective-name')?.textContent.trim().toLowerCase();
-   if(profiles.some(p=>p.role==='high_command'&&p.name?.trim().toLowerCase()===name)){card.classList.add('lspd-hc-owner-card');ownerGrid.append(card)}
-  }
- }
-
+ const directory=$('#efDirectoryGrid'), ownerGrid=$('#lspdHCOwnerGrid');
  if(!directory||!ownerGrid)return;
  const cards=[...directory.querySelectorAll('.ef8g-detective')];
  const card=cards.find(el=>el.querySelector('.ef8g-detective-name')?.textContent.trim().toLowerCase()==='clay spenser');
@@ -48,17 +41,45 @@ function mount(){
  const section=document.createElement('section');section.id='lspdHCSection';section.className='lspd-hc-section';
  section.innerHTML='<div class="lspd-hc-heading"><div><h3>HIGH COMMAND</h3><p>Command personnel and departmental positions</p></div><div class="lspd-hc-actions"><button id="lspdHCAdd" type="button" class="blue" hidden>+ Add Member</button></div></div><div id="lspdHCOwnerGrid" class="ef8g-directory lspd-hc-grid"></div><div id="lspdHCStatus" role="status">Loading shared High Command roster…</div><div id="lspdHCGrid" class="ef8g-directory lspd-hc-grid"></div>';
  card.after(section);
- const search=$('#efDirectorySearch');if(search){search.placeholder='Search personnel by name, badge, rank or callsign...';search.addEventListener('input',()=>{moveSpenser();drawHC()})}
+ const search=$('#efDirectorySearch');if(search){search.placeholder='Search personnel by name, badge, rank or callsign...';search.addEventListener('input',()=>{moveSpenser();drawAccountHC();drawHC()})}
  moveSpenser();
  const run=++lastRun;
+ loadHCAccounts(run);
  hcOnline=false;hcRows=[];
  if(!window.EFDBAuth?.loggedIn){$('#lspdHCStatus').textContent='Sign in to view the shared High Command roster.';return}
  api('list').then(r=>{if(run!==lastRun||!active())return;hcOnline=true;hcRows=(r.records||[]).filter(x=>!x.deleted_at).map(r=>({...r.body,_id:r.record_id,_version:r.version}));$('#lspdHCAdd').hidden=!canEdit();$('#lspdHCAdd').onclick=()=>editor();drawHC()}).catch(e=>{if(run!==lastRun||!active())return;$('#lspdHCStatus').textContent='Shared High Command roster unavailable: '+e.message;$('#lspdHCGrid').replaceChildren()});
 }
-function drawHC(){if(!active()||!hcOnline)return;const q=($('#efDirectorySearch')?.value||'').trim().toLowerCase();let accountHC=[];try{accountHC=JSON.parse(localStorage.getItem('eflspddb_detective_profiles_v1')||'[]').filter(p=>p.role==='high_command'||p.role==='owner')}catch{};
- const accountNames=new Set(accountHC.map(p=>String(p.name||'').trim().toLowerCase()));
- const rows=hcRows.filter(r=>!accountNames.has(String(r.name||'').trim().toLowerCase())).map((r,i)=>({...r,_idx:i})).filter(r=>!(r.name||'').trim().toLowerCase()==='clay spenser'||!$('#lspdHCOwnerGrid')?.children.length).filter(r=>[r.name,r.rank,r.callsign,r.badge,r.notes].some(v=>String(v||'').toLowerCase().includes(q))).sort(lspdCompareCallsign);
- const status=$('#lspdHCStatus');status.textContent=rows.length?`${rows.length} High Command member${rows.length===1?'':'s'}`:(q?'No matching High Command members.':'No High Command members yet.');
+async function loadHCAccounts(run){
+ try{
+  const response=await window.EFDBAuth.request('/accounts',{action:'list'});
+  if(run!==lastRun||!active())return;
+  accountHCRows=(response.accounts||[]).filter(a=>a.active!==false&&['owner','high_command'].includes(a.role));
+  drawAccountHC();
+  drawHC();
+ }catch(e){
+  if(run!==lastRun||!active())return;
+  const status=$('#lspdHCAccountStatus');
+  if(status)status.textContent='Account directory unavailable: '+e.message;
+ }
+}
+function drawAccountHC(){
+ const grid=$('#lspdHCOwnerGrid');if(!grid)return;
+ const q=($('#efDirectorySearch')?.value||'').trim().toLowerCase();
+ const existing=grid.querySelectorAll('[data-hc-account]');
+ existing.forEach(el=>el.remove());
+ const movedNames=new Set([...grid.querySelectorAll('.ef8g-detective:not([data-hc-account])')].map(el=>el.querySelector('.ef8g-detective-name')?.textContent.trim().toLowerCase()));
+ const accounts=accountHCRows.filter(a=>!movedNames.has(String(a.display_name||'').trim().toLowerCase()))
+  .filter(a=>[a.display_name,a.callsign,a.badge_number,a.role].some(v=>String(v||'').toLowerCase().includes(q)))
+  .sort((a,b)=>lspdCompareCallsign({callsign:a.callsign,name:a.display_name},{callsign:b.callsign,name:b.display_name}));
+ for(const a of accounts){
+  const card=document.createElement('article');card.className='ef8g-detective lspd-hc-card';card.dataset.hcAccount=a.id;
+  card.innerHTML=`<div class="ef8g-detective-top"><div class="ef8g-detective-avatar"><i class="fa-solid fa-shield-halved"></i></div><div><div class="ef8g-detective-name">${esc(a.display_name)}</div><div class="ef8g-detective-meta">${esc(a.role==='owner'?'Office of Operations':'High Command')}<br>Badge #${esc(a.badge_number||'—')}<br>Callsign: ${esc(a.callsign||'—')}</div></div></div><div class="ef8g-detective-stats"><span>0 Assigned Cases</span><span>Active</span></div><button type="button" data-profile>View Profile</button>`;
+  card.querySelector('[data-profile]').onclick=()=>profile({name:a.display_name,rank:a.role==='owner'?'Office of Operations':'High Command',callsign:a.callsign,badge:a.badge_number,notes:a.profile_notes});
+  grid.append(card);
+ }
+}
+function drawHC(){if(!active()||!hcOnline)return;const q=($('#efDirectorySearch')?.value||'').trim().toLowerCase();const rows=hcRows.map((r,i)=>({...r,_idx:i})).filter(r=>!(r.name||'').trim().toLowerCase()==='clay spenser'||!$('#lspdHCOwnerGrid')?.children.length).filter(r=>[r.name,r.rank,r.callsign,r.badge,r.notes].some(v=>String(v||'').toLowerCase().includes(q))).sort(lspdCompareCallsign);
+ const status=$('#lspdHCStatus');const total=rows.length+accountHCRows.filter(a=>a.active!==false).length;status.textContent=total?`${total} High Command account/roster member${total===1?'':'s'}`:(q?'No matching High Command members.':'No High Command members yet.');
  const grid=$('#lspdHCGrid');grid.innerHTML=rows.map(r=>`<article class="ef8g-detective lspd-hc-card"><div class="ef8g-detective-top"><div class="ef8g-detective-avatar"><i class="fa-solid fa-shield-halved"></i></div><div><div class="ef8g-detective-name">${esc(r.name)}</div><div class="ef8g-detective-meta">${esc(r.rank||'High Command')}<br>Badge #${esc(r.badge||'—')}<br>Callsign: ${esc(r.callsign||'—')}</div></div></div><div class="ef8g-detective-stats"><span>High Command</span><span>Shared roster</span></div>${r.notes?`<p class="lspd-hc-note">${esc(r.notes)}</p>`:''}<button type="button" data-hc-view="${r._idx}">View Profile</button>${canEdit()?`<div class="lspd-hc-card-controls"><button type="button" data-hc-edit="${r._idx}">Edit</button><button type="button" data-hc-remove="${r._idx}">Remove</button></div>`:''}</article>`).join('');
  grid.querySelectorAll('[data-hc-view]').forEach(b=>b.onclick=()=>profile(hcRows[+b.dataset.hcView]));grid.querySelectorAll('[data-hc-edit]').forEach(b=>b.onclick=()=>editor(hcRows[+b.dataset.hcEdit]));grid.querySelectorAll('[data-hc-remove]').forEach(b=>b.onclick=()=>remove(hcRows[+b.dataset.hcRemove]));
 }
