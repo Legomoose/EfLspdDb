@@ -29,7 +29,31 @@ const table=el('table');area.append(table);async function accountsTabReload(){co
   actions.append(btn('Delete Permanently',async()=>{const name=await deleteDialog(a);if(name===null)return;try{await request('/accounts',{action:'delete',id:a.id,confirm_name:name});await accountsTabReload();}catch(e){result.textContent=e.message;}},'ef4-danger'));
  }
 }tr.append(actions);table.append(tr);}}await accountsTabReload();}
-async function permissionsTab(area,box){let r;try{r=await request('/permissions',{action:'list'});}catch(e){message(box,e.message);return;}const t=el('table'),head=el('tr');head.append(el('th','Permission'));for(const role of ranks.filter(r=>r!=='high_command'))head.append(el('th',titles[role]));t.append(head);for(const permission of r.available_permissions){const tr=el('tr');tr.append(el('td',permissionNames[permission]||permission));for(const role of ranks.filter(r=>r!=='high_command')){const td=el('td');const input=document.createElement('input');input.type='checkbox';input.className='ef4-check';input.checked=!!r.permissions.find(x=>x.role===role&&x.permission===permission)?.allowed;input.onchange=async()=>{input.disabled=true;try{await request('/permissions',{action:'set',role,permission,allowed:input.checked});}catch(e){input.checked=!input.checked;message(box,e.message);}finally{input.disabled=false;}};td.append(input);tr.append(td);}t.append(tr);}area.append(el('p','Changes save immediately. Office of Operations always retains full access.'),t);}
+async function permissionsTab(area,box){
+ let r;try{r=await request('/permissions',{action:'list'});}catch(e){message(box,e.message);return;}
+ const roles=['owner','high_command',...ranks.filter(x=>x!=='high_command')];
+ const t=el('table'),head=el('tr');head.append(el('th','Permission'));
+ for(const role of roles)head.append(el('th',titles[role]||role));t.append(head);
+ const status=el('p','Changes save immediately. Office of Operations and High Command always have access.','ef5-description');
+ for(const permission of r.available_permissions){
+  const tr=el('tr');tr.append(el('td',permissionNames[permission]||permission));
+  if(permission==='view_storage_usage')tr.className='ef5-storage-permission';
+  for(const role of roles){
+   const td=el('td'),input=document.createElement('input');input.type='checkbox';input.className='ef4-check';
+   const permanent=role==='owner'||role==='high_command';
+   input.checked=permanent||r.permissions.some(x=>x.role===role&&x.permission===permission&&x.allowed===true);
+   input.disabled=permanent;input.title=permanent?'Always enabled for this role':'Toggle '+(permissionNames[permission]||permission)+' for '+(titles[role]||role);
+   if(!permanent)input.onchange=async()=>{
+    const wanted=input.checked;input.disabled=true;status.textContent='Saving '+(permissionNames[permission]||permission)+' for '+(titles[role]||role)+'…';
+    try{await request('/permissions',{action:'set',role,permission,allowed:wanted});status.textContent='Saved: '+(titles[role]||role)+' — '+(permissionNames[permission]||permission)+' '+(wanted?'enabled':'disabled')+'.';}
+    catch(e){input.checked=!wanted;status.textContent='Could not save permission: '+e.message;message(box,e.message);}
+    finally{input.disabled=false;}
+   };
+   td.append(input);tr.append(td);
+  }t.append(tr);
+ }
+ area.append(status,t);
+}
 }
 window.EFDBOpenAdmin=openAdmin;
 window.addEventListener('efdb-change-required',()=>{const box=modal('Change Temporary Passcode',true);const note=el('p','Your temporary passcode must be replaced before you can access the database.');const [oldw,old]=field('Temporary code (6 or legacy 12 digits)','','password');const [neww,neo]=field('New 6-digit code','','password');const [confw,confirmCode]=field('Confirm new code','','password');box.append(note,oldw,neww,confw);box.querySelector('.ef5-close')?.remove();box.append(btn('Change Passcode',async()=>{if(!/^\d{6}$/.test(neo.value)||neo.value!==confirmCode.value){message(box,'New codes must be 6 digits and match.');return;}try{await request('/change-code',{current_code:old.value,code:neo.value});window.EFDBAuth.logout();box.remove();}catch(e){message(box,e.message);}}));});
