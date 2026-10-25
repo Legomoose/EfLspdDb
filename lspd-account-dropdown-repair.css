@@ -1,7 +1,0 @@
-/* Account dropdown layering repair: header must be above the map and docked case panel. */
-html body > header.header.ef-new-header, body > .header.ef-new-header, header.header.ef-new-header {position:relative!important;z-index:200000!important;overflow:visible!important;isolation:auto!important;}
-.header.ef-new-header .ef-header-right {position:relative!important;z-index:200001!important;overflow:visible!important;}
-.header.ef-new-header .ef-account-menu, #efAccountMenu {position:absolute!important;top:calc(100% + 10px)!important;right:0!important;z-index:200002!important;max-height:min(75vh,600px)!important;overflow-y:auto!important;box-sizing:border-box!important;}
-body > .workspace, .workspace {position:relative;z-index:1!important;}
-/* Avoid clipping dropdown inside header containers. */
-.header.ef-new-header .ef-header-account {overflow:visible!important;}

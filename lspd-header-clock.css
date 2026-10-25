@@ -1,5 +1,0 @@
-/* Compact header clock, aligned with the account controls. */
-.ef-new-header .lspd-header-clock{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;min-width:112px;margin-right:13px;padding-right:15px;border-right:1px solid rgba(136,173,220,.24);font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1.25}
-.ef-new-header .lspd-clock-time{font-size:16px;letter-spacing:.045em;color:#e8f2ff;font-weight:700}
-.ef-new-header .lspd-clock-date{font-size:10px;color:#a8bfdf;margin-top:3px}
-@media(max-width:640px){.ef-new-header .lspd-header-clock{min-width:76px;margin-right:7px;padding-right:8px}.ef-new-header .lspd-clock-time{font-size:12px}.ef-new-header .lspd-clock-date{font-size:9px}}
