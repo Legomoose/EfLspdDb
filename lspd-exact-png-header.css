@@ -1,0 +1,11 @@
+/* Approved PNG used directly as the header background. No regenerated skyline. */
+.header.ef-new-header {
+ background-image:url("assets/LSPD-skyline-exact-no-black.png")!important;
+ background-position:center center!important;
+ background-size:100% 100%!important;
+ background-repeat:no-repeat!important;
+ height:clamp(110px,7.7vw,160px)!important;
+ min-height:clamp(110px,7.7vw,160px)!important;
+ flex-basis:clamp(110px,7.7vw,160px)!important;
+}
+.header.ef-new-header::before,.header.ef-new-header::after {display:none!important}
