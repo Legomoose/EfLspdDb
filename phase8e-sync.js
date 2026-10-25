@@ -21,4 +21,8 @@ function mount(){const parent=document.getElementById('ef7bShared');if(!parent||
 new MutationObserver(mount).observe(document.body,{childList:true,subtree:true});mount();snapshot();
 window.addEventListener('efdb-auth-login',()=>{snapshot();ready=true;if(enabled)cycle()});window.addEventListener('efdb-auth-logout',()=>{ready=false;pending.clear();versions.clear();status('Signed out — sync paused')});
 timer=setInterval(()=>{if(enabled&&window.EFDBAuth?.loggedIn){ready=true;cycle()}},2000);
+// Promptly check for shared updates when returning to the website, while preserving opt-in and conflict protection.
+window.addEventListener('focus',()=>{if(enabled&&window.EFDBAuth?.loggedIn){ready=true;cycle()}});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&enabled&&window.EFDBAuth?.loggedIn){ready=true;cycle()}});
+window.addEventListener('online',()=>{if(enabled&&window.EFDBAuth?.loggedIn){ready=true;cycle()}});
 })();
