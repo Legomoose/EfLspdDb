@@ -1,0 +1,15 @@
+EFLSPDDB Phase 8G — Supabase live notifications
+
+1. Extract ZIP and upload the FOUR files to the ROOT of your GitHub repository. Replace index.html.
+2. Open phase8g-realtime-config.js on GitHub and replace the placeholder with your Supabase PUBLISHABLE (or legacy anon) key. This is public by design. NEVER use a service_role or secret key.
+3. Commit and wait for Cloudflare Pages deployment.
+4. Open the site in two different browsers, sign in as two detectives, and enable the existing automatic sharing toggle in both browsers.
+5. Create a NEW test pin or edit a synced test pin and verify it appears in the other browser.
+
+Notes:
+- The new Realtime channel sends only 'something changed' notices, NOT the records themselves. Existing authenticated Worker requests fetch the actual records and perform version checks.
+- If the key is not configured, the old two-second polling continues.
+- Supabase Realtime Broadcast channel must be available in your Supabase project. Depending on project Realtime settings, public channels may require enabling public broadcast access.
+- This does not make gangs/contacts fully shared; it accelerates updates to records already supported by Phase 8E.
+- Keep the plain blue header. No Worker or SQL changes.
+- If the Phase 8F controls were not previously uploaded, this package includes them.
