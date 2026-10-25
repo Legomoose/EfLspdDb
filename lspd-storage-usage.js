@@ -1,26 +1,40 @@
-/* LSPD DB Storage & Usage: read-only dashboard. Never exposes service keys. */
+/* EFLSPDDB Storage & Usage - secure role-controlled reporting */
 (()=>{'use strict';
-const allowed=()=>['owner','admin','high_command'].includes(window.EFDBAuth?.user?.role);
-const fmt=n=>n<1024?`${n} B`:n<1048576?`${(n/1024).toFixed(1)} KB`:`${(n/1048576).toFixed(2)} MB`;
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const size=s=>new Blob([s]).size;
-function localStats(){let total=0,rows=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i),v=localStorage.getItem(k)||'',b=size(k)+size(v);total+=b;rows.push({k,b})}}catch{}rows.sort((a,b)=>b.b-a.b);return {total,rows};}
-function mount(){const host=document.getElementById('extraContent');if(!host||document.getElementById('extraTitle')?.textContent?.trim().toLowerCase()!=='settings'||!allowed())return;
- if(host.querySelector('#lspdStorage'))return;
- const root=document.createElement('section');root.id='lspdStorage';root.className='lspd-storage';root.innerHTML=`<div class="lspd-storage-head"><div><h2><i class="fa-solid fa-hard-drive"></i> Storage &amp; Usage</h2><p>Read-only capacity monitoring · Supabase and Cloudflare have separate limits</p></div><button type="button" id="lspdStorageRefresh"><i class="fa-solid fa-rotate"></i> Refresh</button></div><div class="lspd-storage-grid">
- <article class="lspd-storage-tile"><div class="lspd-storage-label"><i class="fa-solid fa-database"></i> Supabase Database</div><strong>Not connected</strong><div class="lspd-storage-track"></div><small>Database size and plan limit require a secure server-side reporting endpoint.</small></article>
- <article class="lspd-storage-tile"><div class="lspd-storage-label"><i class="fa-solid fa-images"></i> Supabase File Storage</div><strong>Not connected</strong><div class="lspd-storage-track"></div><small>Uploaded files and storage quota require secure provider usage reporting.</small></article>
- <article class="lspd-storage-tile"><div class="lspd-storage-label"><i class="fa-solid fa-cloud"></i> Cloudflare Workers</div><strong>Not connected</strong><div class="lspd-storage-track"></div><small>Requests are not file storage. Cloudflare usage needs provider reporting.</small></article>
- <article class="lspd-storage-tile"><div class="lspd-storage-label"><i class="fa-solid fa-laptop"></i> Browser Storage</div><strong id="lspdStorageLocal">Calculating…</strong><div class="lspd-storage-track"><div id="lspdStorageBar"></div></div><small id="lspdStorageQuota">This device only · Browser quotas vary</small></article></div>
- <div class="lspd-storage-bottom"><article class="lspd-storage-panel"><h3><i class="fa-solid fa-chart-pie"></i> Local Data Breakdown</h3><p>Largest items saved in this browser. These are not Supabase database totals.</p><div id="lspdStorageRows"></div></article><article class="lspd-storage-panel"><h3><i class="fa-solid fa-shield-halved"></i> Limits &amp; Warnings</h3><div class="lspd-storage-notice"><i class="fa-solid fa-circle-info"></i><span><b>80% warning / 95% critical</b><br>Warnings will activate for services once verified usage and limits are connected.</span></div><p>No estimated or fictional cloud figures are shown.</p><p>Check provider dashboards for current cloud usage:</p><p><a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer">Supabase dashboard ↗</a> · <a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare dashboard ↗</a></p><small id="lspdStorageUpdated"></small></article></div>`;
- host.prepend(root);root.querySelector('#lspdStorageRefresh').onclick=update;update();}
- async function update(){const el=document.getElementById('lspdStorage');if(!el)return;const {total,rows}=localStats();el.querySelector('#lspdStorageLocal').textContent=fmt(total)+' stored';el.querySelector('#lspdStorageRows').innerHTML=rows.length?rows.slice(0,8).map(x=>`<div class="lspd-storage-row"><span title="${esc(x.k)}">${esc(x.k)}</span><b>${fmt(x.b)}</b></div>`).join(''):'<p>No browser records found.</p>';
- const quota=el.querySelector('#lspdStorageQuota'),bar=el.querySelector('#lspdStorageBar');bar.style.width='0%';quota.textContent='LocalStorage size on this device; browser quota not reported';
- // StorageManager estimates origin-wide storage (including caches), not localStorage alone.
- try{if(navigator.storage?.estimate){const s=await navigator.storage.estimate();if(!document.getElementById('lspdStorage'))return;if(s.quota&&Number.isFinite(s.usage)){quota.textContent=`Entire website origin: ${fmt(s.usage)} of ~${fmt(s.quota)} browser-estimated quota`;const pct=s.usage/s.quota*100;bar.style.width=Math.min(100,pct)+'%';bar.style.background=pct>=95?'#f45e72':pct>=80?'#f4b94e':'#3aabec';}}}catch{}
- el.querySelector('#lspdStorageUpdated').textContent='Local figures refreshed '+new Date().toLocaleString();}
- // Settings is rebuilt by existing scripts; defer to their render then add our panel.
- document.addEventListener('click',e=>{if(e.target.closest('[data-section="settings"],#efHeaderAccountToggle')){setTimeout(mount,150);setTimeout(mount,550)}});
- const host=document.getElementById('extraContent');if(host){new MutationObserver(()=>{if(!document.getElementById('lspdStorage')&&document.getElementById('extraTitle')?.textContent?.trim().toLowerCase()==='settings')queueMicrotask(mount)}).observe(host,{childList:true});}
- window.addEventListener('efdb-auth-login',()=>setTimeout(mount,200));setTimeout(mount,400);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Number.isFinite(Number(n))?new Intl.NumberFormat('en-GB',{maximumFractionDigits:2}).format(Number(n)/1048576)+' MB':'Unavailable';
+const bytes=s=>new Blob([s]).size;
+const root=()=>document.getElementById('lspdStorage');
+function localStats(){let total=0,rows=[];try{for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i),v=localStorage.getItem(k)||'',b=bytes(k)+bytes(v);total+=b;rows.push({k,b});}}catch{}return {total,rows:rows.sort((a,b)=>b.b-a.b)};}
+function tile(title,id,description){return `<article class="lspd-storage-tile"><div class="lspd-storage-label">${title}</div><strong id="${id}">Checking…</strong><div class="lspd-storage-track"><div id="${id}Bar"></div></div><small id="${id}Note">${description}</small></article>`;}
+async function refresh(){let el=root();if(!el)return;
+ const local=localStats();el.querySelector('#lspdLocal').textContent=fmt(local.total)+' stored';
+ el.querySelector('#lspdStorageRows').innerHTML=local.rows.slice(0,8).map(r=>`<div class="lspd-storage-row"><span title="${esc(r.k)}">${esc(r.k)}</span><b>${fmt(r.b)}</b></div>`).join('')||'<p>No browser records.</p>';
+ try{if(navigator.storage?.estimate){const e=await navigator.storage.estimate();if(e.quota&&Number.isFinite(e.usage)){el.querySelector('#lspdLocalNote').textContent=`Origin estimate ${fmt(e.usage)} of ~${fmt(e.quota)} browser quota`;let pct=e.usage/e.quota*100;const bar=el.querySelector('#lspdLocalBar');bar.style.width=Math.min(100,pct)+'%';bar.style.background=pct>=95?'#f45e72':pct>=80?'#f4b94e':'#3aabec';}}}catch{}
+ try{const r=await window.EFDBAuth.request('/storage-usage',{});el=root();if(!el)return;
+ const sup=r.supabase||{};if(sup.status==='connected'){
+ el.querySelector('#lspdDatabase').textContent=fmt(sup.database_bytes);
+ el.querySelector('#lspdDatabaseNote').textContent='Actual database size · Provider plan limit not available';
+ el.querySelector('#lspdFiles').textContent=fmt(sup.file_storage_bytes);
+ el.querySelector('#lspdFilesNote').textContent=`${Number(sup.file_count||0).toLocaleString()} stored objects · Provider plan limit not available`;
+ }else for(const [id,defaultText] of [['lspdDatabase','Database'],['lspdFiles','File storage']]){el.querySelector('#'+id).textContent='Not connected';el.querySelector('#'+id+'Note').textContent=sup.message||defaultText+' metrics unavailable';}
+ const cf=r.cloudflare||{};el.querySelector('#lspdCloudflare').textContent=cf.status==='connected'?Number(cf.requests_24h||0).toLocaleString()+' requests':'Not connected';el.querySelector('#lspdCloudflareNote').textContent=cf.status==='connected'?'Last 24 hours · Account-wide Workers · No quota available':cf.message||'Add CF_ACCOUNT_ID and CF_API_TOKEN as Worker secrets';
+ el.querySelector('#lspdStorageUpdated').textContent='Cloud figures checked '+new Date(r.checked_at).toLocaleString();
+ }catch(err){el=root();if(el)el.querySelector('#lspdStorageUpdated').textContent='Could not load usage: '+err.message;}
+}
+let loading=false;
+async function mount(){if(loading||root()||!window.EFDBAuth?.loggedIn)return;
+ const host=document.getElementById('extraContent');if(!host||document.getElementById('extraTitle')?.textContent?.trim().toLowerCase()!=='settings')return;
+ loading=true;try{
+ // Do not display even the dashboard to a role without the server-side permission.
+ const initial=await window.EFDBAuth.request('/storage-usage',{});
+ if(document.getElementById('extraTitle')?.textContent?.trim().toLowerCase()!=='settings'||root())return;
+ const section=document.createElement('section');section.id='lspdStorage';section.className='lspd-storage';
+ section.innerHTML=`<div class="lspd-storage-head"><div><h2>Storage &amp; Usage</h2><p>Read-only usage statistics · Cloud plan limits are not automatically available</p></div><button type="button" id="lspdStorageRefresh">Refresh</button></div><div class="lspd-storage-grid">${tile('Supabase Database','lspdDatabase','Database usage')}${tile('Supabase File Storage','lspdFiles','Stored object usage')}${tile('Cloudflare Workers','lspdCloudflare','Requests in the last 24 hours')}${tile('Browser Storage','lspdLocal','This device only')}</div><div class="lspd-storage-bottom"><article class="lspd-storage-panel"><h3>Local Data Breakdown</h3><div id="lspdStorageRows"></div></article><article class="lspd-storage-panel"><h3>Limits &amp; Warnings</h3><p>80% warning / 95% critical applies only where a real quota is available. Cloud plan quotas are not reported here; no invented percentages are displayed.</p><p><a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer">Supabase Dashboard</a> · <a href="https://dash.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Dashboard</a></p><small id="lspdStorageUpdated"></small></article></div>`;
+ host.prepend(section);section.querySelector('#lspdStorageRefresh').addEventListener('click',refresh);
+ // Refresh obtains fresh server-side data; initial authorization already checked.
+ await refresh();
+ }catch(e){if(e.message!=='Forbidden')console.warn('Storage dashboard:',e.message);}finally{loading=false;}}
+ document.addEventListener('click',e=>{if(e.target.closest('[data-section="settings"],#efHeaderAccountToggle')){setTimeout(mount,180);setTimeout(mount,550);}});
+ const host=document.getElementById('extraContent');if(host)new MutationObserver(()=>{if(!root()&&document.getElementById('extraTitle')?.textContent?.trim().toLowerCase()==='settings')queueMicrotask(mount);}).observe(host,{childList:true});
+ window.addEventListener('efdb-auth-login',()=>setTimeout(mount,250));setTimeout(mount,500);
 })();
