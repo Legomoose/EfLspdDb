@@ -3,5 +3,5 @@
    Find it in Supabase Dashboard > Project Settings > API Keys. */
 window.EF8G_REALTIME = {
   url: 'https://cbnmxrqhpebojosuowic.supabase.co',
-  anonKey: 'PASTE_YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE'
+  anonKey: 'sb_publishable_GN3-hUlJDCF1lOYVl3hooA_ZxnU0keF'
 };
