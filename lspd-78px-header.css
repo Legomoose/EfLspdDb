@@ -1,0 +1,14 @@
+/* Single final override: true 2048x78 source, no vertical squashing. */
+html body .header.ef-new-header {
+ box-sizing:border-box!important;
+ height:78px!important;min-height:78px!important;max-height:78px!important;
+ flex:0 0 78px!important;
+ background-image:url("assets/lspd-78px-header.webp")!important;
+ background-size:cover!important;
+ background-position:center center!important;
+ background-repeat:no-repeat!important;
+ padding:8px 12px!important;
+ overflow:hidden!important;
+}
+html body .header.ef-new-header::before,html body .header.ef-new-header::after {display:none!important;content:none!important}
+@media(max-width:650px){html body .header.ef-new-header{height:78px!important;min-height:78px!important;max-height:78px!important;flex-basis:78px!important}}
