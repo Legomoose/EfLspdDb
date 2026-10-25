@@ -45,7 +45,7 @@ function syncAccounts(accounts){
      rows.find(p=>!p.account_id&&!p.accountId&&a.badge_number&&p.badge===a.badge_number)||
      rows.find(p=>!p.account_id&&!p.accountId&&p.name?.trim().toLowerCase()===a.display_name.trim().toLowerCase())||{};
    const profile={...entry,account_id:a.id,accountId:a.id,name:a.display_name,
-     rank:(a.role||'detective').replaceAll('_',' '),role:a.role,
+     rank:(a.role==='high_command'?'High Command':(a.role||'detective').replaceAll('_',' ')),role:a.role,
      badge:a.badge_number||'',callsign:a.callsign||'',
      photo:a.profile_photo_path||'',active:a.active!==false};
    const idx=clean.findIndex(p=>(p.account_id||p.accountId)===a.id);
