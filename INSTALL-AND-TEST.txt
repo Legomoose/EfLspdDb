@@ -1,0 +1,17 @@
+EFLSPDDB PHASE 8H-5 - VEHICLES AND CRIMINAL ITEMS
+
+Upload these THREE files into the GitHub repository root, replacing the existing index.html and eflspddb-bundle-2.js:
+- index.html
+- eflspddb-bundle-2.js
+- phase8h5-vehicles-items.js
+
+This package is based on your last uploaded full repository plus the Phase 8H-4 patch.
+IMPORTANT: Install Phase 8H-4 first if you haven't already; the two updated files in this package include its changes.
+
+After Cloudflare deployment, hard refresh PC and laptop. Create a NEW vehicle and a NEW criminal item; verify they appear on the other device, then test editing and deletion.
+
+Existing browser-only records without IDs are NOT bulk uploaded. These can be edited to assign an ID and shared after the sync has initialized. Large embedded images may exceed the backend record limit.
+
+This is NOT a completed full-site sync release. The High Command roster already uses shared backend records; personnel account directory uses account data, but other custom personnel data and department documents still require a separate verified migration. Do not wipe test data yet.
+
+The ZIP and JavaScript syntax were checked, but multi-device behaviour has not been verified. Keep a GitHub backup and test before treating as production ready.
