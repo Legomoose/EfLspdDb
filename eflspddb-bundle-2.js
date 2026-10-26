@@ -335,7 +335,7 @@ const KEY='eflspddb_investigation_files_v1', RKEY='eflspddb_detective_roster_v1'
 const get=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
 let files=get(KEY,[]),roster=get(RKEY,[]),editing=null,photos=[],videoLinks=[],linked=[];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','"':'&quot;',"'":'&#39;'}[c]));
-const store=()=>{try{localStorage.setItem(KEY,JSON.stringify(files));localStorage.setItem(RKEY,JSON.stringify(roster));return true}catch{alert('Browser storage is full. Reduce the size of uploaded photos or export your data.');return false}};
+const store=()=>{try{localStorage.setItem(KEY,JSON.stringify(files));localStorage.setItem(RKEY,JSON.stringify(roster));window.EF8H?.onLocalSave?.(files);return true}catch{alert('Browser storage is full. Reduce the size of uploaded photos or export your data.');return false}};
 const oldRenderRecords=renderRecords;
 const oldRenderExtra=renderExtra;
 const oldShowSection=showSection;
@@ -364,6 +364,7 @@ document.getElementById('caseAddVideo').onclick=()=>{const el=document.getElemen
 document.getElementById('caseVideos').onclick=e=>{const b=e.target.closest('[data-removevideo]');if(b){videoLinks.splice(+b.dataset.removevideo,1);refreshVideos()}};
 document.getElementById('caseFileForm').onsubmit=e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f).entries());if(files.some(c=>c.number.toLowerCase()===d.number.trim().toLowerCase()&&c.id!==editing))return alert('Case number already exists.');const obj={id:editing||('case-'+Date.now()),number:d.number.trim(),title:d.title.trim(),status:d.status,detective:d.detective,location:d.location,suspect:d.suspect,gang:d.gang,description:d.description,photos:[...photos],videos:[...videoLinks],linked:[...document.querySelectorAll('#caseLinkedPins input:checked')].map(x=>x.value),updated:new Date().toISOString()};const prev=[...files];if(editing)files=files.map(x=>x.id===editing?obj:x);else files.unshift(obj);if(!store()){files=prev;return}closeEditor();renderRecords();render()};
 window.EFCaseFiles={list:()=>files.map(f=>({...f})),open:id=>openEditor(files.find(f=>f.id===id)),create:()=>openEditor(),setRoster:names=>{roster=[...new Set(names.filter(Boolean))];store()},getRoster:()=>[...roster]};
+window.EF8HApplyRemoteCase=function(record){if(!record||typeof record.id!=='string')return false;const i=files.findIndex(x=>x.id===record.id);if(i>=0)files[i]=record;else files.unshift(record);try{localStorage.setItem(KEY,JSON.stringify(files));renderRecords();render();return true}catch{return false}};
 document.getElementById('manageDetectives').onclick=()=>window.EFManageDetectives?.();
 document.getElementById('caseFileSearch').oninput=()=>renderRecords();
 document.getElementById('caseFileFilter').onchange=()=>renderRecords();
