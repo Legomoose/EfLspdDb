@@ -1,0 +1,20 @@
+/* Phase 8I: narrow-window layout without changing the desktop theme. */
+.workspace{min-width:0!important}
+.workspace>.center{min-width:0!important;overflow:auto!important}
+.workspace>.leftpanel,.workspace>.rightpanel{flex-shrink:0!important;min-width:0!important}
+.recordsview,.recordsview *{max-width:100%;box-sizing:border-box}
+.recordsview .pagehead,.recordsview .db-card{min-width:0}
+.recordsview .pagehead{flex-wrap:wrap;gap:12px}
+.recordsview .db-card{overflow-wrap:anywhere}
+.recordsview .db-card button{white-space:normal}
+@media(max-width:1050px){
+ .header.ef-new-header{min-width:0!important}
+ .ef-header-identity,.ef-header-right{min-width:0!important}
+ .recordsview{padding:16px!important}
+ .recordsview .db-card{padding:12px!important}
+}
+@media(max-width:680px){
+ .recordsview{padding:10px!important}
+ .recordsview .pagehead h2{font-size:18px!important}
+ .modal{max-width:calc(100vw - 20px)!important}
+}
