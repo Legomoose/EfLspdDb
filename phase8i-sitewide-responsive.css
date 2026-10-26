@@ -1,0 +1,44 @@
+/* Phase 8I revised: site-wide responsive layout. Loaded after original styles. */
+.workspace {min-width:0!important; width:100%;}
+.workspace>.center {min-width:0!important; width:auto!important; overflow:hidden!important;}
+.workspace>.center .recordsview {min-width:0; max-width:100%; overflow:auto;}
+.recordsview #extraContent, .recordsview #extraContent > *, .recordsview .pagehead,
+.recordsview .db-card, .recordsview .ef-contact-card,
+.recordsview .ef-profile-card {min-width:0; max-width:100%; box-sizing:border-box;}
+.recordsview .pagehead {display:flex;flex-wrap:wrap;gap:12px;}
+.recordsview .pagehead h2 {min-width:0; overflow-wrap:break-word;}
+.recordsview .ef-contact-card {display:flex!important;flex-wrap:wrap!important;gap:12px!important;align-items:flex-start!important;}
+.recordsview .ef-contact-info {flex:1 1 240px!important;min-width:0!important;max-width:100%!important;overflow-wrap:break-word!important;word-break:normal!important;}
+.recordsview .ef-contact-actions,.recordsview .ef-contact-tools {display:flex!important;flex:0 1 auto!important;flex-wrap:wrap!important;gap:6px!important;max-width:100%!important;}
+.recordsview .ef-contact-card button {white-space:normal;overflow-wrap:normal;}
+.recordsview .ef8g-directory, .recordsview .ef-intel-grid,
+.recordsview .ef5-grid, .recordsview .ef-report-grid,
+.recordsview .ef-loc-case-grid, .recordsview .ef-gang-member-grid,
+.recordsview .business-grid, .recordsview .lspd-storage-grid {grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))!important;}
+.recordsview .ef-profile-card,.recordsview .ef-directory-detail {min-width:0!important;overflow-wrap:break-word!important;word-break:normal!important;}
+.recordsview .ef-profile-card *,.recordsview .ef-contact-card * {min-width:0;}
+.recordsview .tablewrap {max-width:100%;overflow-x:auto;}
+.recordsview .tablewrap table {min-width:620px;}
+/* At reduced desktop widths, use the overview as a retractable rail, not half the screen. */
+@media (min-width:851px) and (max-width:1599px) {
+ .workspace {display:grid!important;grid-template-columns:clamp(220px,22vw,290px) minmax(0,1fr) 42px!important;}
+ .workspace.left-collapsed {grid-template-columns:42px minmax(0,1fr) 42px!important;}
+ .workspace.responsive-detail-open {grid-template-columns:clamp(220px,22vw,290px) minmax(0,1fr) clamp(290px,28vw,380px)!important;}
+ .workspace.responsive-detail-open.left-collapsed {grid-template-columns:42px minmax(0,1fr) clamp(290px,28vw,380px)!important;}
+ .workspace:not(.responsive-detail-open)>.rightpanel>.panel-inner {display:none!important;}
+ .workspace>.leftpanel,.workspace>.rightpanel {width:auto!important;min-width:0!important;}
+ .workspace>.rightpanel {overflow:hidden!important;}
+ .workspace>.rightpanel .right-toggle {display:block!important;visibility:visible!important;}
+ .workspace>.center .recordsview {padding:clamp(12px,2vw,26px)!important;}
+}
+@media (max-width:850px) {
+ .workspace {display:flex!important;flex-direction:column!important;}
+ .workspace>.leftpanel {width:100%!important;max-height:230px;flex:none!important;}
+ .workspace>.center {width:100%!important;min-height:530px;flex:none!important;}
+ .workspace>.rightpanel {width:100%!important;min-height:0;flex:none!important;}
+ .recordsview {padding:12px!important;}
+ .recordsview .ef-contact-card {flex-direction:column!important;}
+ .recordsview .ef-contact-info {flex-basis:auto!important;}
+ .recordsview .ef-contact-actions,.recordsview .ef-contact-tools {width:100%;}
+ .recordsview .ef8g-directory,.recordsview .ef-intel-grid,.recordsview .ef5-grid {grid-template-columns:minmax(0,1fr)!important;}
+}
