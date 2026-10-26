@@ -1,0 +1,13 @@
+/* Pin Editor: independent scroll region, movable header, and manual resizing. */
+#caseModal #caseForm { box-sizing:border-box!important; min-width: min(560px, calc(100vw - 12px))!important; min-height: min(410px, calc(100dvh - 12px))!important; }
+#caseModal #caseForm .efx-body { flex:1 1 auto!important; min-height:0!important; height:0!important; overflow-y:auto!important; overflow-x:hidden!important; overscroll-behavior:contain!important; scrollbar-width:auto!important; scrollbar-color:#5b83b4 #10243d!important; }
+#caseModal #caseForm .efx-body::-webkit-scrollbar {width:12px}
+#caseModal #caseForm .efx-body::-webkit-scrollbar-thumb {background:#5b83b4;border:2px solid #10243d;border-radius:10px}
+#caseModal #caseForm .modalhead {cursor:move;user-select:none;touch-action:none}
+#caseModal #caseForm .modalhead button {cursor:pointer;touch-action:auto}
+#caseModal #caseForm.ef-manual-window {position:fixed!important;left:var(--ef-pin-left)!important;top:var(--ef-pin-top)!important;width:var(--ef-pin-width)!important;height:var(--ef-pin-height)!important;max-width:calc(100vw - 8px)!important;max-height:calc(100dvh - 8px)!important;margin:0!important;transform:none!important}
+#caseModal.ef-editor-expanded #caseForm.ef-manual-window {position:relative!important;left:auto!important;top:auto!important;width:calc(100vw - 28px)!important;height:calc(100dvh - 86px)!important;max-width:calc(100vw - 28px)!important;max-height:calc(100dvh - 86px)!important}
+#caseModal #efPinResizeGrip {position:absolute;right:2px;bottom:2px;width:27px;height:27px;z-index:12;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 54%,#77b8ff 55%,#77b8ff 59%,transparent 60%,transparent 70%,#77b8ff 71%,#77b8ff 75%,transparent 76%);border-radius:0 0 9px 0}
+#caseModal.ef-editor-expanded #efPinResizeGrip {display:none}
+#caseModal #caseForm .modalactions {padding-right:35px!important}
+@media(max-width:600px){#caseModal #caseForm .modalhead{touch-action:auto}#caseModal #efPinResizeGrip{display:none}}
