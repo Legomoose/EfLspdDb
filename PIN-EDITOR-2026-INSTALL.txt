@@ -1,0 +1,7 @@
+EFLSPDDB PIN EDITOR UPDATE
+
+Upload all contents of this folder to GitHub repository root. Back up the current deployment first. No Worker or Supabase migration included.
+
+Included: category/subcategory buttons, six marker shapes saved with records, live preview, colour and HEX, existing icon library and custom images, constrained responsive modal and fixed footer.
+
+IMPORTANT: Existing custom image uploads remain browser-local; cross-device custom-image upload sync is not newly implemented. This build has passed static JavaScript syntax tests but requires browser testing before production.
