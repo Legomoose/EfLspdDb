@@ -1,0 +1,21 @@
+/* Sidebar scroll repair 2026-10-26: keep both dropdowns fully sized in the scrolling panel. */
+.workspace>.leftpanel{overflow:hidden!important;min-height:0!important;}
+.workspace>.leftpanel>.panel-inner{
+  height:100%!important;min-height:0!important;max-height:100%!important;
+  overflow-x:hidden!important;overflow-y:auto!important;
+  scrollbar-width:thin!important;scrollbar-color:#4d7eb3 #091b31!important;
+  overscroll-behavior-y:contain;
+}
+.workspace>.leftpanel>.panel-inner::-webkit-scrollbar{width:9px!important;height:9px!important;}
+.workspace>.leftpanel>.panel-inner::-webkit-scrollbar-track{background:#091b31!important;}
+.workspace>.leftpanel>.panel-inner::-webkit-scrollbar-thumb{background:#4d7eb3!important;border:2px solid #091b31!important;border-radius:9px!important;}
+.workspace>.leftpanel>.panel-inner>.sidebar-dropdown,
+.workspace>.leftpanel>.panel-inner>.separator,
+.workspace>.leftpanel>.panel-inner>.ef-primary-navigation,
+.workspace>.leftpanel>.panel-inner>#addPinBtn,
+.workspace>.leftpanel>.panel-inner>.pin-choice,
+.workspace>.leftpanel>.panel-inner>h3 {flex-shrink:0!important;}
+.workspace>.leftpanel .sidebar-dropdown{min-height:min-content!important;flex:0 0 auto!important;}
+.workspace>.leftpanel .sidebar-dropdown[open]>.category-list,
+.workspace>.leftpanel .sidebar-dropdown[open]>.dropdown-content{height:auto!important;max-height:none!important;overflow:visible!important;}
+.workspace>.leftpanel .sidebar-dropdown:not([open]){min-height:0!important;}
