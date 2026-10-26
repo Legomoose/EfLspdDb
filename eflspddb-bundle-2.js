@@ -1508,11 +1508,11 @@ function syncAccounts(accounts){
    let entry=clean.find(p=>(p.account_id||p.accountId)===a.id)||
      rows.find(p=>!p.account_id&&!p.accountId&&a.badge_number&&p.badge===a.badge_number)||
      rows.find(p=>!p.account_id&&!p.accountId&&p.name?.trim().toLowerCase()===a.display_name.trim().toLowerCase())||{};
-   const profile={...entry,account_id:a.id,accountId:a.id,name:a.display_name,
-     rank:(a.role==='high_command'?'High Command':(a.role||'detective').replaceAll('_',' ')),role:a.role,
-     badge:a.badge_number||'',callsign:a.callsign||'',
+   const profile={...entry,account_id:a.id,accountId:a.id,name:entry.sharedPersonnelOverride?entry.name:a.display_name,
+     rank:entry.sharedPersonnelOverride?entry.rank:(a.role==='high_command'?'High Command':(a.role||'detective').replaceAll('_',' ')),role:a.role,
+     badge:entry.sharedPersonnelOverride?entry.badge:(a.badge_number||''),callsign:entry.sharedPersonnelOverride?entry.callsign:(a.callsign||''),
      photo:a.profile_photo_path||'',active:a.active!==false};
-   const idx=clean.findIndex(p=>(p.account_id||p.accountId)===a.id);
+   const idx=clean.findIndex(p=>(p.account_id||p.accountId)===a.id||!!(a.badge_number&&String(p.badge||'').trim()===String(a.badge_number).trim())||!!(a.callsign&&String(p.callsign||'').trim().toLowerCase()===String(a.callsign).trim().toLowerCase()));
    if(idx>=0)clean[idx]=profile;else clean.push(profile);
  }
  try{localStorage.setItem(PROFILE_KEY,JSON.stringify(clean));
