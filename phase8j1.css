@@ -1,0 +1,6 @@
+#ef8jPersonnelDialog .ef-dialog{max-width:520px;max-height:90vh;overflow-y:auto}
+#ef8jPersonnelForm{display:grid;gap:12px;padding:16px}
+#ef8jPersonnelForm label{display:grid;gap:6px;color:#c7dfff}
+#ef8jPersonnelForm input,#ef8jPersonnelForm textarea,#ef8jDetective{width:100%;min-width:0;padding:10px;border-radius:6px;background:#10243d;border:1px solid #42668c;color:#fff}
+.ef8j-edit{margin:8px 12px 12px;padding:8px 10px;background:#244b78;color:white;border:1px solid #5378a0;border-radius:6px;cursor:pointer}
+#ef8jPersonnelError{color:#ffb5b5}

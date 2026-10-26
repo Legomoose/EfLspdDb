@@ -1,0 +1,8 @@
+/* Phase 8J-1: detective dropdown for criminal item ownership. */
+(()=>{'use strict';
+function names(){const result=[];const add=(name,callsign)=>{name=String(name||'').trim();if(!name||result.some(x=>x.name.toLowerCase()===name.toLowerCase()))return;result.push({name,callsign:String(callsign||'').trim()})};
+try{const rows=JSON.parse(localStorage.getItem('eflspddb_detective_profiles_v1')||'[]');if(Array.isArray(rows))rows.filter(x=>x.active!==false&&x.role!=='high_command').forEach(x=>add(x.name,x.callsign))}catch{}
+ document.querySelectorAll('#efDirectoryGrid .ef8g-detective').forEach(el=>add(el.querySelector('.ef8g-detective-name')?.textContent,''));return result.sort((a,b)=>a.name.localeCompare(b.name))}
+function update(){const overlay=document.getElementById('itemOverlay');if(!overlay||overlay.querySelector('#ef8jDetective'))return;const input=overlay.querySelector('input[name="addedBy"]');if(!input)return;const select=document.createElement('select');select.id='ef8jDetective';select.name='addedBy';select.required=true;const original=input.value;const rows=names();const empty=document.createElement('option');empty.value='';empty.textContent='Select detective';select.append(empty);for(const r of rows){const option=document.createElement('option');option.value=r.name;option.textContent=r.callsign?`${r.name} (${r.callsign})`:r.name;select.append(option)}if(original&&!rows.some(x=>x.name===original)){const option=document.createElement('option');option.value=original;option.textContent=original+' (existing)';select.append(option)}select.value=original||'';input.replaceWith(select)}
+new MutationObserver(update).observe(document.body,{childList:true,subtree:true});update();
+})();
