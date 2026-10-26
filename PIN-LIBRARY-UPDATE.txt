@@ -1,0 +1,8 @@
+EFLSPDDB Phase 8M — Pin Library visual refresh
+
+Includes redesigned icon grid, selection styling, compact modal, custom image upload panel and existing icon picker preserved.
+
+Does NOT add new pin style data types, database image synchronisation or change existing Investigation workflow. Those require separate implementation/testing.
+
+Deploy the ZIP contents to GitHub repository root. Keep backup. Test pin creation/edit/delete, uploads, locking, map placement and cross-device sync before relying on production.
+No Worker or Supabase changes.
