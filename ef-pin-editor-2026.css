@@ -1,0 +1,32 @@
+/* EFLSPDDB unified pin editor: layout-only enhancement; preserves original form and event handlers */
+#caseModal{padding:20px!important;align-items:center!important;overflow:hidden!important;z-index:3500!important}
+#caseModal #caseForm{width:min(1100px,calc(100vw - 40px))!important;max-width:1100px!important;height:min(91dvh,940px)!important;max-height:91dvh!important;min-height:0!important;display:flex!important;flex-direction:column!important;padding:0!important;border:1px solid #315f94!important;border-radius:15px!important;overflow:hidden!important;background:linear-gradient(150deg,#0d213d,#07172b)!important;box-shadow:0 25px 90px #000c!important}
+#caseModal .modalhead{margin:0!important;padding:17px 22px 6px!important;border-bottom:0!important;flex-shrink:0!important}
+#caseModal .modalhead h2{font-size:21px!important;letter-spacing:.4px!important;color:#e6f1ff!important}
+#caseModal .ef-pin-subtitle{margin:0!important;padding:0 22px 13px;color:#a3bde0;font-size:12px;border-bottom:1px solid #294767;flex-shrink:0}
+#caseModal .ef-pin-category-picker{padding:14px 20px 8px;flex-shrink:0}
+#caseModal .ef-pin-section-label{font-size:11px;font-weight:800;color:#86bcff;letter-spacing:1px;margin-bottom:9px}
+#caseModal .ef-pin-category-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+#caseModal .ef-pin-category{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;min-height:73px;padding:9px 5px;border:1px solid #30557c;border-radius:9px;background:#132946;color:#cfe2ff;font-size:11px;font-weight:700;line-height:1.2}
+#caseModal .ef-pin-category:hover{border-color:#69b1ff;background:#193b67}
+#caseModal .ef-pin-category.is-selected{border-color:#409cff;box-shadow:inset 0 0 0 1px #409cff,0 0 14px #2682ff33;background:#194276;color:white}
+#caseModal .ef-pin-category-emoji{font-size:23px}
+#caseModal #caseForm .formgrid{padding:12px 20px 24px!important;overflow:auto!important;min-height:0!important;align-content:start!important;gap:14px!important;scrollbar-color:#4475a9 #10253f}
+#caseModal .formgrid>label{font-weight:600}
+#caseModal .formgrid input:not([type=radio]):not([type=checkbox]),#caseModal .formgrid select,#caseModal .formgrid textarea{border-radius:7px!important;background:#07182f!important;border-color:#35587f!important;padding:11px!important}
+#caseModal .markersection{border:1px solid #315b85!important;background:#0e2747!important;border-radius:11px!important;padding:16px!important}
+#caseModal .markersection>strong{color:#94c7ff!important;letter-spacing:.7px}
+#caseModal .modalactions{padding:13px 20px!important;margin:0!important;border-top:1px solid #315377!important;flex-shrink:0!important;background:#0b1d36!important;position:static!important}
+#caseModal .modalactions button{border-radius:8px!important}
+#caseModal .modalactions button[type=submit]{background:linear-gradient(135deg,#2375ed,#1662c4)!important;border-color:#378bf9!important}
+#caseModal #efExpandPinEditor{background:#18314e!important;border-color:#476b94!important;color:#d8eaff!important}
+#caseModal.ef-editor-expanded{padding:0!important}
+#caseModal.ef-editor-expanded #caseForm{width:100vw!important;max-width:100vw!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important}
+#caseModal .compact-marker-footer{background:#0b203b;border-radius:8px;padding:10px}
+.ef-pin-launcher{background:#0d223e;border:1px solid #3b6da0;border-radius:11px;padding:12px;margin:8px 0 12px;box-shadow:0 10px 24px #0005}
+.ef-pin-launcher-title{color:#a6ceff;font-weight:800;margin-bottom:9px}
+.ef-pin-launcher-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.ef-pin-launcher-grid button{padding:11px 7px;background:#173657;border:1px solid #325d88;border-radius:7px;color:#e3f1ff;text-align:left;font-size:11px}
+.ef-pin-launcher-grid button:hover{background:#23518a;border-color:#5ba9ff}
+@media(max-width:780px){#caseModal{padding:5px!important}#caseModal #caseForm{width:100%!important;height:97dvh!important;max-height:97dvh!important}#caseModal .ef-pin-category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}#caseModal .ef-pin-category{min-height:60px}#caseModal .formgrid{grid-template-columns:1fr!important}#caseModal .formgrid>*{grid-column:1/-1!important}#caseModal .modalhead h2{font-size:16px!important}#caseModal .ef-pin-category-picker{padding:8px 12px}}
+@media(max-height:600px){#caseModal #caseForm{height:97dvh!important;max-height:97dvh!important}#caseModal .ef-pin-category{min-height:52px}}
