@@ -1418,13 +1418,15 @@ new MutationObserver(mount).observe(document.body,{childList:true,subtree:true})
 (()=>{'use strict';
 const KEY='everfall_lspd_cases_satmap_v1',DATASET='cases',TEST='ef8b-sync-test',OPT='ef8e_auto_sync_optin_v1';
 const versions=new Map(),pending=new Map(),pendingDeletes=new Map();let busy=false,ready=false,enabled=true,timer=null,lastLocal=new Map(),lastError='',totalSaved=0,totalReceived=0,lastSuccess=null;
+let urgentTimer=null,rerunAfterBusy=false;
+function schedulePinSync(){clearTimeout(urgentTimer);urgentTimer=setTimeout(()=>{if(busy){rerunAfterBusy=true;return}cycle()},350)}
 const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return []}};
 const eligible=x=>x&&typeof x==='object'&&/^[a-zA-Z0-9_-]{1,100}$/.test(x.id||'')&&x.id!==TEST&&!['EF-26-014','EF-26-011'].includes(x.id);
 const hash=x=>JSON.stringify(x);
 const api=(action,more={})=>window.EFDBAuth.request('/live-records',{dataset:DATASET,action,...more});
 const status=(msg,bad=false)=>{lastError=bad?msg:'';const el=document.getElementById('ef8e-status');if(el){el.textContent=msg;el.style.color=bad?'#ffb3b3':'#a6e4c0'}};
 function snapshot(){lastLocal=new Map(read().filter(eligible).map(x=>[x.id,hash(x)]))}
-window.EF8E={onLocalSave(records){if(!enabled||!ready)return;const now=new Map(records.filter(eligible).map(x=>[x.id,hash(x)]));for(const x of records.filter(eligible)){if(now.get(x.id)!==lastLocal.get(x.id))pending.set(x.id,structuredClone(x))}for(const id of lastLocal.keys()){if(!now.has(id)){pending.delete(id);if(versions.has(id))pendingDeletes.set(id,versions.get(id));else status('Local-only pin removed (not previously shared).',true)}}lastLocal=now;}};
+window.EF8E={onLocalSave(records){if(!enabled||!ready)return;const now=new Map(records.filter(eligible).map(x=>[x.id,hash(x)]));for(const x of records.filter(eligible)){if(now.get(x.id)!==lastLocal.get(x.id))pending.set(x.id,structuredClone(x))}for(const id of lastLocal.keys()){if(!now.has(id)){pending.delete(id);if(versions.has(id))pendingDeletes.set(id,versions.get(id));else status('Local-only pin removed (not previously shared).',true)}}lastLocal=now;if(pending.size||pendingDeletes.size)schedulePinSync();}};
 async function cycle(){if(!enabled||busy||!window.EFDBAuth?.loggedIn||document.visibilityState!=='visible')return;busy=true;try{
 const response=await api('list');const remote=(response.records||[]).filter(x=>x.record_id!==TEST&&x.body?.kind!=='sync-test');const local=new Map(read().filter(eligible).map(x=>[x.id,x]));let imported=0,conflicts=0,saved=0;
 const remoteIds=new Set(remote.map(x=>x.record_id));
@@ -1435,7 +1437,7 @@ if(!local.has(id)){window.EF8EApplyRemote?.(structuredClone(entry.body));importe
 versions.set(id,entry.version)}
 for(const [id,body] of [...pending]){if(JSON.stringify(body).length>240000){pending.delete(id);conflicts++;continue}const existing=remote.find(x=>x.record_id===id);try{if(existing){const known=versions.get(id);if(known===undefined||known!==existing.version){pending.delete(id);conflicts++;continue}const result=await api('update',{id,version:known,body});versions.set(id,result.record.version)}else{const result=await api('create',{id,body});versions.set(id,result.record.version)}pending.delete(id);saved++}catch(e){if(/conflict|already|409/i.test(e.message)){pending.delete(id);conflicts++}else throw e}}
 totalSaved+=saved;totalReceived+=imported;lastSuccess=new Date();snapshot();status(conflicts?`Conflict protection: ${conflicts} change(s) not merged. Local data preserved. Review conflicting records before editing.`:`Synced · ${totalSaved} saved · ${totalReceived} received this session · 60-second fallback`,conflicts>0);
-}catch(e){status('Offline / sync error: '+e.message+'. Local data preserved.',true)}finally{busy=false}}
+}catch(e){status('Offline / sync error: '+e.message+'. Local data preserved.',true)}finally{busy=false;if(rerunAfterBusy){rerunAfterBusy=false;schedulePinSync()}}}
 function mount(){const parent=document.getElementById('ef7bShared');if(!parent||document.getElementById('ef8e-panel'))return;const section=document.createElement('section');section.id='ef8e-panel';section.className='db-card';section.style.cssText='border:1px solid #3c705c;padding:16px;border-radius:10px;margin-top:16px;background:#0b172a;color:#e5f1eb';section.innerHTML='<h3>PHASE 8E · AUTOMATIC PIN SYNC</h3><p>Automatic sharing is always enabled while logged in. New pins and updates use live notifications with a 60-second fallback. Existing local pins are NOT bulk-uploaded. Shared pin deletion is enabled for records already synchronised.</p><p id="ef8e-status" role="status">Waiting for login…</p><small>Shared pins sync automatically. Conflict protection preserves local copies for manual review. This uses polling with live notifications when configured.</small>';parent.append(section);status('Connecting when signed in…')}
 new MutationObserver(mount).observe(document.body,{childList:true,subtree:true});mount();snapshot();
 window.addEventListener('efdb-auth-login',()=>{snapshot();ready=true;if(enabled)cycle()});window.addEventListener('efdb-auth-logout',()=>{ready=false;pending.clear();pendingDeletes.clear();versions.clear();status('Signed out — sync paused')});
@@ -1444,6 +1446,7 @@ timer=setInterval(()=>{if(enabled&&window.EFDBAuth?.loggedIn&&document.visibilit
 window.addEventListener('focus',()=>{if(enabled&&window.EFDBAuth?.loggedIn){ready=true;cycle()}});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&enabled&&window.EFDBAuth?.loggedIn){ready=true;cycle()}});
 window.addEventListener('online',()=>{if(enabled&&window.EFDBAuth?.loggedIn){ready=true;cycle()}});
+window.addEventListener('efdb-realtime-changed',()=>{if(enabled&&window.EFDBAuth?.loggedIn){ready=true;schedulePinSync()}});
 })();
 ;
 

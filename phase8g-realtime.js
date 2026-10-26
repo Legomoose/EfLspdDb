@@ -15,7 +15,7 @@ function mount(){const p=document.getElementById('ef8e-panel');if(!p)return;
  show(!configured?'Live notifications need a Supabase publishable key (polling still works)':!opted()?'Live notifications paused':!logged()?'Sign in for live notifications':connected?'Live notifications connected':'Connecting live notifications…',!configured);
 }
 function promptRefresh(){if(!opted()||!logged()||document.hidden)return;
- clearTimeout(refreshTimer);refreshTimer=setTimeout(()=>{const now=Date.now();if(now-lastRefresh<2000||document.hidden)return;lastRefresh=now;window.dispatchEvent(new Event('focus'));},350);
+ clearTimeout(refreshTimer);refreshTimer=setTimeout(()=>{const now=Date.now();if(now-lastRefresh<2000||document.hidden)return;lastRefresh=now;window.dispatchEvent(new Event('efdb-realtime-changed'));window.dispatchEvent(new Event('focus'));},350);
 }
 function notify(){if(!connected||!channel||!opted()||!logged())return;
  const now=Date.now();if(now-lastSignal<300)return;lastSignal=now;
