@@ -20,7 +20,7 @@ const preview=document.createElement('section');preview.className='efx-preview';
 right.append(preview);
 const styles=document.createElement('section');styles.className='efx-styles';styles.innerHTML='<div class="efx-label">PIN STYLE</div><div class="efx-style-grid"></div><div class="efx-label efx-color-title">PIN COLOUR</div><div class="efx-swatches"></div><div class="efx-color-controls"><input type="text" id="efxHex" maxlength="7" aria-label="HEX colour" value="#348dff"><button type="button" id="efxPickColor">🎨 Choose</button></div>';
 right.append(styles);
-const styleOptions=[['standard','Standard','📍'],['ring','Ring','♧'],['square','Square','▣'],['diamond','Diamond','◆'],['circle','Circle','●'],['hexagon','Hexagon','⬡']];
+const styleOptions=[['standard','Standard','♧'],['ring','Ring','◎'],['square','Square','▣'],['diamond','Diamond','◆'],['circle','Circle','●'],['hexagon','Hexagon','⬡']];
 const shape=form.elements.markerShape;
 function button(icon,label,cls,fn){const b=document.createElement('button');b.type='button';b.className=cls;b.innerHTML='<span aria-hidden="true">'+icon+'</span><span>'+label+'</span>';b.addEventListener('click',fn);return b;}
 function setCategory(category){if(![...select.options].some(x=>x.value===category))return;select.value=category;select.dispatchEvent(new Event('change',{bubbles:true}));update();}
@@ -28,6 +28,9 @@ function setMain(label){const first=select.value;const sub=aliases[first]===labe
 main.forEach(([ico,label])=>mainSection.querySelector('.efx-main-grid').append(button(ico,label,'efx-main-btn',()=>setMain(label))));
 subs.forEach(([ico,label])=>subsSection.querySelector('.efx-sub-grid').append(button(ico,label,'efx-sub-btn',()=>setCategory(label))));
 styleOptions.forEach(([key,label,ico])=>styles.querySelector('.efx-style-grid').append(button(ico,label,'efx-style-btn',()=>{shape.value=key;shape.dispatchEvent(new Event('change',{bubbles:true}));update();})));
+// Consistent vector shape previews, independent of OS emoji fonts.
+const shapePaths={standard:'M24 3 C12 3 5 12 5 24 C5 35 17 45 24 53 C31 45 43 35 43 24 C43 12 36 3 24 3 Z',ring:'M24 5 A19 19 0 1 1 23.99 5 Z',square:'M7 8 H41 V42 H7 Z',diamond:'M24 4 L44 27 L24 50 L4 27 Z',circle:'M24 5 A19 19 0 1 1 23.99 5 Z',hexagon:'M13 6 H35 L45 27 L35 48 H13 L3 27 Z'};
+styles.querySelectorAll('.efx-style-btn').forEach((b,i)=>{const key=styleOptions[i][0],span=b.querySelector('span');if(!span)return;span.innerHTML='<svg viewBox="0 0 48 56" width="30" height="34" aria-hidden="true"><path d="'+shapePaths[key]+'" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>'+(key==='ring'?'<circle cx="24" cy="24" r="12" fill="none" stroke="currentColor" stroke-width="2"/>':'')+'</svg>';});
 const colors=['#348dff','#ff4d68','#40cb9a','#ffcb53','#9e60ff','#ff914d','#f47cba','#e0e8f3','#111827'];
 const nativeColor=form.elements.markerColor;
 colors.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='efx-swatch';b.style.background=c;b.title=c;b.setAttribute('aria-label','Use colour '+c);b.addEventListener('click',()=>{nativeColor.value=c;nativeColor.dispatchEvent(new Event('input',{bubbles:true}));update();});styles.querySelector('.efx-swatches').append(b)});

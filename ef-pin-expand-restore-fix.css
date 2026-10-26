@@ -1,0 +1,9 @@
+/* Phase: reliable pin editor maximise / restore, independent of form scrolling */
+#caseModal.ef-editor-expanded{padding:72px 14px 14px!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important}
+#caseModal.ef-editor-expanded #caseForm{width:min(1500px,calc(100vw - 28px))!important;max-width:calc(100vw - 28px)!important;height:calc(100dvh - 86px)!important;max-height:calc(100dvh - 86px)!important;border-radius:12px!important;overflow:hidden!important}
+#caseModal #caseForm .modalhead{position:relative!important;z-index:2!important;background:#0d213d!important;min-height:48px!important;flex-shrink:0!important}
+#caseModal #efPinFloatingRestore{display:none!important}
+#caseModal.ef-editor-expanded #efPinFloatingRestore{display:flex!important;position:fixed!important;top:82px!important;right:28px!important;z-index:99999!important;align-items:center!important;gap:7px!important;background:#24518a!important;color:#fff!important;border:1px solid #7bb9ff!important;border-radius:8px!important;padding:10px 16px!important;cursor:pointer!important;font-weight:700!important;box-shadow:0 4px 18px #0009!important}
+#caseModal.ef-editor-expanded #efPinFloatingRestore:hover{background:#3475c5!important}
+#caseModal:not(.ef-editor-expanded) #caseForm{height:min(84dvh,800px)!important;max-height:84dvh!important}
+@media(max-width:780px){#caseModal.ef-editor-expanded{padding:62px 6px 6px!important}#caseModal.ef-editor-expanded #caseForm{width:calc(100vw - 12px)!important;max-width:calc(100vw - 12px)!important;height:calc(100dvh - 68px)!important;max-height:calc(100dvh - 68px)!important}#caseModal.ef-editor-expanded #efPinFloatingRestore{top:70px!important;right:14px!important}}

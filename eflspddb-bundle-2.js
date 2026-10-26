@@ -103,7 +103,7 @@ function permanentPinSvg(c){
    const fallback=window.EF_PIN_SVGS?.['shield-halved'];
    if(fallback)inner=`<svg x="12" y="9" width="24" height="25" viewBox="${fallback[0]}"><path fill="#ffffff" d="${fallback[1]}"/></svg>`;
  }
- const paths={standard:["M24 2 C11 2 3 11 3 23 C3 37 17 46 24 54 C31 46 45 37 45 23 C45 11 37 2 24 2 Z","M24 6 C13 6 7 13 7 23 C7 33 16 42 24 49 C32 42 41 33 41 23 C41 13 35 6 24 6 Z"],ring:["M24 2 C11 2 3 11 3 23 C3 37 17 46 24 54 C31 46 45 37 45 23 C45 11 37 2 24 2 Z","M24 7 C14 7 8 14 8 23 C8 32 16 41 24 48 C32 41 40 32 40 23 C40 14 34 7 24 7 Z"],square:["M7 4 H41 Q45 4 45 9 V40 Q45 44 41 44 H28 L24 53 L20 44 H7 Q3 44 3 40 V9 Q3 4 7 4 Z","M9 9 H39 V39 H9 Z"],diamond:["M24 2 L46 27 L24 54 L2 27 Z","M24 8 L40 27 L24 47 L8 27 Z"],circle:["M24 3 A21 21 0 1 1 23.99 3 Z","M24 8 A16 16 0 1 1 23.99 8 Z"],hexagon:["M13 4 H35 L46 27 L35 50 H13 L2 27 Z","M16 9 H32 L40 27 L32 45 H16 L8 27 Z"]};
+ const paths={standard:["M24 2 C11 2 3 11 3 23 C3 37 17 46 24 54 C31 46 45 37 45 23 C45 11 37 2 24 2 Z","M24 6 C13 6 7 13 7 23 C7 33 16 42 24 49 C32 42 41 33 41 23 C41 13 35 6 24 6 Z"],ring:["M24 3 A21 21 0 1 1 23.99 3 Z","M24 10 A14 14 0 1 1 23.99 10 Z"],square:["M7 4 H41 Q45 4 45 9 V40 Q45 44 41 44 H28 L24 53 L20 44 H7 Q3 44 3 40 V9 Q3 4 7 4 Z","M9 9 H39 V39 H9 Z"],diamond:["M24 2 L46 27 L24 54 L2 27 Z","M24 8 L40 27 L24 47 L8 27 Z"],circle:["M24 3 A21 21 0 1 1 23.99 3 Z","M24 8 A16 16 0 1 1 23.99 8 Z"],hexagon:["M13 4 H35 L46 27 L35 50 H13 L2 27 Z","M16 9 H32 L40 27 L32 45 H16 L8 27 Z"]};
  const pair=paths[shape]||paths.standard;
  return `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="56" viewBox="0 0 48 56"><path d="${pair[0]}" fill="${color}" stroke="#071322" stroke-width="3"/><path d="${pair[1]}" fill="#071526" fill-opacity=".88"/>${inner}</svg>`;
 }
@@ -111,7 +111,7 @@ function permanentPinSrc(c){return 'data:image/svg+xml,'+encodeURIComponent(perm
 function markerIcon(c,isSelected=false){
  const size=Math.max(26,Math.min(80,Number(c.markerSize)||42));
  const height=Math.round(size*56/48);
- return L.divIcon({className:'custom-marker ef-composed-marker',html:`<img class="ef-composed-pin" src="${permanentPinSrc(c)}" width="${size}" height="${height}" alt="" draggable="false">`,iconSize:[size,height],iconAnchor:[size/2,height-2],popupAnchor:[0,-height+6]});
+ return L.divIcon({className:'custom-marker ef-composed-marker',html:`<img class="ef-composed-pin" src="${permanentPinSrc(c)}" width="${size}" height="${height}" alt="" draggable="false">`,iconSize:[size,height],iconAnchor:[size/2,(['ring','circle','diamond','hexagon'].includes(c.markerShape)?height/2:height-2)],popupAnchor:[0,-height+6]});
 }
 function displayMarkerCategory(c){const cat=String(c.markerCategory||'').trim();return c.kind==='general'&&(!cat||cat==='Active Investigation')?'General Location':(cat|| (c.kind==='general'?'General Location':'Investigation'))}
 function mapType(c){const cat=String(displayMarkerCategory(c)).toLowerCase();if(cat.includes('gang')||cat.includes('territory'))return 'gang';if(cat==='business'||cat.includes('business'))return 'business';if(cat.includes('police')||cat.includes('pd station')||cat.includes('government'))return 'pd';if(c.kind!=='general'||cat.includes('detective')||cat.includes('investigation')||cat.includes('crime scene')||cat.includes('evidence')||(cat.includes('person of interest')||cat.includes('location of interest'))||cat.includes('resolved'))return 'detective';return 'other'}
