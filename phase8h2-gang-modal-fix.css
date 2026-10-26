@@ -1,0 +1,7 @@
+/* Phase 8H-2: keep gang editor within viewport, scroll fields, keep actions visible */
+#efGangOverlay {position:fixed!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:12px!important;box-sizing:border-box!important;overflow:hidden!important}
+#efGangOverlay.hidden {display:none!important}
+#efGangOverlay .ef-gang-dialog {width:min(540px,96vw)!important;max-width:96vw!important;max-height:calc(100dvh - 24px)!important;min-height:0!important;resize:none!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;box-sizing:border-box!important}
+#efGangOverlay .ef-dialog-head {flex:0 0 auto!important}
+#efGangOverlay #efGangForm {display:flex!important;flex-direction:column!important;overflow-y:auto!important;overscroll-behavior:contain!important;min-height:0!important;flex:1 1 auto!important;padding-bottom:0!important}
+#efGangOverlay #efGangForm > .ef-actions {position:sticky!important;bottom:0!important;z-index:2!important;background:#12223d!important;padding:12px 4px!important;margin-top:auto!important;border-top:1px solid #365071!important;flex-shrink:0!important}
