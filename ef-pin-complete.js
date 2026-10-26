@@ -21,9 +21,12 @@ right.append(preview);
 const styles=document.createElement('section');styles.className='efx-styles';styles.innerHTML='<div class="efx-label">PIN STYLE</div><div class="efx-style-grid"></div><div class="efx-label efx-color-title">PIN COLOUR</div><div class="efx-swatches"></div><div class="efx-color-controls"><input type="text" id="efxHex" maxlength="7" aria-label="HEX colour" value="#348dff"><button type="button" id="efxPickColor">🎨 Choose</button></div>';
 right.append(styles);
 const styleOptions=[['standard','Standard','♧'],['ring','Ring','◎'],['square','Square','▣'],['diamond','Diamond','◆'],['circle','Circle','●'],['hexagon','Hexagon','⬡']];
-const shape=form.elements.markerShape;
+// The redesigned shape selector must have a real form field. Older builds omitted it.
+let shape=form.elements.markerShape;
+if(!shape){shape=document.createElement('input');shape.type='hidden';shape.name='markerShape';shape.value='standard';form.appendChild(shape);}
+
 function button(icon,label,cls,fn){const b=document.createElement('button');b.type='button';b.className=cls;b.innerHTML='<span aria-hidden="true">'+icon+'</span><span>'+label+'</span>';b.addEventListener('click',fn);return b;}
-function setCategory(category){if(![...select.options].some(x=>x.value===category))return;select.value=category;select.dispatchEvent(new Event('change',{bubbles:true}));update();}
+function setCategory(category){if(![...select.options].some(x=>x.value===category))select.add(new Option(category,category));select.value=category;select.dispatchEvent(new Event('change',{bubbles:true}));update();}
 function setMain(label){const first=select.value;const sub=aliases[first]===label?first:label;setCategory(sub);}
 main.forEach(([ico,label])=>mainSection.querySelector('.efx-main-grid').append(button(ico,label,'efx-main-btn',()=>setMain(label))));
 subs.forEach(([ico,label])=>subsSection.querySelector('.efx-sub-grid').append(button(ico,label,'efx-sub-btn',()=>setCategory(label))));
@@ -47,7 +50,7 @@ const lock=markerSection.querySelector('.locklabel');if(lock)markerSection.appen
 const existingHint=form.querySelector('.formhint');if(existingHint)existingHint.textContent='Click on the map to place a new pin. Existing records and permissions are preserved.';
 const head=form.querySelector('.modalhead');const expand=document.getElementById('efExpandPinEditor');
 if(expand){expand.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();modal.classList.toggle('ef-editor-expanded');expand.textContent=modal.classList.contains('ef-editor-expanded')?'↙ Restore':'⛶ Expand';},true);}
-function update(){const cat=select.value||'General Location',group=aliases[cat]||'General Location';document.getElementById('efxSelectedMain').textContent=group;document.getElementById('efxSelectedSub').textContent=cat;mainSection.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('selected',main[i][1]===group));subsSection.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('selected',subs[i][1]===cat));styles.querySelectorAll('.efx-style-btn').forEach((b,i)=>b.classList.toggle('selected',styleOptions[i][0]===shape.value));styles.querySelectorAll('.efx-swatch').forEach((b,i)=>b.classList.toggle('selected',colors[i].toLowerCase()===nativeColor.value.toLowerCase()));hex.value=nativeColor.value;}
+function update(){const cat=select.value||'General Location',group=aliases[cat]||'General Location';document.getElementById('efxSelectedMain').textContent=group;document.getElementById('efxSelectedSub').textContent=cat;mainSection.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('selected',main[i][1]===group));subsSection.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('selected',subs[i][1]===cat));styles.querySelectorAll('.efx-style-btn').forEach((b,i)=>b.classList.toggle('selected',styleOptions[i][0]===shape.value));styles.querySelectorAll('.efx-swatch').forEach((b,i)=>b.classList.toggle('selected',colors[i].toLowerCase()===String(nativeColor.value||'').toLowerCase()));hex.value=nativeColor.value;}
 select.addEventListener('change',update);shape.addEventListener('change',update);nativeColor.addEventListener('input',update);
 // Keep original pin rendering, saving, synchronisation and map placement handlers.
 const observer=new MutationObserver(()=>{if(!modal.classList.contains('hidden')){update();if(!modal.classList.contains('ef-editor-expanded')&&expand)expand.textContent='⛶ Expand';}});observer.observe(modal,{attributes:true,attributeFilter:['class']});
