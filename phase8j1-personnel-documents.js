@@ -46,7 +46,15 @@ async function refreshPersonnel(){if(!logged())return;try{const result=await req
  let changed=old.length!==profiles().length;
  for(const p of remote){const i=old.findIndex(x=>match(x,p)||norm(x.name)===norm(p.name));if(i>=0){const merged={...old[i],...p,id:old[i].id||p.id,account_id:old[i].account_id||p.account_id,accountId:old[i].accountId||p.accountId};if(JSON.stringify(old[i])!==JSON.stringify(merged)){old[i]=merged;changed=true}}else{old.push(p);changed=true}}for(const id of remoteIds)known.add(id);
  localStorage.setItem(knownKey,JSON.stringify([...known]));
- const cleaned=collapse(old);if(changed||JSON.stringify(cleaned)!==JSON.stringify(profiles())){localStorage.setItem(PROFILE_KEY,JSON.stringify(cleaned));if(document.getElementById('extraTitle')?.textContent==='PERSONNEL DIRECTORY')window.renderExtra?.('directory')}}catch(e){console.warn('Personnel sharing:',e.message)}}
+ const cleaned=collapse(old);
+ // Compare the final, deduplicated state rather than intermediate merges.
+ // The old `changed` flag could be true on every poll even when the visible
+ // profiles were unchanged, causing the entire Personnel + HC grid to flicker.
+ const previous=profiles();
+ if(JSON.stringify(cleaned)!==JSON.stringify(previous)){
+   localStorage.setItem(PROFILE_KEY,JSON.stringify(cleaned));
+   if(document.getElementById('extraTitle')?.textContent==='PERSONNEL DIRECTORY')window.renderExtra?.('directory');
+ }}catch(e){console.warn('Personnel sharing:',e.message)}}
 // Capture Add Record on the directory before the old browser-prompt handler.
 document.getElementById('addEntryBtn')?.addEventListener('click',e=>{if(window.currentSection==='directory'||document.getElementById('extraTitle')?.textContent==='PERSONNEL DIRECTORY'){e.preventDefault();e.stopImmediatePropagation();modal(null)}},true);
 // Provide edit controls for manual personnel profiles without modifying account permissions.
