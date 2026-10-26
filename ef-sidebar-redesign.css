@@ -1,0 +1,28 @@
+/* EFLSPDDB Sidebar Refresh — visual-only; all original IDs, handlers and sync untouched */
+.leftpanel{background:linear-gradient(170deg,#081a32 0%,#061426 55%,#07162a 100%)!important;border-right:1px solid #294a72!important}
+.leftpanel>.panel-inner{padding-left:2px;padding-right:2px}
+.leftpanel .ef-primary-navigation.ef-nav-v2{display:flex!important;flex-direction:column!important;gap:5px!important;margin:9px 0 20px!important;padding:0 1px!important;background:transparent!important;border:0!important}
+.ef-nav-v2 .ef-nav-heading{font-size:10px;letter-spacing:2.6px;color:#7398c6;font-weight:800;padding:6px 10px 10px;border-bottom:1px solid #244467;margin-bottom:5px}
+.leftpanel .ef-nav-v2>button[data-section]{position:relative;display:flex!important;align-items:center!important;gap:10px!important;min-height:54px!important;padding:7px 9px!important;border:1px solid transparent!important;border-radius:10px!important;background:transparent!important;color:#e4edff!important;text-align:left!important;transition:background .16s,border-color .16s,box-shadow .16s,transform .16s!important;box-shadow:none!important;line-height:1.1!important;overflow:hidden}
+.leftpanel .ef-nav-v2>button[data-section]>i:first-child{width:36px!important;height:38px!important;flex:0 0 36px!important;display:grid!important;place-items:center!important;font-size:17px!important;border:1px solid #31537b!important;border-radius:9px!important;background:#112a47!important;box-shadow:inset 0 0 13px #020a1733!important;margin:0!important}
+.ef-nav-v2 .ef-nav-copy{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0;white-space:normal}
+.ef-nav-v2 .ef-nav-copy strong{font-size:12px;line-height:1.12;font-weight:700;color:#f1f6ff;letter-spacing:.05px}
+.ef-nav-v2 .ef-nav-copy small{font-size:9px;line-height:1.25;color:#8faed4;font-weight:400}
+.ef-nav-v2 .ef-nav-arrow{font-size:10px!important;width:auto!important;opacity:.55;color:#94bbef!important;flex-shrink:0}
+.leftpanel .ef-nav-v2>button[data-section]:hover{background:#112b4c!important;border-color:#315e93!important;transform:translateX(2px)}
+.leftpanel .ef-nav-v2>button[data-section].active,.leftpanel .ef-nav-v2>button[data-section].selected,.leftpanel .ef-nav-v2>button[data-section].on,.leftpanel .ef-nav-v2>button[data-section][aria-current="page"]{background:linear-gradient(100deg,#1d4c9c,#15376d)!important;border-color:#3978e6!important;box-shadow:inset 3px 0 #61c2ff,0 3px 16px #0d4cba36!important}
+.leftpanel .ef-nav-v2>button[data-section]:focus-visible{outline:2px solid #78caff;outline-offset:2px}
+.leftpanel .ef-nav-v2>button[data-section].active .ef-nav-copy small,.leftpanel .ef-nav-v2>button[data-section].selected .ef-nav-copy small,.leftpanel .ef-nav-v2>button[data-section].on .ef-nav-copy small{color:#c1d7f8}
+.leftpanel h3{letter-spacing:1px!important;font-size:11px!important;font-weight:800!important;color:#8fc5ff!important}
+.leftpanel #addPinBtn{background:linear-gradient(110deg,#175e3c,#236f47)!important;border:1px solid #3e9c65!important;border-radius:9px!important;font-weight:700;box-shadow:0 4px 16px #061e14aa!important}
+.leftpanel .sidebar-dropdown{border:1px solid #2a4b70!important;border-radius:11px!important;background:linear-gradient(140deg,#10233d,#0a1c33)!important;overflow:hidden;margin:9px 0!important}
+.leftpanel .sidebar-dropdown>summary{background:#112b49!important;padding:12px!important;color:#9dcaff!important;letter-spacing:.7px!important}
+.leftpanel .category-list button{border-radius:7px!important;padding:7px 8px!important;font-size:11px!important;min-height:33px!important}
+.leftpanel .category-list button:hover{background:#1a3b63!important}
+.leftpanel .category-list em{border-radius:10px;background:#172f4e;padding:3px 7px;font-size:10px;min-width:23px;text-align:center;color:#a6d2ff}
+.leftpanel .ef-icon-editor-button{border-radius:8px!important;background:#152f50!important;border:1px solid #345c88!important;margin:8px!important;width:calc(100% - 16px)!important}
+.leftpanel .map-type-filters{border-radius:9px!important}
+.leftpanel input:not([type=checkbox]),.leftpanel select{border-radius:7px!important;background:#0b1a31!important;border-color:#2b517a!important}
+.leftpanel input:focus,.leftpanel select:focus{outline:1px solid #4b9dff!important}
+@media(max-width:1250px){.ef-nav-v2 .ef-nav-copy small{font-size:8.5px}.leftpanel .ef-nav-v2>button[data-section]{gap:7px!important;padding:6px!important}}
+@media(prefers-reduced-motion:reduce){.leftpanel .ef-nav-v2>button[data-section]{transition:none!important}}
