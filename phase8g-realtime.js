@@ -5,7 +5,7 @@
 const OPT='ef8e_auto_sync_optin_v1';
 const CFG=window.EF8G_REALTIME||{};
 const configured=!!(CFG.url&&CFG.anonKey&&!CFG.anonKey.startsWith('PASTE_'));
-let client=null,channel=null,connected=false,wrapped=false,refreshTimer=null,lastSignal=0;
+let client=null,channel=null,connected=false,wrapped=false,refreshTimer=null,lastSignal=0,lastRefresh=0;
 const opted=()=>localStorage.getItem(OPT)==='yes';
 const logged=()=>!!window.EFDBAuth?.loggedIn;
 const label=()=>document.getElementById('ef8g-realtime-status');
@@ -15,7 +15,7 @@ function mount(){const p=document.getElementById('ef8e-panel');if(!p)return;
  show(!configured?'Live notifications need a Supabase publishable key (polling still works)':!opted()?'Live notifications paused':!logged()?'Sign in for live notifications':connected?'Live notifications connected':'Connecting live notifications…',!configured);
 }
 function promptRefresh(){if(!opted()||!logged()||document.hidden)return;
- clearTimeout(refreshTimer);refreshTimer=setTimeout(()=>window.dispatchEvent(new Event('focus')),180);
+ clearTimeout(refreshTimer);refreshTimer=setTimeout(()=>{const now=Date.now();if(now-lastRefresh<2000||document.hidden)return;lastRefresh=now;window.dispatchEvent(new Event('focus'));},350);
 }
 function notify(){if(!connected||!channel||!opted()||!logged())return;
  const now=Date.now();if(now-lastSignal<300)return;lastSignal=now;
