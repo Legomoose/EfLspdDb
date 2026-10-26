@@ -40,7 +40,7 @@ function connect(){mount();wrapRequests();
   channel.on('broadcast',{event:'changed'},()=>promptRefresh());
   channel.subscribe(status=>{
    connected=status==='SUBSCRIBED';
-   if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){show('Live connection unavailable — 2-second fallback active',true)}
+   if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){show('Live connection unavailable — 60-second fallback active',true)}
    else show(connected?'Live notifications connected · polling fallback active':'Connecting live notifications…');
   });
  }catch(e){stop();show('Live connection failed — polling fallback active',true)}

@@ -9,7 +9,7 @@ let docVersion=null,docReady=false,docBusy=false,docLast='',docPending=false;
 const readDocs=()=>{try{const v=JSON.parse(localStorage.getItem(DOC_KEY)||'[]');return Array.isArray(v)?v:[]}catch{return []}};
 const docsText=()=>JSON.stringify(readDocs());
 function drawDocs(){if(document.getElementById('extraTitle')?.textContent==='DEPARTMENT DOCUMENTS')window.renderExtra?.('documents')}
-async function syncDocs(){if(!logged()||docBusy)return;docBusy=true;try{
+async function syncDocs(){if(!logged()||docBusy||document.hidden)return;docBusy=true;try{
  const response=await req('intelligence','list');const remote=(response.records||[]).find(r=>r.record_id===DOC_ID);
  const local=docsText();
  if(!docReady){docReady=true;docVersion=remote?.version??null;if(remote&&Array.isArray(remote.body?.documents)){localStorage.setItem(DOC_KEY,JSON.stringify(remote.body.documents));docLast=docsText();drawDocs()}else{docLast=local;if(readDocs().length&&manager())docPending=true}return}
@@ -23,9 +23,10 @@ async function syncDocs(){if(!logged()||docBusy)return;docBusy=true;try{
  }
  }catch(e){console.warn('Department documents sharing:',e.message)}finally{docBusy=false}}
 // Local document editor is retained; this watches its saves and sends them to shared storage.
-const docObserver=new MutationObserver(()=>{const note=document.querySelector('.lspd-doc-note');if(note)note.textContent='Department document links are shared with signed-in personnel. Google controls access to the linked files.';});
+const docObserver=new MutationObserver(()=>{const note=document.querySelector('.lspd-doc-note');if(note && note.textContent !== 'Department document links are shared with signed-in personnel. Google controls access to the linked files.')note.textContent='Department document links are shared with signed-in personnel. Google controls access to the linked files.';});
 docObserver.observe(document.body,{childList:true,subtree:true});
 let personnelBusy=false;
+let personnelRefreshBusy=false;
 const PROFILE_KEY='eflspddb_detective_profiles_v1';
 function profiles(){try{const v=JSON.parse(localStorage.getItem(PROFILE_KEY)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
 const norm=v=>String(v??'').trim().toLowerCase();
@@ -38,7 +39,7 @@ function modal(record){if(!manager()){alert('Only authorised command personnel c
  try{if(!logged())throw Error('Sign in to save shared personnel records.');const list=await req('personnel','list');const existing=(list.records||[]).find(r=>r.record_id===row.id);await req('personnel',existing?'update':'create',{id:row.id,body:row,...(existing?{version:existing.version}:{})});if(idx>=0)old[idx]={...old[idx],...row,id:old[idx].id||row.id};else old.push(row);localStorage.setItem(PROFILE_KEY,JSON.stringify(collapse(old)));bg.remove();window.renderExtra?.('directory')}
  catch(err){bg.querySelector('#ef8jPersonnelError').textContent='Unable to save: '+err.message}finally{personnelBusy=false}};
 }
-async function refreshPersonnel(){if(!logged())return;try{const result=await req('personnel','list');const remote=(result.records||[]).filter(r=>r.body&&r.body.name).map(r=>r.body);const remoteIds=new Set((result.records||[]).map(r=>r.record_id));
+async function refreshPersonnel(){if(!logged()||personnelRefreshBusy||document.hidden)return;personnelRefreshBusy=true;try{const result=await req('personnel','list');const remote=(result.records||[]).filter(r=>r.body&&r.body.name).map(r=>r.body);const remoteIds=new Set((result.records||[]).map(r=>r.record_id));
  const knownKey='ef8j_known_remote_personnel_ids';
  const known=new Set(JSON.parse(localStorage.getItem(knownKey)||'[]'));
  const removed=new Set(JSON.parse(localStorage.getItem('ef8j_removed_personnel_ids')||'[]'));
@@ -54,7 +55,7 @@ async function refreshPersonnel(){if(!logged())return;try{const result=await req
  if(JSON.stringify(cleaned)!==JSON.stringify(previous)){
    localStorage.setItem(PROFILE_KEY,JSON.stringify(cleaned));
    if(document.getElementById('extraTitle')?.textContent==='PERSONNEL DIRECTORY')window.renderExtra?.('directory');
- }}catch(e){console.warn('Personnel sharing:',e.message)}}
+ }}catch(e){console.warn('Personnel sharing:',e.message)}finally{personnelRefreshBusy=false}}
 // Capture Add Record on the directory before the old browser-prompt handler.
 document.getElementById('addEntryBtn')?.addEventListener('click',e=>{if(window.currentSection==='directory'||document.getElementById('extraTitle')?.textContent==='PERSONNEL DIRECTORY'){e.preventDefault();e.stopImmediatePropagation();modal(null)}},true);
 // Provide edit controls for manual personnel profiles without modifying account permissions.
@@ -99,6 +100,8 @@ new MutationObserver(addDeleteControls).observe(document.body,{childList:true,su
 new MutationObserver(addEdits).observe(document.body,{childList:true,subtree:true});
 function reset(){docReady=false;docVersion=null;docPending=false;docLast=''}
 window.addEventListener('efdb-auth-login',()=>{reset();syncDocs();refreshPersonnel()});window.addEventListener('efdb-auth-logout',reset);
-setInterval(()=>{if(logged()){syncDocs();refreshPersonnel()}},3000);
+setInterval(()=>{if(logged()&&!document.hidden){syncDocs();refreshPersonnel()}},60000);
+window.addEventListener('focus',()=>{if(logged()){syncDocs();refreshPersonnel()}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&logged()){syncDocs();refreshPersonnel()}});
 setTimeout(()=>{addEdits();addDeleteControls();syncDocs();refreshPersonnel()},1200);
 })();

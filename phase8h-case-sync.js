@@ -29,12 +29,12 @@ async function cycle(){if(busy||!window.EFDBAuth?.loggedIn||document.visibilityS
    else result=await api('create',{id,body});versions.set(id,result.record.version);pending.delete(id);saved++;
    }catch(err){if(/409|conflict|already|duplicate/i.test(err.message)){pending.delete(id);conflicts++}else throw err}
  }
- initialized=true;snap();label(conflicts?`${conflicts} case conflict(s) detected. Local copies preserved.`:`Case sync active · ${saved} saved · ${received} received · checks every 2 seconds`,conflicts>0);
+ initialized=true;snap();label(conflicts?`${conflicts} case conflict(s) detected. Local copies preserved.`:`Case sync active · ${saved} saved · ${received} received · 60-second fallback checks`,conflicts>0);
 }catch(err){label('Case sync unavailable: '+err.message+'. Local cases preserved.',true)}finally{busy=false}}
 function mount(){const parent=document.getElementById('ef7bShared');if(!parent||document.getElementById('ef8h-case-panel'))return;const box=document.createElement('section');box.id='ef8h-case-panel';box.className='db-card';box.style.cssText='border:1px solid #3c705c;padding:16px;border-radius:10px;margin-top:16px;background:#0b172a;color:#e5f1eb';box.innerHTML='<h3>PHASE 8H · INVESTIGATION CASE SYNC</h3><p>New cases and edits share automatically while logged in. Existing local cases are not bulk-uploaded. Shared deletion is enabled for previously synchronised cases.</p><p id="ef8h-case-status" role="status">Waiting for login…</p><button type="button" id="ef8h-case-check">Check cases now</button>';parent.append(box);box.querySelector('button').onclick=cycle}
 new MutationObserver(mount).observe(document.body,{childList:true,subtree:true});mount();snap();
 window.addEventListener('efdb-auth-login',()=>{initialized=false;pending.clear();pendingDeletes.clear();versions.clear();snap();cycle()});
 window.addEventListener('efdb-auth-logout',()=>{initialized=false;pending.clear();pendingDeletes.clear();versions.clear()});
-setInterval(()=>{if(window.EFDBAuth?.loggedIn)cycle()},2000);
+setInterval(()=>{if(window.EFDBAuth?.loggedIn)cycle()},60000);
 window.addEventListener('focus',cycle);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')cycle()});
 })();
