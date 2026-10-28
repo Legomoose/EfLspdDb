@@ -52,10 +52,14 @@ fetch('./oulsen_satmap_postals.json?v=20261028-json-test',{cache:'no-store'})
  })
  .catch(error=>{console.warn('[EFLSPDDB Postals] JSON unavailable, using embedded fallback:',error);postalJsonSource='Embedded fallback (JSON failed: '+error.message+')';});
 
+// Calibrated against four geographically separated printed postals on the
+// Oulsen NO GRID 4096x6144 image: 704, 761, 136, 552.
+// Coordinates are Leaflet CRS.Simple map units (image bounds 2048x3072).
+// One shared transform is used by Find Postal and nearest-postal pin assignment.
+const OULSEN_POSTAL_TRANSFORM={sx:0.223742522,sy:0.224009184,ox:928.977431,oy:-1908.04746};
 function worldToMap(x,y){
- if(globalAlignment&&Number.isFinite(globalAlignment.sx)&&Number.isFinite(globalAlignment.sy))
-  return [globalAlignment.oy+globalAlignment.sy*y,globalAlignment.ox+globalAlignment.sx*x];
- return [-(1886.5-0.200*y),840.5+0.196*x];
+ const t=OULSEN_POSTAL_TRANSFORM;
+ return [t.oy+t.sy*Number(y),t.ox+t.sx*Number(x)];
 }
 function postalLocation(code){
  const postal=String(code).trim().padStart(3,'0');
@@ -68,36 +72,9 @@ function nearestPostal(ll){
   if(d<dist){best=p.code;dist=d}}
  return best;
 }
-const calibrationButton=document.createElement('button');
-calibrationButton.id='postalCalibrateBtn';calibrationButton.type='button';
-calibrationButton.title='Align all postals using printed 704 and 761 positions on the no-grid map';
-calibrationButton.innerHTML='<i class="fa-solid fa-crosshairs"></i> Align Map';
-$('postalPinBtn').after(calibrationButton);
-calibrationButton.onclick=()=>{
- const postal=String($('postalInput').value).trim().padStart(3,'0');
- if(!['704','761'].includes(postal))return toast('For map alignment, enter postal 704 or 761 first.');
- calibratingPostal=postal;calibrationButton.classList.add('calibration-active');
- toast('Click the printed '+postal+' on the satellite image to align the entire postal map.');
-};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&calibratingPostal){calibratingPostal=null;calibrationButton.classList.remove('calibration-active');toast('Alignment cancelled.')}});
-map.on('click',e=>{
- if(!calibratingPostal)return;
- const postal=calibratingPostal;calibratingPostal=null;calibrationButton.classList.remove('calibration-active');
- postalCalibrations[postal]=[e.latlng.lat,e.latlng.lng];
- try{localStorage.setItem(POSTAL_CALIBRATION_KEY,JSON.stringify(postalCalibrations))}catch{}
- const a=postalCalibrations['704'],b=postalCalibrations['761'];
- if(a&&b){
-  const pa=postalByCode.get('704'),pb=postalByCode.get('761');
-  const sx=(b[1]-a[1])/(pb.x-pa.x),sy=(b[0]-a[0])/(pb.y-pa.y);
-  if(Number.isFinite(sx)&&Number.isFinite(sy)&&sx>0&&sy>0){
-   globalAlignment={sx,sy,ox:a[1]-sx*pa.x,oy:a[0]-sy*pa.y};
-   try{localStorage.setItem(POSTAL_GLOBAL_KEY,JSON.stringify(globalAlignment))}catch{}
-   toast('All postals aligned using 704 and 761. Search and pin placement now share this alignment.');
-  }else toast('Alignment invalid. Please recalibrate 704 and 761.');
- }else toast('Postal '+postal+' set. Now align '+(postal==='704'?'761':'704')+' to apply across the map.');
- if(e.originalEvent)e.originalEvent._efCalibrationClick=true;
- showPostalPopup([e.latlng.lat,e.latlng.lng],postal);
-});
+// Legacy browser-specific Align Map calibration is deliberately disabled.
+// The shared calibrated transform above applies consistently to all users.
+try{localStorage.removeItem(POSTAL_GLOBAL_KEY);localStorage.removeItem(POSTAL_CALIBRATION_KEY);}catch{}
 let postalMarker=null;
 function showPostalPopup(pt,postal){
  if(postalMarker)map.removeLayer(postalMarker);
