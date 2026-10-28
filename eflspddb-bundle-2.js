@@ -34,6 +34,24 @@ let postalCalibrations=read(POSTAL_CALIBRATION_KEY,{});
 let globalAlignment=read(POSTAL_GLOBAL_KEY,null),calibratingPostal=null;
 let postals=Array.isArray(window.EVERFALL_POSTALS)?window.EVERFALL_POSTALS:[];
 const postalByCode=new Map(postals.map(p=>[String(p.code).padStart(3,'0'),p]));
+// Postal JSON diagnostic test: fetch the original Oulsen dataset as the live lookup source.
+// Keep the embedded coordinates as a safe fallback if the file is missing or blocked.
+let postalJsonSource='Embedded fallback (JSON not yet loaded)';
+fetch('./oulsen_satmap_postals.json?v=20261028-json-test',{cache:'no-store'})
+ .then(response=>{if(!response.ok)throw new Error('HTTP '+response.status);return response.json()})
+ .then(rows=>{
+   if(!Array.isArray(rows)||rows.length<900||!rows.every(p=>p&&/^\d{1,3}$/.test(String(p.code))&&Number.isFinite(Number(p.x))&&Number.isFinite(Number(p.y))))throw new Error('Invalid postal JSON');
+   postals=rows.map(p=>({code:String(p.code).padStart(3,'0'),x:Number(p.x),y:Number(p.y)}));
+   postalByCode.clear();postals.forEach(p=>postalByCode.set(p.code,p));
+   postalJsonSource='oulsen_satmap_postals.json ('+postals.length+' locations)';
+   console.info('[EFLSPDDB Postals] Loaded live JSON:',postals.length);
+   if(document.getElementById('postalInput')?.value.trim()){
+     const code=document.getElementById('postalInput').value.trim().padStart(3,'0');
+     if(postalMarker&&postalByCode.has(code))showPostalPopup(postalLocation(code),code);
+   }
+ })
+ .catch(error=>{console.warn('[EFLSPDDB Postals] JSON unavailable, using embedded fallback:',error);postalJsonSource='Embedded fallback (JSON failed: '+error.message+')';});
+
 function worldToMap(x,y){
  if(globalAlignment&&Number.isFinite(globalAlignment.sx)&&Number.isFinite(globalAlignment.sy))
   return [globalAlignment.oy+globalAlignment.sy*y,globalAlignment.ox+globalAlignment.sx*x];
@@ -87,7 +105,8 @@ function showPostalPopup(pt,postal){
  const html='<div class="ef-postal-target" title="Temporary search target; not a saved detective pin"><span>+</span></div>';
  postalMarker=L.marker(pt,{interactive:true,zIndexOffset:1500,icon:L.divIcon({className:'ef-postal-target-icon',html,iconSize:[44,44],iconAnchor:[22,22]})}).addTo(map);
  const details=p?'GTA X: '+p.x.toFixed(2)+' / Y: '+p.y.toFixed(2):'';
- postalMarker.bindPopup('<div class="postal-popup-content"><strong>POSTAL '+safe(postal)+'</strong><div>'+details+'</div><small>Temporary search marker — not saved</small></div>',{className:'postal-themed-popup',offset:[0,-12],closeButton:true,autoPan:false}).openPopup();
+ const mapDebug='Map lat: '+Number(pt[0]).toFixed(3)+' / lng: '+Number(pt[1]).toFixed(3);
+ postalMarker.bindPopup('<div class="postal-popup-content"><strong>POSTAL '+safe(postal)+'</strong><div>'+details+'</div><div>'+mapDebug+'</div><small>Source: '+safe(postalJsonSource)+'</small><div><small>Temporary search marker — not saved</small></div></div>',{className:'postal-themed-popup',offset:[0,-12],closeButton:true,autoPan:false}).openPopup();
 }
 $('postalSearchBtn').onclick=()=>{
  const postal=String($('postalInput').value).trim().padStart(3,'0');
