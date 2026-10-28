@@ -25,7 +25,7 @@ function saveDb(){localStorage.setItem(DB_KEY,JSON.stringify(database));window.E
 function fmtDate(v){return v?new Date(v).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'—'}
 function toast(message){$('toast').textContent=message;$('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),3100)}
 const MAP_WIDTH=2048,MAP_HEIGHT=3072;
-const map=L.map('map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:4,zoomSnap:.25,zoomControl:true,attributionControl:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false});const bounds=[[-MAP_HEIGHT,0],[0,MAP_WIDTH]];L.imageOverlay('assets/oulsen-nogrid.webp',bounds).addTo(map);map.fitBounds(bounds);
+const map=L.map('map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:4,zoomSnap:.25,zoomControl:true,attributionControl:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false});const bounds=[[-MAP_HEIGHT,0],[0,MAP_WIDTH]];L.imageOverlay('assets/oulsen-nogrid.webp',bounds).addTo(map);map.fitBounds(bounds);map.setView([-2140,1024],0.25,{animate:false});
 // Oulsen NO-GRID map: a single shared world-to-image transform for both search and pin lookup.
 // Optional two-point calibration (704 and 761) corrects image scale and offset globally.
 const POSTAL_GLOBAL_KEY='eflspddb_oulsen_nogrid_global_alignment_v1';
@@ -81,8 +81,21 @@ map.on('click',e=>{
  showPostalPopup([e.latlng.lat,e.latlng.lng],postal);
 });
 let postalMarker=null;
-function showPostalPopup(pt,postal){if(postalMarker)map.removeLayer(postalMarker);postalMarker=L.marker(pt,{icon:L.divIcon({className:'postal-search-marker',html:'<div class="postal-dot"><i class="fa-solid fa-location-dot"></i></div>',iconSize:[36,44],iconAnchor:[18,40]})}).addTo(map);postalMarker.bindPopup('<div class="postal-popup-content"><span>POSTAL</span><strong>'+safe(postal)+'</strong></div>',{className:'postal-themed-popup',offset:[0,-32],closeButton:true,autoPan:true}).openPopup()}
-$('postalSearchBtn').onclick=()=>{const pt=postalLocation($('postalInput').value);if(!pt)return toast('Postal not found.');if(postalMarker){map.removeLayer(postalMarker);postalMarker=null;}map.setView(pt,1.8,{animate:false});toast('Showing area around postal '+$('postalInput').value.trim().padStart(3,'0'))};
+function showPostalPopup(pt,postal){
+ if(postalMarker)map.removeLayer(postalMarker);
+ const p=postalByCode.get(String(postal).padStart(3,'0'));
+ const html='<div class="ef-postal-target" title="Temporary search target; not a saved detective pin"><span>+</span></div>';
+ postalMarker=L.marker(pt,{interactive:true,zIndexOffset:1500,icon:L.divIcon({className:'ef-postal-target-icon',html,iconSize:[44,44],iconAnchor:[22,22]})}).addTo(map);
+ const details=p?'GTA X: '+p.x.toFixed(2)+' / Y: '+p.y.toFixed(2):'';
+ postalMarker.bindPopup('<div class="postal-popup-content"><strong>POSTAL '+safe(postal)+'</strong><div>'+details+'</div><small>Temporary search marker — not saved</small></div>',{className:'postal-themed-popup',offset:[0,-12],closeButton:true,autoPan:false}).openPopup();
+}
+$('postalSearchBtn').onclick=()=>{
+ const postal=String($('postalInput').value).trim().padStart(3,'0');
+ const pt=postalLocation(postal);if(!pt)return toast('Postal not found.');
+ map.setView(pt,1.8,{animate:false});showPostalPopup(pt,postal);
+ toast('Crosshair marks the exact calculated location of postal '+postal+'.');
+};
+$('postalInput').addEventListener('input',()=>{if(!$('postalInput').value.trim()&&postalMarker){map.removeLayer(postalMarker);postalMarker=null;}});
 $('postalInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('postalSearchBtn').click()}});
 $('postalPinBtn').onclick=()=>{placementMode=true;pinKind='general';placingForId=null;toast('Click the exact location on the map to create your pin. Press Esc to cancel.');};
 $('customPinBtn').onclick=()=>{pinKind='general';placementMode=true;placingForId=null;toast('Click the exact location on the map to create your pin. Press Esc to cancel.');};
