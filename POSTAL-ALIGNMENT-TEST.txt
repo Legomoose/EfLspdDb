@@ -1,0 +1,13 @@
+OULSEN NO-GRID POSTAL ALIGNMENT TEST
+
+The existing NO-GRID image is retained. All 947 postal coordinates are refreshed from your uploaded JSON.
+
+To calibrate the map globally in this browser:
+1. Search postal 704; zoom until you can see the PRINTED 704 on the image.
+2. Enter 704 and click Align Map, then click the centre of the printed 704 label.
+3. Search postal 761; locate the PRINTED 761 on the image.
+4. Enter 761 and click Align Map, then click the centre of the printed 761 label.
+5. Search 704, 761 and 136; test placing pins.
+
+IMPORTANT: This alignment is stored in the current browser, not synced to other detectives. It is a test tool for deriving the correct image transform. Report whether the map now matches across regions before rolling it out to other users.
+No database reset is performed.

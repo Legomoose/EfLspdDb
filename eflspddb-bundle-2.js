@@ -26,41 +26,60 @@ function fmtDate(v){return v?new Date(v).toLocaleDateString('en-GB',{day:'2-digi
 function toast(message){$('toast').textContent=message;$('toast').classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.add('hidden'),3100)}
 const MAP_WIDTH=2048,MAP_HEIGHT=3072;
 const map=L.map('map',{crs:L.CRS.Simple,minZoom:-2,maxZoom:4,zoomSnap:.25,zoomControl:true,attributionControl:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false});const bounds=[[-MAP_HEIGHT,0],[0,MAP_WIDTH]];L.imageOverlay('assets/oulsen-nogrid.webp',bounds).addTo(map);map.fitBounds(bounds);
-function worldToMap(x,y){return[-(1886.5-0.200*y),840.5+0.196*x]}
-let postals=Array.isArray(window.EVERFALL_POSTALS)?window.EVERFALL_POSTALS:[];
-// Image-to-world alignment checked against the original satellite image and user screenshot.
+// Oulsen NO-GRID map: a single shared world-to-image transform for both search and pin lookup.
+// Optional two-point calibration (704 and 761) corrects image scale and offset globally.
+const POSTAL_GLOBAL_KEY='eflspddb_oulsen_nogrid_global_alignment_v1';
 const POSTAL_CALIBRATION_KEY='eflspddb_postal_image_calibration_v2';
-let postalCalibrations=read(POSTAL_CALIBRATION_KEY,{}),calibratingPostal=null;
+let postalCalibrations=read(POSTAL_CALIBRATION_KEY,{});
+let globalAlignment=read(POSTAL_GLOBAL_KEY,null),calibratingPostal=null;
+let postals=Array.isArray(window.EVERFALL_POSTALS)?window.EVERFALL_POSTALS:[];
+const postalByCode=new Map(postals.map(p=>[String(p.code).padStart(3,'0'),p]));
+function worldToMap(x,y){
+ if(globalAlignment&&Number.isFinite(globalAlignment.sx)&&Number.isFinite(globalAlignment.sy))
+  return [globalAlignment.oy+globalAlignment.sy*y,globalAlignment.ox+globalAlignment.sx*x];
+ return [-(1886.5-0.200*y),840.5+0.196*x];
+}
 function postalLocation(code){
  const postal=String(code).trim().padStart(3,'0');
- const p=postals.find(p=>String(p.code)===postal);if(!p)return null;
- const saved=postalCalibrations[postal];
- if(Array.isArray(saved)&&saved.length===2&&saved.every(Number.isFinite))return saved;
+ const p=postalByCode.get(postal);if(!p)return null;
  return worldToMap(p.x,p.y);
+}
+function nearestPostal(ll){
+ let best='',dist=Infinity;
+ for(const p of postals){const [lat,lng]=worldToMap(p.x,p.y),d=(lat-ll.lat)**2+(lng-ll.lng)**2;
+  if(d<dist){best=p.code;dist=d}}
+ return best;
 }
 const calibrationButton=document.createElement('button');
 calibrationButton.id='postalCalibrateBtn';calibrationButton.type='button';
-calibrationButton.title='Fine-tune this postal by clicking its printed number on the satellite image';
-calibrationButton.innerHTML='<i class="fa-solid fa-crosshairs"></i> Calibrate';
+calibrationButton.title='Align all postals using printed 704 and 761 positions on the no-grid map';
+calibrationButton.innerHTML='<i class="fa-solid fa-crosshairs"></i> Align Map';
 $('postalPinBtn').after(calibrationButton);
 calibrationButton.onclick=()=>{
  const postal=String($('postalInput').value).trim().padStart(3,'0');
- if(!postals.some(p=>String(p.code)===postal))return toast('Enter a valid postal first.');
+ if(!['704','761'].includes(postal))return toast('For map alignment, enter postal 704 or 761 first.');
  calibratingPostal=postal;calibrationButton.classList.add('calibration-active');
- toast('Calibration: click the printed '+postal+' number on the map. Press Esc to cancel.');
+ toast('Click the printed '+postal+' on the satellite image to align the entire postal map.');
 };
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&placementMode){placementMode=false;toast('Pin placement cancelled.');}if(e.key==='Escape'&&calibratingPostal){calibratingPostal=null;calibrationButton.classList.remove('calibration-active');toast('Calibration cancelled.')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&calibratingPostal){calibratingPostal=null;calibrationButton.classList.remove('calibration-active');toast('Alignment cancelled.')}});
 map.on('click',e=>{
  if(!calibratingPostal)return;
  const postal=calibratingPostal;calibratingPostal=null;calibrationButton.classList.remove('calibration-active');
  postalCalibrations[postal]=[e.latlng.lat,e.latlng.lng];
- try{localStorage.setItem(POSTAL_CALIBRATION_KEY,JSON.stringify(postalCalibrations))}catch{return toast('Could not save postal calibration in this browser.');}
- // Prevent this click from also placing an investigation/general pin.
+ try{localStorage.setItem(POSTAL_CALIBRATION_KEY,JSON.stringify(postalCalibrations))}catch{}
+ const a=postalCalibrations['704'],b=postalCalibrations['761'];
+ if(a&&b){
+  const pa=postalByCode.get('704'),pb=postalByCode.get('761');
+  const sx=(b[1]-a[1])/(pb.x-pa.x),sy=(b[0]-a[0])/(pb.y-pa.y);
+  if(Number.isFinite(sx)&&Number.isFinite(sy)&&sx>0&&sy>0){
+   globalAlignment={sx,sy,ox:a[1]-sx*pa.x,oy:a[0]-sy*pa.y};
+   try{localStorage.setItem(POSTAL_GLOBAL_KEY,JSON.stringify(globalAlignment))}catch{}
+   toast('All postals aligned using 704 and 761. Search and pin placement now share this alignment.');
+  }else toast('Alignment invalid. Please recalibrate 704 and 761.');
+ }else toast('Postal '+postal+' set. Now align '+(postal==='704'?'761':'704')+' to apply across the map.');
  if(e.originalEvent)e.originalEvent._efCalibrationClick=true;
- showPostalPopup(postalCalibrations[postal],postal);
- toast('Postal '+postal+' aligned to the map image and saved in this browser.');
+ showPostalPopup([e.latlng.lat,e.latlng.lng],postal);
 });
-function nearestPostal(ll){let best='',dist=Infinity;for(const p of postals){const [lat,lng]=postalLocation(p.code),d=(lat-ll.lat)**2+(lng-ll.lng)**2;if(d<dist){best=p.code;dist=d}}return best}
 let postalMarker=null;
 function showPostalPopup(pt,postal){if(postalMarker)map.removeLayer(postalMarker);postalMarker=L.marker(pt,{icon:L.divIcon({className:'postal-search-marker',html:'<div class="postal-dot"><i class="fa-solid fa-location-dot"></i></div>',iconSize:[36,44],iconAnchor:[18,40]})}).addTo(map);postalMarker.bindPopup('<div class="postal-popup-content"><span>POSTAL</span><strong>'+safe(postal)+'</strong></div>',{className:'postal-themed-popup',offset:[0,-32],closeButton:true,autoPan:true}).openPopup()}
 $('postalSearchBtn').onclick=()=>{const pt=postalLocation($('postalInput').value);if(!pt)return toast('Postal not found.');if(postalMarker){map.removeLayer(postalMarker);postalMarker=null;}map.setView(pt,1.8,{animate:false});toast('Showing area around postal '+$('postalInput').value.trim().padStart(3,'0'))};
