@@ -8,10 +8,7 @@ const existing=document.getElementById('efMapOnlyToolsBtn');
 if(existing){existing.textContent='';existing.innerHTML='<i class="fa-solid fa-layer-group"></i> Pins & Filters';existing.title='Toggle Pins & Filters';}
 const oldToggle=document.getElementById('toggleLeftPanel');if(oldToggle){oldToggle.tabIndex=-1;oldToggle.setAttribute('aria-hidden','true')}
 const close=document.querySelector('.ef-map-tools-close');if(close)close.style.display='none';
-const toggle=()=>{const open=ws.classList.contains('ef-map-tools-open');ws.classList.toggle('ef-map-tools-open',!open);existing?.setAttribute('aria-expanded',String(!open));window.dispatchEvent(new Event('resize'))};
-if(existing){const replacement=existing.cloneNode(true);existing.replaceWith(replacement);replacement.addEventListener('click',toggle)}
-document.addEventListener('pointerdown',e=>{if(!ws.classList.contains('ef-map-tools-open'))return;const panel=ws.querySelector(':scope > .leftpanel');if(panel?.contains(e.target)||e.target.closest('#efMapOnlyToolsBtn'))return;ws.classList.remove('ef-map-tools-open')});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')ws.classList.remove('ef-map-tools-open')});
+// The original map-only-controls module already owns button toggling and resizing.
 document.addEventListener('click',e=>{const b=e.target.closest('.ef-update-theme[data-theme]');if(b)theme(b.dataset.theme)},true);
 try{const saved=JSON.parse(localStorage.getItem(KEY)||'{}');theme(saved.theme||'cyber')}catch{theme('cyber')}
 }

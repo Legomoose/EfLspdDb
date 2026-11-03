@@ -42,3 +42,49 @@ body:has(.tactical-sidebar) #mapView .maptoolbar #postalNotice{display:none!impo
 html[data-ef-theme="midnight"] body:has(.tactical-sidebar) #cyberDashboard,html[data-ef-theme="emerald"] body:has(.tactical-sidebar) #cyberDashboard,html[data-ef-theme="crimson"] body:has(.tactical-sidebar) #cyberDashboard,html[data-ef-theme="dark"] body:has(.tactical-sidebar) #cyberDashboard{background:var(--ef-bg)!important}
 html[data-ef-theme] body:has(.tactical-sidebar) .tactical-sidebar{background:var(--ef-panel)!important}
 html[data-ef-theme] body:has(.tactical-sidebar) .tactical-stat,html[data-ef-theme] body:has(.tactical-sidebar) .tactical-panel{background:var(--ef-panel)!important;border-color:var(--ef-border)!important}
+
+/* v6: override older, more-specific bundled styles */
+html body .shell > header.header.ef-new-header,
+html body .shell > header.header.ef-new-header.hybrid-header{
+height:132px!important;min-height:132px!important;max-height:132px!important;flex:0 0 132px!important;
+padding:0 24px!important;gap:18px!important;flex-wrap:nowrap!important;
+background-image:linear-gradient(90deg,#020d1bf2 0%,#020d1bc9 20%,#020d1b15 48%,#020d1bf0 88%),url('assets/tactical-skyline.webp')!important;
+background-position:center,center!important;background-size:100% 100%,cover!important;background-repeat:no-repeat!important;
+border-bottom:2px solid #03b9ff!important;overflow:hidden!important
+}
+html body .shell > header.header.ef-new-header .ef-header-identity{
+min-width:280px!important;max-width:440px!important;flex:0 1 auto!important;
+display:flex!important;align-items:center!important;gap:15px!important;
+padding:12px 16px!important;border-left:2px solid #10baff!important;
+background:linear-gradient(90deg,#031322f5,#031322a0)!important
+}
+html body .shell > header.header.ef-new-header .ef-header-identity img{height:76px!important;width:76px!important}
+html body .shell > header.header.ef-new-header .ef-header-identity strong{font-size:32px!important;letter-spacing:2px!important}
+html body .shell > header.header.ef-new-header .ef-header-identity small{font-size:11px!important;letter-spacing:1.1px!important}
+html body .shell > header.header.ef-new-header .ef-header-right{margin-left:auto!important;flex:0 1 auto!important;background:#031427e9!important;border-top:1px solid #06bfff!important;border-bottom:1px solid #06bfff!important}
+html body .shell > header.header.ef-new-header #cyberThemeSelect,
+html body .shell > header.header.ef-new-header #efThemeToggle{display:none!important}
+html body:has(.tactical-sidebar) .workspace #mapView.mapview .maptoolbar{
+position:absolute!important;top:14px!important;left:14px!important;right:auto!important;bottom:auto!important;
+width:max-content!important;max-width:calc(100% - 28px)!important;display:flex!important;
+flex-direction:row!important;align-items:center!important;gap:8px!important;z-index:900!important
+}
+html body:has(.tactical-sidebar) .workspace #mapView.mapview .postalbar{
+display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+align-items:center!important;gap:6px!important;padding:6px!important;max-width:100%!important
+}
+html body:has(.tactical-sidebar) .workspace #mapView.mapview .postalbar input{width:190px!important;min-width:90px!important}
+html body:has(.tactical-sidebar).tactical-map .workspace #efMapOnlyToolsBtn{
+top:77px!important;left:14px!important;z-index:900!important
+}
+html body:has(.tactical-sidebar) #mapView .leaflet-top.leaflet-left{top:120px!important;left:14px!important}
+html body:has(.tactical-sidebar) .workspace .leftpanel .side-toggle,
+html body:has(.tactical-sidebar) .workspace .leftpanel .collapse-toggle{display:none!important}
+@media(max-width:900px){
+html body .shell > header.header.ef-new-header{height:104px!important;min-height:104px!important;max-height:104px!important;flex-basis:104px!important}
+html body .shell > header.header.ef-new-header .ef-header-identity img{height:54px!important;width:54px!important}
+html body .shell > header.header.ef-new-header .ef-header-identity strong{font-size:22px!important}
+html body:has(.tactical-sidebar) .workspace #mapView.mapview .postalbar{flex-wrap:wrap!important}
+html body:has(.tactical-sidebar).tactical-map .workspace #efMapOnlyToolsBtn{top:112px!important}
+html body:has(.tactical-sidebar) #mapView .leaflet-top.leaflet-left{top:165px!important}
+}
