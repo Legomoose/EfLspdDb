@@ -1,0 +1,44 @@
+
+/* Approved skyline styling; text and clock remain real DOM content, not baked into an image */
+body .shell>.header.ef-new-header{height:132px!important;min-height:132px!important;max-height:132px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;padding:0 22px!important;gap:20px!important;background:linear-gradient(90deg,#020e1b 0%,#020e1bc9 20%,#020e1b2b 48%,#020e1bd9 83%,#020e1b 100%),url('assets/tactical-skyline.webp') center center/cover no-repeat!important;border-bottom:2px solid #00baff!important;box-shadow:inset 0 1px #35bfff,0 4px 18px #008ddd44!important}
+body .ef-new-header .ef-header-identity{display:flex!important;align-items:center!important;gap:15px!important;min-width:310px!important;background:linear-gradient(90deg,#021021ef,#02102170)!important;padding:12px 16px!important;border-left:2px solid #15baff!important}
+body .ef-new-header .ef-header-identity img{height:88px!important;width:88px!important;object-fit:contain!important}
+body .ef-new-header .ef-header-identity strong{font-size:31px!important;line-height:1.1!important;letter-spacing:2px!important;color:#f1f8ff!important;text-shadow:0 2px 8px #000!important}
+body .ef-new-header .ef-header-identity small{display:block!important;font-size:11px!important;letter-spacing:1px!important;max-width:250px!important;line-height:1.5!important;color:#a7d6f3!important}
+body .ef-new-header .ef-header-search{display:none!important}
+body .ef-new-header .ef-header-right{margin-left:auto!important;display:flex!important;align-items:center!important;gap:14px!important;background:linear-gradient(90deg,#04192be0,#020d1cf2)!important;padding:13px 15px!important;border-top:1px solid #0abaff!important;border-bottom:1px solid #0abaff!important}
+body .ef-new-header #cyberThemeSelect,body .ef-new-header #efThemeToggle{display:none!important}
+body .ef-new-header .lspd-header-clock{display:flex!important;flex-direction:column!important}
+body .ef-new-header .lspd-clock-time{font-size:18px!important}
+body .ef-new-header .ef-header-account{max-width:170px!important}
+html[data-ef-theme="midnight"]{--ef-bg:#120f24;--ef-panel:#211b39;--ef-panel2:#30234d;--ef-text:#f4eeff;--ef-muted:#b8a8d4;--ef-accent:#aa85fa;--ef-border:#66518b}
+html[data-ef-theme="emerald"]{--ef-bg:#061b19;--ef-panel:#0c302a;--ef-panel2:#13483c;--ef-text:#e8fff4;--ef-muted:#a0d6c4;--ef-accent:#31d9a1;--ef-border:#287e67}
+html[data-ef-theme="crimson"]{--ef-bg:#230e19;--ef-panel:#351625;--ef-panel2:#4a2031;--ef-text:#fff0f2;--ef-muted:#d7aab8;--ef-accent:#f56d90;--ef-border:#91415b}
+html[data-ef-theme="dark"]{--ef-bg:#11151c;--ef-panel:#1b222c;--ef-panel2:#283241;--ef-text:#e8ecf4;--ef-muted:#aab6c7;--ef-accent:#879fdb;--ef-border:#44536c}
+html[data-ef-theme] .tactical-sidebar{background:var(--ef-panel)!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] .tactical-stat,html[data-ef-theme] .tactical-panel{background:linear-gradient(140deg,var(--ef-panel2),var(--ef-bg))!important;border-color:var(--ef-border)!important;color:var(--ef-text)!important}
+html[data-ef-theme] .tactical-side-nav button.active{border-color:var(--ef-accent)!important;background:var(--ef-panel2)!important}
+html[data-ef-theme] .tactical-action-grid button,html[data-ef-theme] .tactical-tool-grid button{background:var(--ef-panel2)!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] #cyberDashboard{background:var(--ef-bg)!important}
+/* Map: one button; no arrow bar or competing duplicate controls */
+body:has(.tactical-sidebar) .workspace .leftpanel .side-toggle,
+body:has(.tactical-sidebar) #cyberMapControlsToggle,
+body:has(.tactical-sidebar) .ef-map-tools-close,
+body:has(.tactical-sidebar) .rightpanel .side-toggle{display:none!important}
+body:has(.tactical-sidebar) .workspace>.leftpanel{display:none!important}
+body:has(.tactical-sidebar).tactical-map .workspace>.leftpanel{display:none!important}
+body:has(.tactical-sidebar).tactical-map .workspace.ef-map-tools-open>.leftpanel{display:block!important;position:absolute!important;top:0!important;left:238px!important;bottom:0!important;max-height:none!important;height:100%!important;width:310px!important;z-index:1000!important;overflow:auto!important;background:#06172af5!important;box-shadow:8px 0 28px #0008!important}
+body:has(.tactical-sidebar) #efMapOnlyToolsBtn{display:none!important}
+body:has(.tactical-sidebar).tactical-map #efMapOnlyToolsBtn{display:flex!important;position:absolute!important;z-index:850!important;top:14px!important;left:14px!important;right:auto!important;bottom:auto!important;align-items:center!important;gap:9px!important;background:#06253f!important;color:#d8f3ff!important;border:1px solid #24aef0!important;border-radius:7px!important;padding:11px 15px!important;box-shadow:0 5px 15px #0009!important;cursor:pointer!important}
+body:has(.tactical-sidebar) #mapView .maptoolbar{position:absolute!important;top:12px!important;left:185px!important;right:12px!important;max-width:calc(100% - 200px)!important;display:flex!important;flex-direction:row!important;align-items:flex-start!important;gap:8px!important;z-index:750!important;pointer-events:none!important}
+body:has(.tactical-sidebar) #mapView .maptoolbar>*{pointer-events:auto!important}
+body:has(.tactical-sidebar) #mapView .postalbar{display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:5px!important;margin:0!important;padding:5px!important;border-radius:8px!important}
+body:has(.tactical-sidebar) #mapView .postalbar input{width:175px!important;min-width:100px!important;margin:0!important}
+body:has(.tactical-sidebar) #mapView .leaflet-top.leaflet-left{top:64px!important;left:10px!important}
+body:has(.tactical-sidebar) #mapView .leaflet-control-zoom{margin-top:0!important}
+body:has(.tactical-sidebar) #mapView .maptoolbar #postalNotice{display:none!important}
+@media(max-width:950px){body:has(.tactical-sidebar).tactical-map .workspace.ef-map-tools-open>.leftpanel{left:65px!important}body:has(.tactical-sidebar) #mapView .maptoolbar{left:14px!important;top:67px!important;right:12px!important;max-width:calc(100% - 28px)!important}body .shell>.header.ef-new-header{height:110px!important;min-height:110px!important}body .ef-new-header .ef-header-identity img{height:55px!important;width:55px!important}body .ef-new-header .ef-header-identity strong{font-size:20px!important}body .ef-new-header .ef-header-identity{min-width:0!important}}
+
+html[data-ef-theme="midnight"] body:has(.tactical-sidebar) #cyberDashboard,html[data-ef-theme="emerald"] body:has(.tactical-sidebar) #cyberDashboard,html[data-ef-theme="crimson"] body:has(.tactical-sidebar) #cyberDashboard,html[data-ef-theme="dark"] body:has(.tactical-sidebar) #cyberDashboard{background:var(--ef-bg)!important}
+html[data-ef-theme] body:has(.tactical-sidebar) .tactical-sidebar{background:var(--ef-panel)!important}
+html[data-ef-theme] body:has(.tactical-sidebar) .tactical-stat,html[data-ef-theme] body:has(.tactical-sidebar) .tactical-panel{background:var(--ef-panel)!important;border-color:var(--ef-border)!important}
