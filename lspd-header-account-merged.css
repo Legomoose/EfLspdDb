@@ -88,3 +88,81 @@ html body #efUpdateShell .ef-update-originals .db-card{border:1px solid #25648d!
 html body #efUpdateShell .ef-notify-button{background:#113f64!important;color:#e8f7ff!important;border:1px solid #357fab!important;padding:10px 14px!important;border-radius:9px!important;cursor:pointer}
 @media(max-width:880px){html body #efUpdateShell .ef-update-layout{grid-template-columns:minmax(0,1fr)}html body #efUpdateShell .ef-update-tabs{flex-direction:row!important;flex-wrap:wrap!important;gap:6px!important}html body #efUpdateShell .ef-update-tabs button{width:auto!important;min-height:38px;padding:8px 11px!important}}
 @media(max-width:550px){html body #efUpdateShell .ef-update-top{padding:11px!important}html body #efUpdateShell .ef-update-top h2{font-size:18px!important}html body #efUpdateShell .ef-account-profile{grid-template-columns:44px minmax(0,1fr)}html body #efUpdateShell .ef-account-profile-avatar{width:42px;height:42px}.ef-account-status{grid-column:2}html body #efUpdateShell .ef-update-panel{padding:12px!important}html body #efUpdateShell .ef-account-actions{grid-template-columns:1fr}}
+
+/* 2026-11-03 approved cyber control-centre settings redesign */
+html body #efUpdateShell .ef-update-layout{display:grid;grid-template-columns:minmax(210px,250px) minmax(0,1fr)!important;gap:18px!important;align-items:start}
+html body #efUpdateShell .ef-update-tabs-wrap{background:linear-gradient(180deg,rgba(9,28,47,.98),rgba(6,19,36,.98));border:1px solid #275985;border-radius:16px;box-shadow:0 12px 36px rgba(0,0,0,.24),inset 0 1px 0 rgba(164,221,255,.04);padding:14px}
+html body #efUpdateShell .ef-update-tabs-title{padding:2px 2px 10px}
+html body #efUpdateShell .ef-update-tabs-title h3{margin:0;color:#fff;font-size:20px;letter-spacing:1px;display:flex;gap:10px;align-items:center}
+html body #efUpdateShell .ef-update-tabs-title i{color:#6fd2ff}
+html body #efUpdateShell .ef-update-tabs{display:flex!important;flex-direction:column!important;gap:8px!important;padding:0!important;margin:0!important;background:transparent!important;border:none!important;box-shadow:none!important}
+html body #efUpdateShell .ef-update-tabs button{width:100%!important;display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;text-align:left!important;gap:10px!important;min-height:48px!important;padding:12px 14px!important;border-radius:11px!important;border:1px solid #214a73!important;background:linear-gradient(180deg,rgba(13,34,57,.95),rgba(7,21,38,.98))!important;color:#eaf7ff!important;font-size:14px!important;font-weight:700!important;line-height:1.25!important;box-shadow:inset 0 1px 0 rgba(147,220,255,.04)!important}
+html body #efUpdateShell .ef-update-tabs button:hover{transform:translateY(-1px);background:linear-gradient(180deg,rgba(19,49,82,.98),rgba(10,30,52,.99))!important;border-color:#3792cf!important;box-shadow:0 0 20px rgba(0,151,255,.08),inset 3px 0 0 #2ac8ff!important}
+html body #efUpdateShell .ef-update-tabs button.ef-selected{background:linear-gradient(180deg,rgba(42,74,122,.98),rgba(26,53,100,.99))!important;border-color:#62b8ff!important;box-shadow:0 0 24px rgba(0,162,255,.14),inset 4px 0 0 #28d1ff!important;color:#fff!important}
+html body #efUpdateShell .ef-update-content{display:flex;flex-direction:column;gap:12px;min-width:0}
+html body #efUpdateShell .ef-ctrl-main{display:flex;flex-direction:column;gap:16px}
+html body #efUpdateShell .ef-ctrl-hero{padding:20px 24px;border-radius:16px;border:1px solid #2a5c88;background:linear-gradient(110deg,rgba(8,32,59,.92),rgba(8,25,46,.84)),url('assets/operations-hq.webp');background-size:cover;background-position:center;box-shadow:0 0 0 1px rgba(31,120,191,.12),0 16px 36px rgba(0,0,0,.22)}
+html body #efUpdateShell .ef-ctrl-hero-kicker{font-size:11px;font-weight:800;letter-spacing:1.7px;color:#63d3ff;margin-bottom:8px}
+html body #efUpdateShell .ef-ctrl-hero h2{margin:0;color:#fff;font-size:31px;line-height:1.05;letter-spacing:1.4px;font-weight:850}
+html body #efUpdateShell .ef-ctrl-hero p{margin:10px 0 0;color:#c8e6ff;font-size:17px;line-height:1.5}
+html body #efUpdateShell .ef-ctrl-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(300px,.7fr);gap:18px;align-items:start}
+html body #efUpdateShell .ef-ctrl-center,html body #efUpdateShell .ef-ctrl-right{display:flex;flex-direction:column;gap:16px}
+html body #efUpdateShell .ef-ctrl-panel{background:linear-gradient(180deg,rgba(8,25,45,.96),rgba(7,21,39,.98));border:1px solid #285a86;border-radius:16px;padding:18px 18px 16px;box-shadow:0 12px 30px rgba(0,0,0,.16),inset 0 1px 0 rgba(153,220,255,.04)}
+html body #efUpdateShell .ef-ctrl-panel.ef-ctrl-inner{padding:16px;margin-top:14px}
+html body #efUpdateShell .ef-ctrl-panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:14px}
+html body #efUpdateShell .ef-ctrl-panel-head h3{margin:0;color:#fff;font-size:18px;letter-spacing:.7px;font-weight:820;display:flex;align-items:center;gap:10px}
+html body #efUpdateShell .ef-ctrl-panel-head p{margin:2px 0 0;color:#9fc7e5;font-size:14px}
+html body #efUpdateShell .ef-ctrl-panel-head i{color:#55d0ff}
+html body #efUpdateShell .ef-ctrl-account-card{display:grid;grid-template-columns:110px minmax(0,1fr);gap:18px;align-items:center;padding:16px;border-radius:15px;border:1px solid #2d5f8c;background:linear-gradient(120deg,rgba(14,39,65,.95),rgba(10,29,48,.92)),url('assets/operations-hq.webp');background-size:cover;background-position:center right;margin-bottom:16px}
+html body #efUpdateShell .ef-ctrl-account-avatar{display:grid;place-items:center;width:104px;height:104px;border-radius:50%;border:3px solid #46c7ff;color:#eaf8ff;background:radial-gradient(circle at 35% 30%,rgba(93,209,255,.28),rgba(9,35,60,.96));font-size:46px;box-shadow:0 0 34px rgba(0,183,255,.14)}
+html body #efUpdateShell .ef-ctrl-account-copy h4{margin:0 0 8px;color:#fff;font-size:24px;line-height:1.1}
+html body #efUpdateShell .ef-ctrl-account-copy p{margin:0 0 12px;color:#d0e6f7;font-size:16px}
+html body #efUpdateShell .ef-ctrl-badges{display:flex;flex-wrap:wrap;gap:10px}
+html body #efUpdateShell .ef-ctrl-badges span{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:10px;border:1px solid #2a628f;background:rgba(7,22,39,.8);color:#eaf7ff;font-size:13px;font-weight:800;letter-spacing:.3px}
+html body #efUpdateShell .ef-ctrl-badges .ef-online{border-color:#1ea261;color:#7cffbe}
+html body #efUpdateShell .ef-ctrl-badges .ef-offline{border-color:#8c425a;color:#ffc1cf}
+html body #efUpdateShell .ef-ctrl-action-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:16px}
+html body #efUpdateShell .ef-ctrl-action-row button,html body #efUpdateShell .ef-ctrl-quick-grid button{display:flex;align-items:center;gap:14px;text-align:left;padding:18px 16px;border-radius:14px;border:1px solid #2c638f;background:linear-gradient(180deg,rgba(17,42,68,.97),rgba(9,24,43,.99));color:#eef8ff;min-height:86px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(168,226,255,.04)}
+html body #efUpdateShell .ef-ctrl-action-row button:hover,html body #efUpdateShell .ef-ctrl-quick-grid button:hover{transform:translateY(-1px);border-color:#4bb3ff;box-shadow:0 0 24px rgba(0,153,255,.12),inset 0 1px 0 rgba(194,237,255,.06)}
+html body #efUpdateShell .ef-ctrl-action-row button>i:first-child,html body #efUpdateShell .ef-ctrl-quick-grid button>i:first-child{font-size:28px;color:#59d5ff;width:30px;text-align:center;flex:0 0 30px}
+html body #efUpdateShell .ef-ctrl-action-row button span,html body #efUpdateShell .ef-ctrl-quick-grid button span{display:flex;flex-direction:column;gap:4px;min-width:0}
+html body #efUpdateShell .ef-ctrl-action-row button strong,html body #efUpdateShell .ef-ctrl-quick-grid button strong{font-size:16px;line-height:1.2;color:#fff}
+html body #efUpdateShell .ef-ctrl-action-row button small,html body #efUpdateShell .ef-ctrl-quick-grid button small{font-size:13px;line-height:1.35;color:#a9cce5}
+html body #efUpdateShell .ef-ctrl-action-row button .fa-chevron-right{margin-left:auto;color:#a9defe;font-size:16px}
+html body #efUpdateShell .ef-logout-tile{border-color:#9d364e!important;background:linear-gradient(180deg,rgba(70,26,39,.98),rgba(54,20,33,.99))!important}
+html body #efUpdateShell .ef-ctrl-security-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+html body #efUpdateShell .ef-ctrl-security-grid>div{padding:12px 14px;border-radius:12px;border:1px solid #285e89;background:rgba(9,25,44,.82)}
+html body #efUpdateShell .ef-ctrl-security-grid small{display:block;color:#9fc6e2;font-size:12px;margin-bottom:7px}
+html body #efUpdateShell .ef-ctrl-security-grid strong{display:block;color:#fff;font-size:18px;line-height:1.2}
+html body #efUpdateShell .ef-ctrl-security-grid .ef-ok{color:#69f1a7}
+html body #efUpdateShell .ef-ctrl-info-box{padding:16px;border-radius:14px;border:1px solid #34a6ff;background:linear-gradient(180deg,rgba(9,38,67,.92),rgba(7,26,44,.98));box-shadow:0 0 26px rgba(0,157,255,.1) inset}
+html body #efUpdateShell .ef-ctrl-info-box h4{margin:0 0 8px;color:#fff;font-size:18px;display:flex;align-items:center;gap:10px}
+html body #efUpdateShell .ef-ctrl-info-box i{color:#7cddff}
+html body #efUpdateShell .ef-ctrl-info-box p{margin:7px 0 0;color:#d2e8f7;font-size:14px;line-height:1.55}
+html body #efUpdateShell .ef-ctrl-status-list{display:flex;flex-direction:column;border-top:1px solid rgba(84,145,188,.24)}
+html body #efUpdateShell .ef-ctrl-status-list>div{display:flex;justify-content:space-between;gap:10px;padding:13px 4px;border-bottom:1px solid rgba(84,145,188,.24)}
+html body #efUpdateShell .ef-ctrl-status-list span{color:#d5efff;font-size:16px}
+html body #efUpdateShell .ef-ctrl-status-list span:before{content:'●';color:#37f06f;margin-right:11px;font-size:12px;vertical-align:middle}
+html body #efUpdateShell .ef-ctrl-status-list strong{color:#fff;font-size:15px}
+html body #efUpdateShell .ef-ctrl-quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+html body #efUpdateShell .ef-ctrl-activity-list{display:flex;flex-direction:column;gap:4px}
+html body #efUpdateShell .ef-ctrl-activity-row{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:12px;align-items:start;padding:10px 2px;border-bottom:1px solid rgba(84,145,188,.24)}
+html body #efUpdateShell .ef-ctrl-activity-row>i{color:#2ebfff;font-size:9px;line-height:1.8}
+html body #efUpdateShell .ef-ctrl-activity-row strong{display:block;color:#fff;font-size:15px;line-height:1.3;margin-bottom:2px}
+html body #efUpdateShell .ef-ctrl-activity-row small{display:block;color:#a9cce5;font-size:13px;line-height:1.45}
+html body #efUpdateShell .ef-ctrl-activity-row time{color:#d8efff;font-size:13px;white-space:nowrap}
+html body #efUpdateShell .ef-ctrl-link{background:none!important;border:none!important;color:#61d6ff!important;padding:0!important;min-height:auto!important;box-shadow:none!important}
+html body #efUpdateShell .ef-ctrl-tab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+html body #efUpdateShell .ef-form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+html body #efUpdateShell .ef-form-grid label{display:flex;flex-direction:column;gap:8px;color:#d9efff;font-size:14px;font-weight:700}
+html body #efUpdateShell .ef-form-grid select{width:100%}
+html body #efUpdateShell .ef-update-grid{gap:12px}
+html body #efUpdateShell .ef-update-card{background:linear-gradient(180deg,rgba(12,31,53,.98),rgba(7,21,39,.99));border-color:#275985;border-radius:12px;padding:15px}
+html body #efUpdateShell .ef-update-card strong{font-size:20px}
+html body #efUpdateShell .ef-update-card small{font-size:13px}
+html body #efUpdateShell .ef-update-panel p,html body #efUpdateShell .ef-ctrl-panel p,html body #efUpdateShell .ef-update-note{font-size:14px!important;line-height:1.55}
+html body #efUpdateShell .ef-update-top{padding:16px 18px!important}
+html body #efUpdateShell .ef-update-top h2{font-size:26px!important}
+@media(max-width:1200px){html body #efUpdateShell .ef-ctrl-grid{grid-template-columns:minmax(0,1fr)}html body #efUpdateShell .ef-ctrl-action-row{grid-template-columns:1fr}html body #efUpdateShell .ef-ctrl-security-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:980px){html body #efUpdateShell .ef-update-layout{grid-template-columns:minmax(0,1fr)!important}html body #efUpdateShell .ef-update-tabs{flex-direction:row!important;flex-wrap:wrap!important}html body #efUpdateShell .ef-update-tabs button{width:auto!important}html body #efUpdateShell .ef-ctrl-quick-grid{grid-template-columns:1fr 1fr}html body #efUpdateShell .ef-form-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){html body #efUpdateShell .ef-ctrl-hero h2{font-size:24px}html body #efUpdateShell .ef-ctrl-hero p{font-size:15px}html body #efUpdateShell .ef-ctrl-account-card{grid-template-columns:1fr;text-align:left}html body #efUpdateShell .ef-ctrl-account-avatar{width:84px;height:84px;font-size:38px}html body #efUpdateShell .ef-ctrl-security-grid,html body #efUpdateShell .ef-ctrl-quick-grid,html body #efUpdateShell .ef-form-grid{grid-template-columns:1fr}html body #efUpdateShell .ef-ctrl-activity-row{grid-template-columns:14px minmax(0,1fr)}html body #efUpdateShell .ef-ctrl-activity-row time{grid-column:2}}

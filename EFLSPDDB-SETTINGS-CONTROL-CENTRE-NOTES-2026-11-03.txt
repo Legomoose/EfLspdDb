@@ -1,0 +1,17 @@
+EFLSPDDB Settings Control Centre Update · 2026-11-03
+
+Included in this package:
+- Rebuilt Settings page to match the approved cyber control-centre style
+- Larger tile-based layout and stronger typography
+- Left Settings navigation panel redesigned as boxed cyber tiles
+- Main account control tiles for Change Access Code, Manage Accounts and Log Out
+- Right-side System Status, Quick Actions and Recent Activity panels
+- Existing functionality preserved behind the redesign
+- Earlier approved header, theme, typography and sidebar updates remain included in the full package
+
+Files changed for update-only package:
+- ef-complete-update.js
+- lspd-header-account-merged.css
+
+No database schema changes are included.
+No Cloudflare Worker changes are included.
