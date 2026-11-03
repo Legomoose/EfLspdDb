@@ -42,12 +42,12 @@ map.on('click',e=>{
  try{localStorage.setItem(POSTAL_CALIBRATION_KEY,JSON.stringify(postalCalibrations))}catch{return toast('Could not save postal calibration in this browser.');}
  // Prevent this click from also placing an investigation/general pin.
  if(e.originalEvent)e.originalEvent._efCalibrationClick=true;
- showPostalPopup(postalCalibrations[postal],postal);
+ /* Postal lookup centres the map without creating a temporary pin. */
  toast('Postal '+postal+' aligned to the map image and saved in this browser.');
 });
 function nearestPostal(ll){let best='',dist=Infinity;for(const p of postals){const [lat,lng]=postalLocation(p.code),d=(lat-ll.lat)**2+(lng-ll.lng)**2;if(d<dist){best=p.code;dist=d}}return best}
 let postalMarker=null;
-function showPostalPopup(pt,postal){if(postalMarker)map.removeLayer(postalMarker);postalMarker=L.marker(pt,{icon:L.divIcon({className:'postal-search-marker',html:'<div class="postal-dot"><i class="fa-solid fa-location-dot"></i></div>',iconSize:[36,44],iconAnchor:[18,40]})}).addTo(map);postalMarker.bindPopup('<div class="postal-popup-content"><span>POSTAL</span><strong>'+safe(postal)+'</strong></div>',{className:'postal-themed-popup',offset:[0,-32],closeButton:true,autoPan:true}).openPopup()}
+function showPostalPopup(pt,postal){ /* Search results do not place temporary map pins. */ }
 $('postalSearchBtn').onclick=()=>{const pt=postalLocation($('postalInput').value);if(!pt)return toast('Postal not found.');if(postalMarker){map.removeLayer(postalMarker);postalMarker=null;}map.setView(pt,1.8,{animate:false});toast('Showing area around postal '+$('postalInput').value.trim().padStart(3,'0'))};
 $('postalInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('postalSearchBtn').click()}});
 $('postalPinBtn').onclick=()=>{placementMode=true;pinKind='general';placingForId=null;toast('Click the exact location on the map to create your pin. Press Esc to cancel.');};
