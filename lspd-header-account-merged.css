@@ -1,0 +1,90 @@
+/* LSPD DB — approved compact skyline and Settings integration, 2026-11-03. */
+/* Real 2048×70 artwork, width-sensitive contain: no squeeze or forced cover crop. */
+html body .shell>header#lspdRebuiltHeader.header,
+html body:has(.tactical-sidebar) .shell>header#lspdRebuiltHeader.header{
+  position:relative!important;display:flex!important;align-items:center!important;justify-content:space-between!important;
+  height:70px!important;min-height:70px!important;max-height:70px!important;flex:0 0 70px!important;
+  box-sizing:border-box!important;padding:0 13px!important;gap:8px!important;
+  background-color:#031121!important;background-image:url('assets/ef2026/header-panorama-70.webp')!important;
+  background-position:center center!important;background-repeat:no-repeat!important;background-size:contain!important;
+  overflow:hidden!important;border:0!important;border-bottom:1px solid #1377af!important;
+  box-shadow:inset 0 1px #2b81b544,0 3px 13px #0009!important;
+}
+html body #lspdRebuiltHeader .lspd-rebuilt-brand{
+  position:relative!important;z-index:2!important;display:flex!important;align-items:center!important;
+  flex:0 0 auto!important;min-width:0!important;max-width:39%!important;height:100%!important;
+  gap:10px!important;padding:5px 12px 5px 5px!important;box-sizing:border-box!important;
+  border:0!important;border-right:1px solid #1a587a55!important;
+  background:linear-gradient(90deg,#031121f5,#031121e8 75%,#03112100)!important;
+}
+html body #lspdRebuiltHeader .lspd-rebuilt-brand img{display:block!important;width:47px!important;height:55px!important;flex:0 0 47px!important;object-fit:contain!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark{display:flex!important;flex-direction:column!important;gap:0!important;min-width:0!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark strong{font-size:clamp(17px,1.9vw,29px)!important;line-height:1.05!important;letter-spacing:1.2px!important;color:#f2faff!important;white-space:nowrap!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark span{font-size:clamp(7px,.85vw,11px)!important;line-height:1.25!important;letter-spacing:1.7px!important;color:#b4e8ff!important;white-space:nowrap!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark small{display:block!important;font-size:8px!important;letter-spacing:1.2px!important;line-height:1.25!important;white-space:nowrap!important;color:#9ecbe7!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-controls.ef-header-right{
+  position:relative!important;z-index:2!important;display:flex!important;align-items:center!important;
+  gap:9px!important;flex:0 1 auto!important;min-width:0!important;max-width:53%!important;
+  height:44px!important;margin-left:auto!important;padding:4px 10px!important;box-sizing:border-box!important;
+  border:1px solid #24618d!important;border-radius:7px!important;
+  background:#04152bdc!important;box-shadow:0 1px 12px #0007!important;
+}
+html body #lspdRebuiltHeader #lspdHeaderClock{display:flex!important;flex-direction:column!important;align-items:flex-start!important;min-width:90px!important;gap:1px!important;white-space:nowrap!important}
+html body #lspdRebuiltHeader .lspd-clock-time{font-size:15px!important;line-height:1.1!important;font-weight:750!important;color:#fff!important}
+html body #lspdRebuiltHeader .lspd-clock-date{font-size:9px!important;line-height:1.15!important;color:#9fbdda!important;white-space:nowrap!important}
+html body #lspdRebuiltHeader #lspdUtcClock{display:flex!important;flex-direction:column!important;align-items:center!important;min-width:40px!important;gap:0!important;padding-left:10px!important;border-left:1px solid #2e5271!important;line-height:1.15!important}
+html body #lspdRebuiltHeader #lspdUtcClock small{font-size:9px!important;color:#9db5d0!important}
+html body #lspdRebuiltHeader #lspdUtcClock strong{font-size:12px!important;color:#e8f4ff!important}
+html body #lspdRebuiltHeader .ef-header-avatar{width:27px!important;height:27px!important;flex:0 0 27px!important;display:grid!important;place-items:center!important;font-size:12px!important;background:#23527e!important;border-radius:50%!important}
+html body #lspdRebuiltHeader .ef-header-account{display:flex!important;flex-direction:column!important;justify-content:center!important;gap:1px!important;min-width:0!important;max-width:215px!important}
+html body #lspdRebuiltHeader .ef-header-account strong{font-size:11px!important;color:#f5f9ff!important;white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important}
+html body #lspdRebuiltHeader .ef-header-account small{font-size:9px!important;color:#b4d4e9!important;white-space:nowrap!important;text-overflow:ellipsis!important;overflow:hidden!important}
+/* All account actions live in Settings now. Retain hidden legacy buttons for their secure handlers. */
+html body #lspdRebuiltHeader #efHeaderAccountToggle,
+html body #lspdRebuiltHeader #efAccountMenu{display:none!important;visibility:hidden!important;pointer-events:none!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-skyline,
+html body #lspdRebuiltHeader .ef-final-header-message{display:none!important}
+@media(max-width:1020px){html body #lspdRebuiltHeader #lspdUtcClock{display:none!important}}
+@media(max-width:650px){html body #lspdRebuiltHeader .lspd-rebuilt-brand{gap:5px!important;padding:3px!important}html body #lspdRebuiltHeader .lspd-rebuilt-brand img{width:31px!important;height:37px!important;flex-basis:31px!important}html body #lspdRebuiltHeader .lspd-rebuilt-wordmark strong{font-size:16px!important}html body #lspdRebuiltHeader .lspd-rebuilt-wordmark span{font-size:7px!important;letter-spacing:.5px!important}html body #lspdRebuiltHeader .lspd-rebuilt-wordmark small{display:none!important}html body #lspdRebuiltHeader #lspdHeaderClock{min-width:69px!important}html body #lspdRebuiltHeader .lspd-clock-time{font-size:12px!important}html body #lspdRebuiltHeader .lspd-clock-date{font-size:7px!important}html body #lspdRebuiltHeader .ef-header-avatar{display:none!important}html body #lspdRebuiltHeader .ef-header-account strong{font-size:10px!important}html body #lspdRebuiltHeader .ef-header-account small{display:none!important}html body #lspdRebuiltHeader .lspd-rebuilt-controls.ef-header-right{max-width:52%!important;gap:5px!important;padding:4px 6px!important}}
+@media(max-width:390px){html body #lspdRebuiltHeader .ef-header-account{display:none!important}}
+
+/* Settings desktop layout based on the approved cyber-blue dashboard treatment. */
+html body #efUpdateShell{color:#eef7ff;max-width:1800px;margin:0 auto 18px!important;min-width:0!important}
+html body #efUpdateShell .ef-update-top{padding:14px 17px;margin-bottom:15px;background:linear-gradient(105deg,#0a2844ee,#06172bcf);border:1px solid #25608b;border-radius:11px;box-shadow:0 4px 18px #0003}
+html body #efUpdateShell .ef-update-top h2{font-size:24px!important;line-height:1.12;letter-spacing:1.1px;font-weight:850;color:#f5faff!important}
+html body #efUpdateShell .ef-update-top p{font-size:12px;color:#9ec4dc!important;margin-top:6px}
+html body #efUpdateShell .ef-update-layout{display:grid;grid-template-columns:minmax(184px,215px) minmax(0,1fr);gap:16px;align-items:start}
+html body #efUpdateShell .ef-update-tabs{display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;gap:6px!important;padding:12px!important;margin:0!important;background:linear-gradient(145deg,#0a2139,#06172b);border:1px solid #23587d;border-radius:12px;box-shadow:0 4px 20px #0003}
+html body #efUpdateShell .ef-update-tabs button{width:100%!important;display:flex!important;align-items:center!important;text-align:left!important;gap:9px!important;min-height:42px;padding:9px 11px!important;border:1px solid transparent!important;background:transparent!important;border-radius:8px!important;color:#c6e0f3!important;font-size:12px!important;font-weight:650;cursor:pointer}
+html body #efUpdateShell .ef-update-tabs button:hover{background:#10375b!important;border-color:#2879ae!important}
+html body #efUpdateShell .ef-update-tabs button.ef-selected{background:linear-gradient(110deg,#0e4c79,#0b2949)!important;border:1px solid #18aafa!important;box-shadow:inset 3px 0 #28c3ff,0 0 0 1px #23a2f426!important;color:#fff!important}
+html body #efUpdateShell .ef-update-content{min-width:0;display:flex;flex-direction:column;gap:10px}
+html body #efUpdateShell #efUpdateBody{min-width:0}
+html body #efUpdateShell .ef-update-panel,
+html body #efUpdateShell .ef-update-card{background:linear-gradient(120deg,#092239,#071b30)!important;border:1px solid #245d85!important;border-radius:10px;box-shadow:0 2px 8px #0002}
+html body #efUpdateShell .ef-update-panel{padding:18px!important;margin:0 0 12px!important}
+html body #efUpdateShell .ef-update-panel h3{font-size:16px!important;letter-spacing:.3px!important;color:#ebf7ff!important;margin:0 0 13px!important}
+html body #efUpdateShell .ef-update-panel p,
+html body #efUpdateShell .ef-update-panel label{line-height:1.6;font-size:12px;color:#aac9df!important}
+html body #efUpdateShell .ef-update-note{font-size:11px;color:#89b4d0!important}
+html body #efUpdateShell .ef-update-theme{min-height:92px;border-radius:9px;text-align:left;transition:transform .15s,filter .15s}
+html body #efUpdateShell .ef-update-theme:hover{transform:translateY(-2px);filter:brightness(1.14)}
+html body #efUpdateShell button:focus-visible{outline:2px solid #2cc9ff!important;outline-offset:2px!important}
+html body #efUpdateShell .ef-account-profile{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:15px;padding:12px 0 18px;border-bottom:1px solid #215477;margin-bottom:16px}
+html body #efUpdateShell .ef-account-profile-avatar{display:grid;place-items:center;width:54px;height:54px;background:linear-gradient(135deg,#145f91,#123253);border:1px solid #31b8f8;border-radius:13px;color:#8adeff;font-size:23px}
+html body #efUpdateShell .ef-account-profile h4{font-size:19px;margin:0 0 4px;color:#fff}
+html body #efUpdateShell .ef-account-profile p{margin:0;font-size:12px;color:#a6c9e2}
+html body #efUpdateShell .ef-account-status{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:#70ecc3;font-size:11px}
+html body #efUpdateShell .ef-account-status:before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:#40dda9;box-shadow:0 0 10px #40dda9}
+html body #efUpdateShell .ef-account-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+html body #efUpdateShell .ef-account-actions button{display:flex;align-items:center;justify-content:flex-start;gap:10px;min-height:49px;padding:12px!important;background:#0d3555!important;color:#e7f6ff!important;border:1px solid #2973a4!important;border-radius:9px!important;text-align:left;cursor:pointer;font-weight:700}
+html body #efUpdateShell .ef-account-actions button:hover{background:#154d78!important;border-color:#36bdfa!important}
+html body #efUpdateShell .ef-account-actions button.ef-signout{border-color:#9e4c5d!important;background:#3b1e2d!important;color:#ffd9e1!important}
+html body #efUpdateShell .ef-account-actions button.ef-signout:hover{background:#5a2635!important}
+html body #efUpdateShell .ef-account-actions button[hidden]{display:none!important}
+html body #efUpdateShell .ef-account-foot{display:flex;flex-wrap:wrap;gap:13px;margin-top:14px;font-size:11px;color:#a6c9e2}
+html body #efUpdateShell .ef-account-foot span{border:1px solid #1e5276;border-radius:6px;padding:7px 10px;background:#05172b}
+html body #efUpdateShell .ef-update-originals .db-card{border:1px solid #25648d!important;background:#0a223a!important;border-radius:10px!important}
+html body #efUpdateShell .ef-notify-button{background:#113f64!important;color:#e8f7ff!important;border:1px solid #357fab!important;padding:10px 14px!important;border-radius:9px!important;cursor:pointer}
+@media(max-width:880px){html body #efUpdateShell .ef-update-layout{grid-template-columns:minmax(0,1fr)}html body #efUpdateShell .ef-update-tabs{flex-direction:row!important;flex-wrap:wrap!important;gap:6px!important}html body #efUpdateShell .ef-update-tabs button{width:auto!important;min-height:38px;padding:8px 11px!important}}
+@media(max-width:550px){html body #efUpdateShell .ef-update-top{padding:11px!important}html body #efUpdateShell .ef-update-top h2{font-size:18px!important}html body #efUpdateShell .ef-account-profile{grid-template-columns:44px minmax(0,1fr)}html body #efUpdateShell .ef-account-profile-avatar{width:42px;height:42px}.ef-account-status{grid-column:2}html body #efUpdateShell .ef-update-panel{padding:12px!important}html body #efUpdateShell .ef-account-actions{grid-template-columns:1fr}}
