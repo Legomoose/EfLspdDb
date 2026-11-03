@@ -1,36 +1,151 @@
-/* Single authoritative map panel presentation */
-html body:has(.tactical-sidebar) .workspace #efMapOnlyToolsBtn{display:none!important}
-html body:has(.tactical-sidebar).ef-map-unified-active .workspace #efMapOnlyToolsBtn{display:flex!important;position:absolute!important;top:74px!important;left:14px!important;right:auto!important;bottom:auto!important;z-index:1250!important;align-items:center!important;gap:8px!important;background:#082c48!important;color:#eaf8ff!important;border:1px solid #26baff!important;border-radius:7px!important;padding:10px 14px!important;cursor:pointer!important}
-html body:has(.tactical-sidebar) .workspace>.leftpanel,html body:has(.tactical-sidebar) .workspace>.rightpanel{display:none!important}
-html body:has(.tactical-sidebar).ef-map-unified-active .workspace.ef-map-tools-open>.leftpanel{display:block!important;position:absolute!important;left:238px!important;top:0!important;bottom:0!important;width:320px!important;max-width:calc(100% - 238px)!important;height:100%!important;z-index:1200!important;overflow:auto!important;background:#061a2ef8!important;box-shadow:6px 0 25px #0009!important}
-html body:has(.tactical-sidebar).ef-map-unified-active .workspace.ef-map-detail-open>.rightpanel{display:block!important;position:absolute!important;right:0!important;left:auto!important;top:0!important;bottom:0!important;width:360px!important;max-width:calc(100% - 238px)!important;height:100%!important;z-index:1200!important;overflow:auto!important;background:#061a2ef8!important;box-shadow:-6px 0 25px #0009!important}
-html body .workspace .leftpanel .ef-map-tools-close{display:flex!important;align-items:center!important;gap:8px!important;margin:9px!important;padding:8px 11px!important;border:1px solid #288fc7!important;border-radius:6px!important;background:#0b2e49!important;color:white!important;cursor:pointer!important}
-html body .workspace .rightpanel .ef-repair-detail-close{display:none!important}
-html body:has(.tactical-sidebar).ef-map-unified-active .workspace .rightpanel #toggleRightPanel{display:grid!important;place-items:center!important;position:sticky!important;float:right!important;top:8px!important;right:8px!important;left:auto!important;margin:8px!important;width:34px!important;height:34px!important;border:1px solid #278ac5!important;border-radius:6px!important;background:#0a304c!important;color:#fff!important;z-index:6!important;cursor:pointer!important}
-html body:has(.tactical-sidebar).ef-map-unified-active #mapView .leaflet-top.leaflet-left{top:124px!important}
-html body .leaflet-marker-icon.custom-marker{cursor:pointer!important}
-@media(max-width:950px){html body:has(.tactical-sidebar).ef-map-unified-active .workspace.ef-map-tools-open>.leftpanel{left:65px!important;max-width:calc(100% - 65px)!important}html body:has(.tactical-sidebar).ef-map-unified-active .workspace.ef-map-detail-open>.rightpanel{max-width:calc(100% - 65px)!important}}
-
-/* Hotfix: make map panel visibility independent of the old tactical-map route detector */
-html body.ef-map-unified-active .workspace #efMapOnlyToolsBtn{display:flex!important;position:absolute!important;top:76px!important;left:14px!important;z-index:1600!important;pointer-events:auto!important;align-items:center!important;gap:7px!important;background:#082c48!important;color:#fff!important;border:1px solid #26baff!important;border-radius:7px!important;padding:10px 14px!important;cursor:pointer!important}
-html body.ef-map-unified-active .workspace.ef-map-tools-open>.leftpanel{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;position:absolute!important;top:0!important;left:238px!important;bottom:0!important;width:320px!important;height:100%!important;z-index:1500!important;overflow:auto!important;background:#061a2ef8!important;box-shadow:6px 0 25px #0009!important}
-html body.ef-map-unified-active .workspace.ef-map-detail-open>.rightpanel{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;position:absolute!important;top:0!important;right:0!important;left:auto!important;bottom:0!important;width:360px!important;height:100%!important;z-index:1500!important;overflow:auto!important;background:#061a2ef8!important;box-shadow:-6px 0 25px #0009!important}
-html body.ef-map-unified-active .workspace .rightpanel #toggleRightPanel{display:grid!important;position:sticky!important;float:right!important;top:8px!important;z-index:10!important;width:34px!important;height:34px!important;place-items:center!important;border:1px solid #278ac5!important;background:#0a304c!important;color:#fff!important;border-radius:6px!important}
-@media(max-width:950px){html body.ef-map-unified-active .workspace.ef-map-tools-open>.leftpanel{left:65px!important;max-width:calc(100% - 65px)!important}html body.ef-map-unified-active .workspace.ef-map-detail-open>.rightpanel{max-width:calc(100% - 65px)!important}}
-
-
-/* Deduplicate navigation inside map pin drawer; main tactical sidebar owns navigation.
-   Keep all original elements in DOM for existing event handlers. */
-html body .workspace > .leftpanel .ef-primary-navigation,
-html body .workspace > .leftpanel .ef-brand { display:none!important; }
-/* The drawer has its own close button; don't float an extra toggle above it. */
-html body.ef-map-unified-active .workspace.ef-map-tools-open #efMapOnlyToolsBtn { display:none!important; }
-/* Ensure the actual pin tools start clearly immediately after the close control. */
-html body.ef-map-unified-active .workspace.ef-map-tools-open > .leftpanel .panel-inner > h3:first-of-type { margin-top:12px!important; }
-
-/* Map navigation is owned solely by the permanent sidebar. */
-html body .workspace > .leftpanel .ef-nav-heading{display:none!important}
-html body.ef-map-unified-active .workspace.ef-map-tools-open > .leftpanel .side-toggle{display:none!important}
-/* Keep marker interactions above noninteractive decorations. */
-html body.ef-map-unified-active #mapView .leaflet-marker-pane{pointer-events:none}
+/* EFLSPDDB Final Map Intelligence layout — replaces layered experimental map overrides.
+   All original controls remain in the DOM. No saved pin/map data is modified. */
+html body:has(.tactical-sidebar) .workspace > .leftpanel,
+html body:has(.tactical-sidebar) .workspace > .rightpanel{display:none!important}
+html body.ef-map-unified-active:has(.tactical-sidebar) .workspace{
+ display:grid!important;grid-template-columns:220px 286px minmax(0,1fr) 318px!important;
+ grid-template-rows:146px minmax(0,1fr)!important;min-height:0!important;overflow:hidden!important;
+ gap:0!important;position:relative!important;background:#020c19!important;
+}
+html body.ef-map-unified-active .workspace > .tactical-sidebar{
+ grid-column:1!important;grid-row:1 / 3!important;min-width:0!important;height:100%!important;
+}
+html body .workspace > .ef-big-map-hero{display:none!important}
+html body.ef-map-unified-active .workspace > .ef-big-map-hero{
+ display:flex!important;grid-column:2 / 5!important;grid-row:1!important;position:relative;
+ align-items:center!important;min-width:0!important;overflow:hidden!important;
+ margin:14px 15px 13px 15px!important;padding:19px 24px!important;border:1px solid #285981!important;border-radius:12px!important;
+ background:linear-gradient(90deg,#06162bea 3%,#06172cde 42%,#05152ac0 82%,#06182cd9),url('assets/cyber2/operations-hq.webp') center/cover no-repeat!important;
+ box-shadow:inset 0 1px #7fcaff24!important;
+}
+.ef-big-map-hero>div{position:relative;z-index:1}
+.ef-big-map-hero small{display:flex;align-items:center;gap:9px;color:#a2d4f7;font-size:10px;font-weight:750;letter-spacing:.16em}
+.ef-big-map-hero .ef-pulse{display:inline-block;width:6px;height:6px;box-shadow:0 0 9px #39ffac;background:#39ffac;border-radius:50%}
+.ef-big-map-hero h1{margin:9px 0 5px;font-size:clamp(20px,2vw,34px);line-height:1.1;letter-spacing:.08em;color:white;font-weight:900}
+.ef-big-map-hero p{margin:0;color:#b4d0e5;font-size:12px}
+html body.ef-map-unified-active:has(.tactical-sidebar) .workspace > .leftpanel{
+ display:flex!important;grid-column:2!important;grid-row:2!important;
+ position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;
+ width:auto!important;max-width:none!important;min-width:0!important;height:100%!important;max-height:100%!important;
+ z-index:5!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+ overflow:hidden!important;flex-direction:column!important;background:linear-gradient(#081c33,#041428)!important;
+ margin:0 0 12px 15px!important;border:1px solid #255581!important;border-radius:11px!important;box-shadow:none!important;
+}
+html body.ef-map-unified-active:has(.tactical-sidebar) .workspace > .center{
+ display:block!important;grid-column:3!important;grid-row:2!important;
+ position:relative!important;min-width:0!important;min-height:0!important;width:100%!important;height:100%!important;
+ margin:0!important;padding:0 8px 12px!important;overflow:hidden!important;
+}
+html body.ef-map-unified-active:has(.tactical-sidebar) .workspace > .rightpanel{
+ display:flex!important;grid-column:4!important;grid-row:2!important;
+ position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+ width:auto!important;max-width:none!important;min-width:0!important;height:100%!important;max-height:100%!important;
+ z-index:5!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+ overflow:hidden!important;flex-direction:column!important;
+ margin:0 15px 12px 0!important;padding:0!important;background:linear-gradient(#081d35,#031328)!important;
+ border:1px solid #265784!important;border-radius:11px!important;box-shadow:none!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel .panel-inner,
+html body.ef-map-unified-active .workspace > .rightpanel .panel-inner{
+ display:block!important;min-width:0!important;width:100%!important;height:100%!important;max-height:100%!important;
+ padding:15px 13px 20px!important;box-sizing:border-box!important;
+ overflow-x:hidden!important;overflow-y:auto!important;scrollbar-width:thin!important;scrollbar-color:#215781 #06192c!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel .panel-inner::-webkit-scrollbar,
+html body.ef-map-unified-active .workspace > .rightpanel .panel-inner::-webkit-scrollbar{width:5px;background:transparent!important}
+html body.ef-map-unified-active .workspace > .leftpanel .panel-inner::-webkit-scrollbar-thumb,
+html body.ef-map-unified-active .workspace > .rightpanel .panel-inner::-webkit-scrollbar-thumb{border-radius:6px;background:#215781!important}
+html body.ef-map-unified-active .workspace > .leftpanel .ef-primary-navigation,
+html body.ef-map-unified-active .workspace > .leftpanel .ef-brand,
+html body.ef-map-unified-active .workspace > .leftpanel .ef-nav-heading,
+html body.ef-map-unified-active .workspace > .leftpanel #toggleLeftPanel{display:none!important}
+html body.ef-map-unified-active .workspace .ef-map-tools-close{
+ display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;
+ width:auto!important;margin:10px 12px 0!important;padding:8px 12px!important;
+ background:#092945!important;border:1px solid #2e7cb5!important;color:#ecf9ff!important;border-radius:6px!important;
+ font-size:12px!important;font-weight:750!important;cursor:pointer!important;align-self:flex-end!important;
+}
+html body.ef-map-unified-active .workspace .ef-final-map-search{margin:2px 0 17px;padding:0 0 13px;border-bottom:1px solid #275175}
+html body.ef-map-unified-active .workspace .ef-final-map-search h3,
+html body.ef-map-unified-active .workspace > .leftpanel .panel-inner > h3{
+ font-size:12px!important;font-weight:800!important;letter-spacing:.09em!important;color:#d7ecff!important;margin:8px 0 12px!important;
+}
+html body.ef-map-unified-active .workspace .ef-final-map-search .searchfield{width:100%;margin:0!important}
+html body.ef-map-unified-active .workspace .ef-final-map-search input{width:100%;min-width:0;font-size:12px}
+html body.ef-map-unified-active .workspace .category-list button{font-size:12px!important;max-width:100%!important}
+html body.ef-map-unified-active .workspace > .leftpanel .cyber-sidebar-art{position:relative!important;width:100%!important;min-height:170px!important;margin-top:22px!important;overflow:hidden!important;border-radius:10px!important}
+html body.ef-map-unified-active .workspace > .leftpanel .cyber-sidebar-art img{width:100%!important;height:210px!important;object-fit:cover!important;object-position:center 55%!important}
+html body.ef-map-unified-active .workspace > .leftpanel .cyber-sidebar-art span{position:absolute!important;bottom:10px!important;left:10px!important;right:5px!important}
+html body.ef-map-unified-active .workspace > .center #mapView{
+ display:block!important;width:100%!important;height:100%!important;min-height:0!important;position:relative!important;
+ overflow:hidden!important;border:1px solid #1d6493!important;border-radius:10px!important;
+}
+html body.ef-map-unified-active .workspace > .center #mapView #map{height:100%!important;width:100%!important}
+html body.ef-map-unified-active #mapView .maptoolbar{position:absolute!important;left:10px!important;top:12px!important;z-index:850!important}
+html body.ef-map-unified-active #mapView #efMapOnlyToolsBtn{
+ display:flex!important;align-items:center!important;gap:9px!important;position:absolute!important;
+ z-index:1200!important;left:13px!important;top:76px!important;right:auto!important;bottom:auto!important;
+ margin:0!important;padding:10px 13px!important;border:1px solid #1da8f6!important;border-radius:7px!important;
+ background:#082742ed!important;color:#edf9ff!important;box-shadow:0 2px 15px #0009!important;
+ font-size:12px!important;font-weight:750!important;cursor:pointer!important;pointer-events:auto!important;
+}
 html body.ef-map-unified-active #mapView .leaflet-marker-icon{pointer-events:auto!important;cursor:pointer!important}
+html body.ef-map-unified-active #mapView .leaflet-marker-pane{pointer-events:none!important}
+html body.ef-map-unified-active #mapView .leaflet-marker-pane>*{pointer-events:auto!important}
+html body.ef-map-unified-active #mapView .leaflet-top.leaflet-left{top:124px!important}
+html body.ef-map-unified-active .workspace .rightpanel #toggleRightPanel{
+ display:grid!important;place-items:center!important;position:absolute!important;
+ top:9px!important;right:9px!important;left:auto!important;float:none!important;z-index:50!important;
+ width:30px!important;height:30px!important;padding:0!important;margin:0!important;
+ border:1px solid #275d8b!important;border-radius:6px!important;background:#071f3a!important;color:#effaff!important;cursor:pointer!important;
+}
+html body.ef-map-unified-active .workspace .rightpanel:has(#efLocationProfile) #toggleRightPanel{display:none!important}
+html body.ef-map-unified-active .workspace .rightpanel .ef-repair-detail-close{display:none!important}
+html body.ef-map-unified-active .workspace .rightpanel .panel-inner .casehead{padding-right:35px!important}
+html body.ef-map-unified-active .workspace.ef-map-tools-collapsed{grid-template-columns:220px 0 minmax(0,1fr) 318px!important}
+html body.ef-map-unified-active .workspace.ef-map-tools-collapsed > .leftpanel{display:none!important}
+html body.ef-map-unified-active .workspace.ef-map-tools-collapsed > .center{grid-column:3!important}
+html body.ef-map-unified-active .workspace.ef-map-detail-closed{grid-template-columns:220px 286px minmax(0,1fr) 0!important}
+html body.ef-map-unified-active .workspace.ef-map-detail-closed > .rightpanel{display:none!important}
+html body.ef-map-unified-active .workspace.ef-map-tools-collapsed.ef-map-detail-closed{grid-template-columns:220px 0 minmax(0,1fr) 0!important}
+@media(max-width:1450px){
+ html body.ef-map-unified-active:has(.tactical-sidebar) .workspace{grid-template-columns:205px 245px minmax(0,1fr) 280px!important}
+ html body.ef-map-unified-active .workspace.ef-map-tools-collapsed{grid-template-columns:205px 0 minmax(0,1fr) 280px!important}
+ html body.ef-map-unified-active .workspace.ef-map-detail-closed{grid-template-columns:205px 245px minmax(0,1fr) 0!important}
+ html body.ef-map-unified-active .workspace.ef-map-tools-collapsed.ef-map-detail-closed{grid-template-columns:205px 0 minmax(0,1fr) 0!important}
+}
+@media(max-width:1050px){
+ html body.ef-map-unified-active:has(.tactical-sidebar) .workspace{grid-template-columns:72px 230px minmax(0,1fr)!important;grid-template-rows:132px minmax(0,1fr)!important}
+ html body.ef-map-unified-active .workspace > .tactical-sidebar{width:72px!important}
+ html body.ef-map-unified-active .workspace > .ef-big-map-hero{grid-column:2/4!important}
+ html body.ef-map-unified-active .workspace > .leftpanel{grid-column:2!important}
+ html body.ef-map-unified-active .workspace > .center{grid-column:3!important}
+ html body.ef-map-unified-active .workspace > .rightpanel{position:absolute!important;right:5px!important;top:145px!important;bottom:10px!important;width:min(330px,75vw)!important;height:auto!important;z-index:300!important;box-shadow:-8px 0 24px #000b!important}
+ html body.ef-map-unified-active .workspace.ef-map-detail-closed > .rightpanel{display:none!important}
+ html body.ef-map-unified-active .workspace.ef-map-tools-collapsed{grid-template-columns:72px 0 minmax(0,1fr)!important}
+}
+@media(max-width:700px){
+ html body.ef-map-unified-active:has(.tactical-sidebar) .workspace{grid-template-columns:65px minmax(0,1fr)!important;grid-template-rows:120px minmax(0,1fr)!important}
+ html body.ef-map-unified-active .workspace > .ef-big-map-hero{grid-column:2!important;margin:7px!important;padding:12px!important}
+ html body.ef-map-unified-active .workspace > .ef-big-map-hero h1{font-size:21px}
+ html body.ef-map-unified-active .workspace > .leftpanel{position:absolute!important;grid-column:auto!important;z-index:250!important;top:128px!important;left:70px!important;bottom:5px!important;width:min(280px,74vw)!important;height:auto!important;margin:0!important;box-shadow:5px 0 20px #000b!important}
+ html body.ef-map-unified-active .workspace > .center{grid-column:2!important;padding:0 6px 6px!important}
+ html body.ef-map-unified-active .workspace > .rightpanel{top:128px!important;width:min(320px,78vw)!important}
+ html body.ef-map-unified-active .workspace.ef-map-tools-collapsed > .leftpanel{display:none!important}
+}
+/* Keep category controls compact enough for the approved police photograph. */
+html body.ef-map-unified-active .workspace > .leftpanel #addPinBtn{
+ display:block!important;width:100%!important;min-height:41px!important;border:1px solid #217bce!important;
+ border-radius:8px!important;background:linear-gradient(#1474d8,#0c55a8)!important;color:white!important;font-weight:800!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel .category-list{
+ max-height:218px!important;overflow-x:hidden!important;overflow-y:auto!important;
+ scrollbar-width:thin!important;scrollbar-color:#215781 transparent!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel .category-list::-webkit-scrollbar{width:4px!important}
+html body.ef-map-unified-active .workspace > .leftpanel .category-list::-webkit-scrollbar-thumb{background:#215781!important;border-radius:5px!important}
+/* A general-location profile has its own X. Never show the outer panel X with it. */
+html body.ef-map-unified-active .workspace > .rightpanel:has(#efLocationProfile){
+ overflow-y:auto!important;overflow-x:hidden!important;scrollbar-width:thin!important;scrollbar-color:#215781 #071a2c!important;
+}
+html body.ef-map-unified-active .workspace > .rightpanel #efLocationProfile{min-height:100%!important;width:100%!important;flex:none!important;overflow:visible!important}

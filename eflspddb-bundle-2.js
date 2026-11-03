@@ -77,19 +77,15 @@ function nearestPostal(ll){
 try{localStorage.removeItem(POSTAL_GLOBAL_KEY);localStorage.removeItem(POSTAL_CALIBRATION_KEY);}catch{}
 let postalMarker=null;
 function showPostalPopup(pt,postal){
- if(postalMarker)map.removeLayer(postalMarker);
- const p=postalByCode.get(String(postal).padStart(3,'0'));
- const html='<div class="ef-postal-target" title="Temporary search target; not a saved detective pin"><span>+</span></div>';
- postalMarker=L.marker(pt,{interactive:true,zIndexOffset:1500,icon:L.divIcon({className:'ef-postal-target-icon',html,iconSize:[44,44],iconAnchor:[22,22]})}).addTo(map);
- const details=p?'GTA X: '+p.x.toFixed(2)+' / Y: '+p.y.toFixed(2):'';
- const mapDebug='Map lat: '+Number(pt[0]).toFixed(3)+' / lng: '+Number(pt[1]).toFixed(3);
- postalMarker.bindPopup('<div class="postal-popup-content"><strong>POSTAL '+safe(postal)+'</strong><div>'+details+'</div><div>'+mapDebug+'</div><small>Source: '+safe(postalJsonSource)+'</small><div><small>Temporary search marker — not saved</small></div></div>',{className:'postal-themed-popup',offset:[0,-12],closeButton:true,autoPan:false}).openPopup();
+ // Postal lookup pans/zooms to the requested postal. Never create a temporary pin.
+ if(postalMarker){try{map.removeLayer(postalMarker)}catch(_){} postalMarker=null;}
 }
+
 $('postalSearchBtn').onclick=()=>{
  const postal=String($('postalInput').value).trim().padStart(3,'0');
  const pt=postalLocation(postal);if(!pt)return toast('Postal not found.');
  map.setView(pt,1.8,{animate:false});showPostalPopup(pt,postal);
- toast('Crosshair marks the exact calculated location of postal '+postal+'.');
+ toast('Map centred on postal '+postal+'.');
 };
 $('postalInput').addEventListener('input',()=>{if(!$('postalInput').value.trim()&&postalMarker){map.removeLayer(postalMarker);postalMarker=null;}});
 $('postalInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('postalSearchBtn').click()}});

@@ -7,7 +7,7 @@ if(!ws||!map)return;
 const existing=document.getElementById('efMapOnlyToolsBtn');
 if(existing){existing.textContent='';existing.innerHTML='<i class="fa-solid fa-layer-group"></i> Pins & Filters';existing.title='Toggle Pins & Filters';}
 const oldToggle=document.getElementById('toggleLeftPanel');if(oldToggle){oldToggle.tabIndex=-1;oldToggle.setAttribute('aria-hidden','true')}
-const close=document.querySelector('.ef-map-tools-close');if(close)close.style.display='none';
+/* Drawer visibility is controlled exclusively by ef-map-only-controls.js. */
 // The original map-only-controls module already owns button toggling and resizing.
 document.addEventListener('click',e=>{const b=e.target.closest('.ef-update-theme[data-theme]');if(b)theme(b.dataset.theme)},true);
 try{const saved=JSON.parse(localStorage.getItem(KEY)||'{}');theme(saved.theme||'cyber')}catch{theme('cyber')}

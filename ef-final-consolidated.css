@@ -1,0 +1,171 @@
+/* EFLSPDDB · November 2026 consolidated presentation.
+   Uses existing renderers, actions, session state and Supabase integration. */
+:root{--ef-big-accent:#1bb6ff}
+/* 78 px cinematic header: an actual source asset cut to 78 px, not distorted 132 px artwork. */
+html body .shell>header#lspdRebuiltHeader.header,
+html body:has(.tactical-sidebar) .shell>header#lspdRebuiltHeader.header{
+ height:78px!important;min-height:78px!important;max-height:78px!important;flex:0 0 78px!important;
+ padding:0 16px!important;gap:11px!important;overflow:hidden!important;
+ background:#031224 url('assets/ef2026/header-panorama-78.webp') center center / cover no-repeat!important;
+ border-bottom:2px solid #12b8f5!important;box-shadow:0 3px 12px #078dda30!important;
+}
+html body #lspdRebuiltHeader .lspd-rebuilt-brand{
+ display:flex!important;align-items:center!important;gap:11px!important;padding:7px 13px!important;
+ min-width:0!important;max-width:39%!important;flex:0 1 auto!important;height:100%!important;
+ background:linear-gradient(90deg,#041325f3,#051626da 76%,transparent)!important;
+ border-left:0!important;border-right:1px solid #32739f!important;
+}
+html body #lspdRebuiltHeader .lspd-rebuilt-brand img{width:54px!important;height:61px!important;object-fit:contain!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark{gap:1px!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark strong{font-size:clamp(20px,1.8vw,27px)!important;letter-spacing:.07em!important;line-height:1.08!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark span{font-size:10px!important;letter-spacing:.17em!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark small{font-size:8px!important;letter-spacing:.1em!important}
+html body #lspdRebuiltHeader .ef-final-header-message{
+ display:block!important;position:relative!important;z-index:1!important;flex:1 1 auto!important;
+ font-size:12px!important;letter-spacing:.14em!important;font-weight:800!important;color:#e7f3ff!important;
+ text-shadow:0 2px 6px #000!important;white-space:nowrap!important;overflow:hidden!important;
+}
+html body #lspdRebuiltHeader .lspd-rebuilt-controls.ef-header-right{
+ display:flex!important;flex:0 1 auto!important;gap:7px!important;padding:7px 10px!important;
+ max-width:48%!important;margin-left:0!important;min-width:0!important;
+ background:#04152bd9!important;border:1px solid #2c638b!important;border-radius:7px!important;
+}
+html body #lspdRebuiltHeader #lspdHeaderClock{min-width:100px!important;gap:1px!important}
+html body #lspdRebuiltHeader .lspd-clock-time{font-size:15px!important}
+html body #lspdRebuiltHeader .lspd-clock-date{font-size:9px!important}
+html body #lspdRebuiltHeader #lspdUtcClock{min-width:35px!important;padding-left:7px!important}
+html body #lspdRebuiltHeader #lspdUtcClock strong{font-size:12px!important}
+html body #lspdRebuiltHeader .ef-header-avatar{height:28px!important;width:28px!important;flex-basis:28px!important}
+html body #lspdRebuiltHeader .ef-header-account strong{font-size:12px!important}
+html body #lspdRebuiltHeader .ef-header-account small{font-size:9px!important}
+html body #lspdRebuiltHeader #efHeaderAccountToggle{width:24px!important;height:24px!important;flex-basis:24px!important}
+@media(max-width:1300px){html body #lspdRebuiltHeader .ef-final-header-message{display:none!important}}
+@media(max-width:700px){html body #lspdRebuiltHeader .lspd-rebuilt-wordmark small,html body #lspdRebuiltHeader #lspdUtcClock{display:none!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-brand img{width:38px!important;height:45px!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark strong{font-size:18px!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-brand{gap:7px!important;padding:0 7px!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-controls.ef-header-right{max-width:44%!important;padding:5px!important}
+}
+/* Main navigation: approved nighttime patrol art is part of the permanent left sidebar. */
+html body:has(.tactical-sidebar) .workspace{grid-template-columns:220px minmax(0,1fr)!important}
+html body:has(.tactical-sidebar) .workspace > .tactical-sidebar{
+ min-width:0!important;display:flex!important;flex-direction:column!important;grid-column:1!important;
+ padding:13px 9px 11px!important;overflow:hidden!important;border-right:1px solid #214c78!important;
+ background:linear-gradient(180deg,#06192f,#05152b 66%,#020d1e)!important;
+}
+.tactical-sidebar .tactical-side-nav{flex:0 0 auto!important;gap:2px!important}
+.tactical-sidebar .tactical-side-nav button{min-height:39px!important;padding:8px 11px!important;font-size:12px!important;gap:11px!important}
+.tactical-sidebar .tactical-side-nav button i{font-size:16px!important;width:19px!important}
+.tactical-sidebar .ef-final-sidebar-art{
+ display:block!important;position:relative!important;min-height:120px!important;flex:1 1 auto!important;
+ width:calc(100% + 18px)!important;margin:9px -9px -11px!important;
+ background:linear-gradient(180deg,#03152cee 0%,#06172f52 32%,#04112612 75%,#06182db3 100%),url('assets/ef2026/sidebar-patrol.webp') center 60%/cover no-repeat!important;
+ overflow:hidden!important;
+}
+.tactical-sidebar .tactical-side-foot{z-index:2!important;position:relative!important;display:none!important}
+@media(max-height:740px){.tactical-sidebar .ef-final-sidebar-art{min-height:55px!important}}
+@media(max-width:1050px){html body:has(.tactical-sidebar) .workspace{grid-template-columns:72px minmax(0,1fr)!important}
+.tactical-sidebar .tactical-side-nav button{justify-content:center!important;padding:9px!important}
+.tactical-sidebar .tactical-side-nav button span{display:none!important}
+.tactical-sidebar .tactical-side-nav button i{font-size:20px!important;width:auto!important}
+}
+@media(max-width:700px){html body:has(.tactical-sidebar) .workspace{grid-template-columns:65px minmax(0,1fr)!important}}
+/* The approved streamlined section header combines title, summary, artwork and the one real action. */
+html body #extraView>.pagehead,html body #recordsView>.pagehead{display:none!important}
+html body #extraView,html body #recordsView{padding:15px 20px 36px!important;overflow-x:hidden!important}
+html body #extraView>.hybrid-hero,html body #recordsView>.hybrid-hero{
+ min-height:150px!important;max-height:none!important;height:auto!important;
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ padding:0!important;margin-bottom:16px!important;border:1px solid #2d648d!important;
+ border-radius:12px!important;isolation:isolate!important;
+}
+html body #extraView>.hybrid-hero>img,html body #recordsView>.hybrid-hero>img{opacity:.82!important;object-fit:cover!important;object-position:center 46%!important}
+html body #extraView>.hybrid-hero:after,html body #recordsView>.hybrid-hero:after{
+ background:linear-gradient(90deg,#06172bf6 0%,#071a2cdb 37%,#06182c80 70%,#041629a6 100%)!important;
+ z-index:0!important;pointer-events:none!important;
+}
+html body .hybrid-hero .hybrid-hero-content{
+ position:relative!important;z-index:2!important;max-width:calc(100% - 240px)!important;
+ padding:19px 24px!important;min-width:0!important;
+}
+html body .hybrid-hero h1{font-size:clamp(22px,2vw,32px)!important;line-height:1.14!important;margin:0 0 5px!important;letter-spacing:.085em!important}
+html body .hybrid-hero p{font-size:12px!important;margin:0!important}
+html body .hybrid-kicker{font-size:9px!important;margin-bottom:10px!important;letter-spacing:.15em!important}
+html body .hybrid-hero>.ef-big-hero-action{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+ position:relative!important;z-index:3!important;flex:0 0 auto!important;
+ padding:11px 16px!important;margin:0 20px 0 6px!important;
+ min-height:42px!important;border:1px solid #348ef2!important;border-radius:8px!important;
+ background:linear-gradient(180deg,#1578ee,#0863d1)!important;color:#fff!important;
+ font-weight:800!important;font-size:12px!important;white-space:nowrap!important;
+ box-shadow:0 4px 18px #006dff30!important;cursor:pointer!important;
+}
+html body .hybrid-hero>.ef-big-hero-action:hover{background:linear-gradient(180deg,#218bff,#0864d6)!important}
+/* Files, policies, badge and binders from the approved Department Documents preview. */
+html body[data-ef-final-section="documents"] #extraView>.hybrid-hero.ef-documents-hero{
+ background-image:linear-gradient(90deg,#061629ee 0%,#061629d6 41%,#06162971 74%,#06162952),url('assets/ef2026/department-records.webp')!important;
+ background-position:center,right center!important;background-size:cover,61% 100%!important;background-repeat:no-repeat!important;
+}
+html body[data-ef-final-section="documents"] #extraView>.hybrid-hero>img{display:none!important}
+html body[data-ef-final-section="documents"] #extraView .lspd-docs-head,
+html body[data-ef-final-section="documents"] #extraView #cyberDocIntro{display:none!important}
+html body[data-ef-final-section="documents"] #extraView #extraContent,
+html body[data-ef-final-section="documents"] #extraView .lspd-docs{display:block!important;width:100%!important;min-width:0!important}
+html body[data-ef-final-section="documents"] #extraView .lspd-docs-list{display:grid!important;gap:9px!important}
+html body[data-ef-final-section="documents"] #extraView .lspd-doc-row{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ background:linear-gradient(110deg,#132944,#0d2138)!important;
+ border:1px solid #315e89!important;border-radius:10px!important;padding:15px 17px!important;gap:14px!important;
+}
+/* Record layout: no separate second title panel. All real search controls stay attached. */
+html body[data-ef-final-section="items"] #extraView #extraContent,
+html body[data-ef-final-section="vehicles"] #extraView #extraContent,
+html body[data-ef-final-section="gangs"] #extraView #extraContent,
+html body[data-ef-final-section="contacts"] #extraView #extraContent{display:block!important;grid-template-columns:none!important}
+html body[data-ef-final-section="items"] #extraContent .ef-items-wrap{
+ display:block!important;width:100%!important;max-width:none!important;min-width:0!important;
+ overflow:visible!important;margin:0!important;
+}
+html body[data-ef-final-section="items"] #extraContent .ef-items-tools{display:flex!important;width:100%!important;gap:12px!important;margin:0 0 13px!important}
+html body[data-ef-final-section="items"] #extraContent .ef-items-tools input{flex:1 1 auto!important;min-width:0!important;max-width:100%!important}
+html body[data-ef-final-section="items"] #extraContent #efItemResults{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;width:100%!important;min-width:0!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-tile{
+ display:block!important;width:100%!important;min-width:0!important;max-width:none!important;
+ box-sizing:border-box!important;background:#142945!important;border:1px solid #335c84!important;border-radius:10px!important;padding:13px 16px!important;
+ overflow:visible!important;
+}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-main{
+ display:grid!important;grid-template-columns:62px minmax(135px,1.45fr) minmax(145px,2fr) minmax(110px,1fr) minmax(110px,1fr) auto!important;
+ gap:14px!important;align-items:center!important;width:100%!important;min-width:0!important;flex-wrap:nowrap!important;
+}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-photo{width:60px!important;height:60px!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-name,
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-field{min-width:0!important;flex:none!important;overflow-wrap:anywhere!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-buttons{display:flex!important;gap:8px!important;margin-left:0!important;flex-wrap:nowrap!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-buttons button{padding:8px 13px!important;white-space:nowrap!important;font-size:12px!important}
+html body[data-ef-final-section="vehicles"] #extraView .ef8g-vehicles,
+html body[data-ef-final-section="vehicles"] #extraView .ef8g-vehicle-tools,
+html body[data-ef-final-section="gangs"] #extraView .ef-gang-list,
+html body[data-ef-final-section="contacts"] #extraView .ef-contact-tools{width:100%!important;max-width:none!important}
+html body[data-ef-final-section="cases"] #recordsView>.cyber-case-toolbar{display:none!important}
+html body[data-ef-final-section="cases"] #recordsView>.case-toolbar{
+ display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:10px!important;
+ width:100%!important;margin:0 0 16px!important;padding:0!important;
+}
+html body[data-ef-final-section="cases"] #recordsView>.case-toolbar input{flex:1 1 400px!important;min-width:200px!important}
+html body[data-ef-final-section="cases"] #recordsView>.case-toolbar select{flex:0 0 150px!important}
+html body[data-ef-final-section="cases"] #recordsView>.case-toolbar #manageDetectives{flex:0 0 auto!important}
+@media(max-width:1380px){html body[data-ef-final-section="items"] #extraContent .ef-criminal-main{grid-template-columns:58px minmax(135px,1.3fr) minmax(145px,1.8fr) minmax(110px,1fr) minmax(100px,1fr) auto!important;gap:10px!important}}
+@media(max-width:1180px){html body[data-ef-final-section="items"] #extraContent .ef-criminal-main{grid-template-columns:56px minmax(120px,1.2fr) minmax(145px,2fr) auto!important;gap:12px!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-field:nth-of-type(4),
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-field:nth-of-type(5){grid-column:auto!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-buttons{grid-column:3/-1!important;justify-content:flex-end!important}
+}
+@media(max-width:800px){html body #extraView,html body #recordsView{padding:12px!important}
+html body .hybrid-hero .hybrid-hero-content{max-width:none!important;flex:1!important;padding:14px!important}
+html body .hybrid-hero>.ef-big-hero-action{margin:0 10px 0 0!important;padding:9px 10px!important;font-size:11px!important}
+html body .hybrid-hero h1{font-size:20px!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-main{display:flex!important;flex-wrap:wrap!important;gap:12px!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-field{flex:1 1 140px!important}
+html body[data-ef-final-section="items"] #extraContent .ef-criminal-buttons{width:100%!important;justify-content:flex-end!important}
+}

@@ -3,7 +3,7 @@
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]));
 const photos=['cruiser.webp','crime-scene.webp','forensic.webp','interrogation.webp','operations.webp','warehouse.webp','gang-cover.webp','store.webp','harbour.webp','scene-cover.webp'].map(n=>'assets/cyber2/'+n);
-const routes=[['dashboard','fa-table-cells-large','Dashboard'],['cases','fa-folder-open','Cases'],['gangs','fa-people-group','Gangs'],['map','fa-location-dot','Map'],['vehicles','fa-car','Vehicles'],['items','fa-cube','Known Criminal Items'],['contacts','fa-address-card','Contacts'],['directory','fa-users','Personnel'],['documents','fa-file-lines','Department Documents'],['settings','fa-gear','Settings']];
+const routes=[['dashboard','fa-table-cells-large','Dashboard'],['cases','fa-folder-open','Cases'],['gangs','fa-people-group','Gangs'],['map','fa-location-dot','Map'],['vehicles','fa-car','Vehicles'],['items','fa-cube','Criminal Items'],['contacts','fa-address-card','Contacts'],['directory','fa-users','Personnel'],['documents','fa-file-lines','Department Documents'],['settings','fa-gear','Settings']];
 let current=0,timer=null,rendering=false;
 function navigate(id){document.querySelector('.cyber-topnav [data-cyber-section="'+id+'"]')?.click();setTimeout(updateActive,90)}
 function updateActive(){
