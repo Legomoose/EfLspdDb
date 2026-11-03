@@ -1,0 +1,69 @@
+
+/* Tactical Operations v4 — layout built from approved concept */
+body:has(.tactical-sidebar) {background:#020c17!important}
+body:has(.tactical-sidebar) .cyber-topnav{display:none!important}
+body:has(.tactical-sidebar) .workspace{display:grid!important;grid-template-columns:238px minmax(0,1fr)!important;position:relative!important;min-height:0!important}
+body:has(.tactical-sidebar) .workspace>.center{grid-column:2!important;min-width:0!important;overflow-y:auto!important;overflow-x:hidden!important;height:100%!important;max-height:none!important}
+body:has(.tactical-sidebar) .workspace>.leftpanel,body:has(.tactical-sidebar) .workspace>.rightpanel{display:none!important}
+body.tactical-map .workspace>.leftpanel{display:flex!important;left:238px!important;z-index:850!important;position:absolute!important;width:310px!important;max-width:calc(100vw - 250px)!important}
+.tactical-sidebar{grid-column:1;grid-row:1;z-index:45;background:linear-gradient(180deg,#031326,#04101f);border-right:1px solid #13527b;display:flex;flex-direction:column;min-height:0;overflow-y:auto;padding:20px 12px 14px;box-sizing:border-box}
+.tactical-side-nav{display:flex;flex-direction:column;gap:4px}
+.tactical-side-nav button{width:100%;display:flex;align-items:center;gap:14px;border:1px solid transparent;background:transparent;color:#e1edfa;padding:13px 14px;text-align:left;font-size:14px;font-weight:650;border-radius:6px;cursor:pointer;min-height:46px}
+.tactical-side-nav button i{width:21px;text-align:center;color:#c3eaff;font-size:18px}
+.tactical-side-nav button:hover{background:#123451;border-color:#246a9c}
+.tactical-side-nav button.active{background:linear-gradient(90deg,#06538a,#103858);border-color:#12b7ff;box-shadow:inset 3px 0 #00c6ff,0 0 12px #007fc83a;color:#fff}
+.tactical-side-foot{margin-top:auto;padding:22px 10px 5px;border-top:1px solid #165078;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#b6d8ed}
+.tactical-side-foot span b{color:#22dd80}
+body:has(.tactical-sidebar) #cyberDashboard{padding:18px!important;max-width:none!important;width:100%!important;box-sizing:border-box!important;background:#020d19!important;min-height:100%!important;overflow:visible!important}
+.tactical-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;margin-bottom:20px}
+.tactical-stat{min-height:84px;border:1px solid #3687b9;border-radius:9px;background:linear-gradient(140deg,#061d32,#020d1b);display:flex;align-items:center;gap:20px;padding:14px 20px;box-sizing:border-box;box-shadow:inset 0 1px #4ebfff22}
+.tactical-stat:first-child{border-color:#00baff;box-shadow:0 0 12px #008fe94a,inset 0 1px #67cfff55}
+.tactical-stat>i{font-size:33px;color:#50c7ff;min-width:38px;text-align:center}
+.tactical-stat small{display:block;font-size:12px;color:#f4f8ff;font-weight:800;letter-spacing:.3px}
+.tactical-stat strong{font-size:30px;color:white;line-height:1.35}
+.tactical-main-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-bottom:18px;align-items:stretch}
+.tactical-hero{position:relative;min-height:335px;border:1px solid #0ea7ef;border-radius:10px;overflow:hidden;background:#041222}
+.tactical-hero>img{position:absolute;width:100%;height:100%;object-fit:cover;object-position:center}
+.tactical-arrow{position:absolute;top:43%;z-index:2;background:#02101bc9;border:1px solid #3c83a6;color:white;font-size:24px;border-radius:7px;width:40px;height:56px;cursor:pointer}
+.tactical-arrow.prev{left:10px}.tactical-arrow.next{right:10px}
+.tactical-dots{position:absolute;bottom:11px;left:0;right:0;display:flex;justify-content:center;gap:9px}
+.tactical-dots button{height:11px;width:11px;padding:0;border-radius:50%;border:1px solid #a1c5d8;background:#061a2b;cursor:pointer}
+.tactical-dots button.active{background:#00bfff;border-color:#00bfff}
+.tactical-side-panels{display:grid;grid-template-rows:1fr 1fr;gap:18px;min-height:0}
+.tactical-panel{border:1px solid #168cc5;border-radius:9px;background:linear-gradient(160deg,#051a2d,#020d1a);overflow:hidden;min-width:0}
+.tactical-bureau{padding:20px 24px;background:radial-gradient(circle at 90% 45%,#07477888,transparent 35%),linear-gradient(160deg,#061c31,#020d1a)}
+.tactical-bureau-heading{display:flex;align-items:center;gap:16px}
+.tactical-bureau-heading img{height:64px;width:64px;object-fit:contain}
+.tactical-bureau-heading h2{font-size:25px;margin:0 0 5px!important;color:white!important;letter-spacing:.5px}
+.tactical-bureau-heading small{font-size:11px;letter-spacing:1.3px;color:#b5d5e9}
+.tactical-bureau p{margin:13px 0 0 80px;color:#d7e7f6;line-height:1.55;font-size:14px}
+.tactical-actions{padding:12px 14px}
+.tactical-actions h2,.tactical-bottom-grid .tactical-panel>h2{font-size:17px!important;color:#f4f9ff!important;margin:0!important;display:flex;align-items:center;gap:10px;font-weight:800}
+.tactical-actions h2 i,.tactical-bottom-grid h2 i{color:#17c7ff}
+.tactical-action-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:12px}
+.tactical-action-grid button{border:1px solid #3888bc;border-radius:8px;background:linear-gradient(#0c2944,#05182b);color:#fff;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;cursor:pointer;font-size:12px;font-weight:750}
+.tactical-action-grid button i{font-size:27px;color:#76d6ff}
+.tactical-action-grid button:hover,.tactical-tool-grid button:hover{border-color:#00c7ff;background:#0b3d5d}
+.tactical-bottom-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.tactical-bottom-grid .tactical-panel{min-height:230px}
+.tactical-bottom-grid .tactical-panel>h2{min-height:47px;padding:0 15px;border-bottom:1px solid #185780}
+.tactical-bottom-grid h2 button{margin-left:auto;border:0;background:none;color:#29c8ff;cursor:pointer;font-size:12px}
+.tactical-list{padding:10px 12px}
+.tactical-case-row,.tactical-activity{display:flex;align-items:center;width:100%;gap:10px;min-height:38px;padding:5px 7px;border:0;border-bottom:1px solid #1b3b53;background:transparent;color:#eaf5ff;text-align:left;cursor:pointer;font-size:12px}
+.tactical-case-id{border:1px solid #129ce2;border-radius:5px;padding:6px 9px;min-width:76px;text-align:center;color:#d7f3ff;font-weight:750}
+.tactical-case-row em{margin-left:auto;font-style:normal;background:#123d5d;padding:5px 9px;border-radius:5px;color:#8bdfff}
+.tactical-activity>i{font-size:18px;color:#5fcbff}.tactical-activity small{margin-left:auto;color:#8fa9bb}
+.tactical-empty{padding:12px;color:#a6bfd1;font-size:13px}
+.tactical-tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:13px}
+.tactical-tool-grid button{display:flex;align-items:center;gap:12px;text-align:left;border:1px solid #347eaf;background:linear-gradient(#102b47,#06182a);border-radius:8px;color:#eaf7ff;padding:12px;min-height:70px;cursor:pointer}
+.tactical-tool-grid button i{font-size:24px;color:#75d6ff}
+.tactical-tool-grid button strong,.tactical-tool-grid button small{display:block}.tactical-tool-grid button small{font-size:10px;color:#b5cbd9;margin-top:5px}
+body:has(.tactical-sidebar) .ef-header,body:has(.tactical-sidebar) .tactical-header{min-height:135px!important;height:135px!important;max-height:135px!important;background:linear-gradient(90deg,#020e1b 0%,#03172bbb 35%,#021222aa 100%),url('lspd-night-skyline-header.webp') center 44% / cover no-repeat!important;border-bottom:2px solid #05b9ff!important;box-shadow:0 3px 20px #00a5f533!important}
+@media(max-width:1300px){.tactical-stats{gap:8px}.tactical-stat{padding:12px;gap:8px}.tactical-main-grid{grid-template-columns:1fr 1fr}.tactical-action-grid{gap:5px}.tactical-bureau p{margin-left:0}.tactical-side-nav button{font-size:12px}}
+@media(max-width:950px){body:has(.tactical-sidebar) .workspace{grid-template-columns:65px minmax(0,1fr)!important}.tactical-sidebar{padding:14px 6px}.tactical-side-nav button{justify-content:center;padding:13px 5px}.tactical-side-nav button span,.tactical-side-foot{display:none}.tactical-main-grid,.tactical-bottom-grid{grid-template-columns:1fr}.tactical-stats{grid-template-columns:repeat(3,1fr)}body.tactical-map .workspace>.leftpanel{left:65px!important}}
+@media(max-width:550px){.tactical-stats{grid-template-columns:repeat(2,1fr)}.tactical-stat{min-height:70px}.tactical-action-grid{grid-template-columns:repeat(3,1fr)}.tactical-bureau-heading h2{font-size:18px}.tactical-bureau-heading img{width:42px;height:42px}}
+/* Match actual header markup */
+body:has(.tactical-sidebar) .shell>.header.ef-new-header{height:145px!important;min-height:145px!important;max-height:145px!important;background:linear-gradient(90deg,#020e1be8 0%,#03172b99 45%,#021222aa 100%),url('lspd-night-skyline-header.webp') center 42% / cover no-repeat!important;border-bottom:2px solid #05b9ff!important;box-shadow:0 3px 20px #00a5f533!important;display:flex!important;align-items:center!important}
+body:has(.tactical-sidebar) .shell>.header .ef-header-identity strong{font-size:clamp(24px,3vw,45px)!important;letter-spacing:2px!important;color:#f0f7ff!important;text-shadow:0 2px 9px #000}
+body:has(.tactical-sidebar) .shell>.header .ef-header-identity img{width:95px!important;height:95px!important;object-fit:contain!important}
+body:has(.tactical-sidebar) .shell>.header .ef-header-identity small{font-size:12px!important;letter-spacing:1.4px!important;color:#a6e1ff!important}
