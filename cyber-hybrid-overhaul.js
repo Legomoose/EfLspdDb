@@ -30,7 +30,7 @@ function enhanceCases(){
   [...row.children].forEach((cell,i)=>{cell.dataset.label=['CASE FILE','LOCATION','LEAD DETECTIVE','STATUS','LAST UPDATED','CASE ACTIONS'][i]});
   if(!row.querySelector('.hybrid-case-art')){
    const artEl=document.createElement('div');artEl.className='hybrid-case-art';artEl.innerHTML='<img src="assets/cyber2/case-cover.webp" alt=""><span>DETECTIVE BUREAU · CASE FILE</span>';
-   row.prepend(artEl);
+   row.querySelector('td')?.prepend(artEl);
   }
  }
 }

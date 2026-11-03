@@ -18,7 +18,7 @@ function syncThemeSelector(){
 }
 function syncLayoutMode(){
  const mapView=$('mapView');
- const onMap=!!mapView && !mapView.classList.contains('hidden');
+ const onMap=!!mapView && !mapView.classList.contains('hidden'); if(!onMap)document.body.classList.remove('cyber-map-drawer-open');
  document.body.classList.toggle('cyber-map-mode',onMap);
  document.body.classList.toggle('cyber-nonmap-mode',!onMap);
  const btn=$('cyberMapControlsToggle');
@@ -30,7 +30,7 @@ function enhanceMapToolbar(){
  const btn=document.createElement('button');
  btn.type='button'; btn.id='cyberMapControlsToggle';
  btn.innerHTML='<i class="fa-solid fa-sliders"></i> Pins & Filters';
- btn.addEventListener('click',()=>{$('toggleLeftPanel')?.click(); setTimeout(syncLayoutMode,60)});
+ btn.addEventListener('click',()=>{document.body.classList.toggle('cyber-map-drawer-open');btn.setAttribute('aria-expanded',String(document.body.classList.contains('cyber-map-drawer-open')));setTimeout(()=>window.dispatchEvent(new Event('resize')),90)});
  toolbar.appendChild(btn);
 }
 function initCaseToolbar(){
@@ -110,7 +110,7 @@ function initDashboardCarousel(images){
  dots.innerHTML=images.map((_,i)=>`<button type="button" aria-label="Show image ${i+1}" data-i="${i}" class="${i===0?'active':''}"></button>`).join('');
  dots.onclick=e=>{const b=e.target.closest('button[data-i]'); if(!b) return; index=Number(b.dataset.i)||0; draw();};
  root.onclick=e=>{if(e.target.closest('#cyberFeatureDots')) return; index=(index+1)%images.length; draw();};
- draw(); window.__efCyberCarousel=setInterval(()=>{index=(index+1)%images.length; draw();},4500);
+ draw(); window.__efCyberCarousel=setInterval(()=>{index=(index+1)%images.length; draw();},10000);
 }
 function drawDashboard(){
  const el=$('cyberDashboard'); if(!el) return;
@@ -145,7 +145,8 @@ function boot(){
   }
   dash.classList.add('hidden');
   const matching=[...document.querySelectorAll('.ef-primary-navigation [data-section]')].find(x=>x.dataset.section===sec);
-  if(matching) matching.click(); else document.querySelector('[data-section="map"]')?.click();
+  if(matching) matching.click();
+  else { const original=document.querySelector(`[data-section="${sec}"]`); if(original) original.click(); else {console.warn('Missing section',sec);return;} }
   navigation.forEach(b=>b.classList.toggle('active',b.dataset.cyberSection===sec));
   if(sec==='map') setTimeout(()=>{try{window.EFDBMap?.invalidateSize?.()}catch{}; window.dispatchEvent(new Event('resize')); syncLayoutMode();},130);
   setTimeout(()=>{initCaseToolbar(); enhanceDocumentsView(); renderSectionArt(); syncLayoutMode();},150);

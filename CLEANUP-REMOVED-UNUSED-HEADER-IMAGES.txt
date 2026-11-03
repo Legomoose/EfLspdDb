@@ -1,0 +1,22 @@
+Removed from cleaned full package (not deleted from your GitHub repository):
+lspd-skyline-100px (13).webp
+lspd-skyline-original.png
+lspd-clean-78px.webp
+lspd-storage-preview-skyline (14).webp
+lspd-clean-78px (5).webp
+lspd-new-skyline-20261025.webp
+lspd-skyline-78-recomposed.webp
+lspd-skyline-panorama-remade (2).webp
+lspd-natural-78px.png
+LSPD-skyline-exact-no-black.png
+lspd-skyline-78-recomposed (10).webp
+lspd-78px-header (8).webp
+lspd-approved-header-wide.webp
+lspd-skyline-banner-final (11).webp
+lspd-natural-78px (4).png
+lspd-storage-preview-skyline.webp
+lspd-78px-header.webp
+lspd-night-skyline-header (1).webp
+lspd-new-skyline-20261025 (12).webp
+
+Preserved all application scripts, map images, database configuration, GitHub workflow, accounts and data files.
