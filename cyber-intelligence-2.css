@@ -85,3 +85,98 @@ html[data-ef-theme] #map{height:calc(100dvh - 265px)!important;min-height:520px!
 .cyber-sidebar-art span{position:absolute;bottom:0;left:0;right:0;padding:16px 10px 10px;background:linear-gradient(transparent,#020b1af5);color:#eaf7ff;font-size:10px;font-weight:700;letter-spacing:1.5px;line-height:1.6}
 .cyber-case-cover{height:clamp(130px,18vh,235px);border:1px solid var(--ef-border);border-radius:10px;margin:10px 0 18px;overflow:hidden}
 .cyber-case-cover img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+
+
+/* ===== Cyber Intelligence 2.1 refinements ===== */
+html body .shell > header.header.ef-new-header{
+  background:
+    linear-gradient(90deg,rgba(3,11,24,.96),rgba(5,18,35,.82) 45%,rgba(7,24,44,.78) 100%),
+    url('assets/cyber2/skyline-clean.webp') center/cover no-repeat!important;
+  border-bottom:1px solid #204f77!important;
+  box-shadow:0 12px 35px rgba(0,0,0,.22)!important;
+  height:96px!important;min-height:96px!important;max-height:96px!important;padding:10px 16px!important;
+}
+html body .shell > header.header.ef-new-header .ef-header-identity img{width:54px!important;height:62px!important;object-fit:contain!important}
+html body .shell > header.header.ef-new-header .ef-header-identity strong{font-size:22px!important;letter-spacing:.08em!important}
+html body .shell > header.header.ef-new-header .ef-header-identity small{font-size:11px!important;letter-spacing:.18em!important;color:#b7d8f4!important}
+html body .shell > header.header.ef-new-header .ef-header-search{max-width:680px!important;flex:1 1 680px!important}
+html body .shell > header.header.ef-new-header .ef-header-search input{background:rgba(6,21,38,.92)!important;border:1px solid #315d86!important;border-radius:14px!important;color:#ecf7ff!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+html body .shell > header.header.ef-new-header .ef-header-right{gap:10px!important}
+#cyberThemeSelect{width:188px!important;min-width:188px!important;background:#061b31!important;border:1px solid #35618b!important;border-radius:10px!important;color:#eaf7ff!important;padding:9px 10px!important;font-size:11px!important}
+#efThemeToggle{display:none!important}
+
+body.cyber-nonmap-mode .workspace{grid-template-columns:minmax(0,1fr)!important}
+body.cyber-nonmap-mode .workspace>.leftpanel,
+body.cyber-nonmap-mode .workspace>.rightpanel{display:none!important}
+body.cyber-map-mode .workspace{grid-template-columns:300px minmax(0,1fr) 370px!important}
+body.cyber-map-mode .workspace>.leftpanel,
+body.cyber-map-mode .workspace>.rightpanel{display:flex!important}
+body.cyber-nonmap-mode .center{min-width:0!important}
+
+.maptoolbar{top:16px!important;left:16px!important;right:auto!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:8px!important;max-width:min(420px,calc(100vw - 32px))!important}
+.postalbar{display:flex!important;gap:6px!important;background:rgba(8,22,40,.92)!important;border:1px solid #2d597f!important;border-radius:14px!important;padding:8px!important;box-shadow:0 10px 26px rgba(0,0,0,.24)!important;backdrop-filter:blur(8px)!important}
+.postalbar input{width:188px!important;font-size:13px!important}
+.postalbar button,.maptoolbar>button{border-radius:10px!important;padding:9px 12px!important;font-size:12px!important}
+#cyberMapControlsToggle{background:linear-gradient(125deg,#123a60,#0c2843)!important;color:#e6f4ff!important;border:1px solid #356893!important;box-shadow:0 8px 24px rgba(0,0,0,.2)!important}
+#cyberMapControlsToggle i{margin-right:6px}
+
+.cyber-dashboard{width:100%!important;max-width:none!important;padding:22px 24px 42px!important}
+.cyber-stats{grid-template-columns:repeat(4,minmax(160px,1fr))!important}
+.cyber-feature-carousel{position:relative;overflow:hidden;border-bottom:1px solid var(--ef-border)}
+.cyber-feature-carousel img{display:block;width:100%;height:clamp(240px,26vw,360px);object-fit:cover;object-position:center}
+.cyber-carousel-dots{position:absolute;right:16px;bottom:14px;display:flex;gap:7px}
+.cyber-carousel-dots button{width:10px;height:10px;border-radius:999px;border:1px solid rgba(255,255,255,.8);background:rgba(6,18,31,.55);padding:0}
+.cyber-carousel-dots button.active{background:#72c6ff;border-color:#72c6ff;box-shadow:0 0 0 3px rgba(114,198,255,.18)}
+
+#recordsView{padding:24px!important}
+#recordsView .pagehead{padding-bottom:14px!important;margin-bottom:0!important}
+#recordsView .pagehead h2{font-size:24px!important;letter-spacing:.08em!important;margin:0!important}
+#recordsView .pagehead #addRecordBtn{border-radius:10px!important;padding:11px 15px!important;font-weight:700!important}
+#recordsView .tablewrap{margin-top:14px!important;background:linear-gradient(150deg,#0a2036,#071628)!important;border:1px solid #214f74!important;border-radius:14px!important;box-shadow:0 8px 26px rgba(0,0,0,.16)!important}
+#recordsView table{min-width:960px!important}
+#recordsView th{position:sticky;top:0;background:#10253c!important;color:#9fd6ff!important;text-transform:uppercase;letter-spacing:.08em;z-index:2}
+#recordsView td{padding:14px 12px!important;vertical-align:middle!important}
+#recordsView tbody tr:hover{background:rgba(18,52,83,.32)!important}
+#recordsView td button{background:#112a45!important;border:1px solid #2e608b!important;color:#dff1ff!important;padding:8px 10px!important;border-radius:8px!important;margin-right:6px!important}
+#recordsView td button[data-select]{background:transparent!important;border:none!important;color:#7ecfff!important;padding:0!important;font-weight:700!important}
+#recordsView td button[data-delete]{background:#3b1821!important;border-color:#733646!important;color:#ffd5da!important}
+#recordsView .status-tag{font-size:10px!important;letter-spacing:.08em!important;padding:5px 8px!important}
+.ef-case-number-btn{font-weight:700!important}
+.cyber-case-toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:14px 0 0}
+.cyber-case-toolbar .cyber-case-search{position:relative;min-width:min(100%,420px);flex:1 1 420px}
+.cyber-case-toolbar .cyber-case-search i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#89b9df}
+.cyber-case-toolbar .cyber-case-search input,
+.cyber-case-toolbar select{width:100%;background:#09192e!important;border:1px solid #2a547c!important;color:#e6f4ff!important;border-radius:10px!important;padding:11px 12px!important}
+.cyber-case-toolbar .cyber-case-search input{padding-left:34px!important}
+.cyber-case-toolbar label{display:grid;gap:6px;color:#99c6ea;font-size:12px;min-width:160px}
+
+#extraView{padding:24px!important}
+#extraView .pagehead h2{font-size:24px!important;letter-spacing:.08em!important}
+#extraContent>.db-card:first-child{margin-top:14px!important}
+#extraContent .db-card{background:linear-gradient(150deg,#0b2238,#061526)!important;border:1px solid #215277!important;border-radius:14px!important;box-shadow:0 5px 22px rgba(2,10,23,.25)!important}
+#extraContent .db-card button{border-radius:8px!important;padding:8px 12px!important}
+.cyber-doc-intro{display:flex;flex-direction:column;gap:6px;background:linear-gradient(150deg,#0b2238,#071729);border:1px solid #215277;border-radius:14px;padding:16px 18px;margin:14px 0 16px;color:#e8f5ff;box-shadow:0 5px 22px rgba(2,10,23,.25)}
+.cyber-doc-intro strong{font-size:18px;letter-spacing:.05em}
+.cyber-doc-intro span{color:#a5c5df;font-size:12px;line-height:1.5}
+
+.footer{background:#04101f!important}
+
+@media(max-width:1200px){
+  body.cyber-map-mode .workspace{grid-template-columns:260px minmax(0,1fr)!important}
+  body.cyber-map-mode .workspace>.rightpanel{display:none!important}
+  .cyber-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:860px){
+  html body .shell > header.header.ef-new-header{height:auto!important;min-height:92px!important;max-height:none!important}
+  html body .shell > header.header.ef-new-header .ef-header-search{display:none!important}
+  #cyberThemeSelect{width:150px!important;min-width:150px!important}
+  .cyber-dashboard{padding:16px!important}
+  .cyber-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .maptoolbar{max-width:calc(100vw - 24px)!important;left:12px!important;top:12px!important}
+}
+@media(max-width:560px){
+  #cyberThemeSelect{width:118px!important;min-width:118px!important;font-size:10px!important}
+  .cyber-feature-carousel img{height:220px!important}
+  .cyber-case-toolbar{align-items:stretch!important}
+  .cyber-case-toolbar label{min-width:100%!important}
+}
