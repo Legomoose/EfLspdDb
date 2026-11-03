@@ -70,6 +70,44 @@ html body:has(.tactical-sidebar) .workspace > .tactical-sidebar{
 .tactical-sidebar .tactical-side-nav button i{font-size:20px!important;width:auto!important}
 }
 @media(max-width:700px){html body:has(.tactical-sidebar) .workspace{grid-template-columns:65px minmax(0,1fr)!important}}
+/* 2026-11-03 sidebar navigation tiling: every section uses the same boxed cyber tile treatment. */
+.tactical-sidebar .tactical-side-nav{gap:8px!important;padding-top:4px!important}
+.tactical-sidebar .tactical-side-nav button{
+ position:relative!important;isolation:isolate!important;overflow:hidden!important;
+ min-height:44px!important;padding:10px 12px!important;border-radius:8px!important;
+ border:1px solid #275985!important;
+ background:linear-gradient(180deg,rgba(14,34,57,.88),rgba(7,21,37,.96))!important;
+ box-shadow:inset 0 1px 0 rgba(135,215,255,.06),0 0 0 1px rgba(0,0,0,.08)!important;
+ color:#eef7ff!important;letter-spacing:.012em!important;
+ transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease!important;
+}
+.tactical-sidebar .tactical-side-nav button::before{
+ content:'';position:absolute;inset:0 auto 0 0;width:3px;border-radius:8px 0 0 8px;
+ background:linear-gradient(180deg,#29c7ff,#0a67d8);opacity:.26;transition:opacity .16s ease,box-shadow .16s ease!important;
+}
+.tactical-sidebar .tactical-side-nav button i{color:#8fd9ff!important;text-shadow:0 0 10px rgba(56,177,255,.12)!important}
+.tactical-sidebar .tactical-side-nav button span{font-weight:700!important}
+.tactical-sidebar .tactical-side-nav button:hover{
+ transform:translateY(-1px)!important;
+ background:linear-gradient(180deg,rgba(18,48,79,.94),rgba(10,29,50,.98))!important;
+ border-color:#3792cf!important;
+ box-shadow:0 0 0 1px rgba(39,112,168,.12),0 0 18px rgba(0,151,255,.12),inset 0 1px 0 rgba(176,232,255,.07)!important;
+}
+.tactical-sidebar .tactical-side-nav button:hover::before{opacity:.75!important;box-shadow:0 0 14px rgba(0,190,255,.22)!important}
+.tactical-sidebar .tactical-side-nav button.active{
+ background:linear-gradient(180deg,rgba(43,74,121,.96),rgba(28,55,101,.98))!important;
+ border-color:#66b4ff!important;color:#ffffff!important;
+ box-shadow:0 0 0 1px rgba(98,180,255,.12),0 0 20px rgba(0,151,255,.18),inset 0 1px 0 rgba(196,235,255,.18)!important;
+}
+.tactical-sidebar .tactical-side-nav button.active::before{opacity:1!important;box-shadow:0 0 16px rgba(10,192,255,.45)!important}
+.tactical-sidebar .tactical-side-nav button.active i{color:#d9f4ff!important}
+@media(max-width:1050px){
+ .tactical-sidebar .tactical-side-nav{gap:7px!important}
+ .tactical-sidebar .tactical-side-nav button{padding:10px!important;border-radius:9px!important}
+}
+@media(max-width:700px){
+ .tactical-sidebar .tactical-side-nav button{min-height:42px!important}
+}
 /* The approved streamlined section header combines title, summary, artwork and the one real action. */
 html body #extraView>.pagehead,html body #recordsView>.pagehead{display:none!important}
 html body #extraView,html body #recordsView{padding:15px 20px 36px!important;overflow-x:hidden!important}
