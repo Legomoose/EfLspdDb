@@ -23,14 +23,25 @@ updateActive();
 }
 function getFiles(){try{return window.EFCaseFiles?.list?.()||[]}catch{return []}}
 function countById(id){const e=document.querySelector(id);if(!e)return 0;return e.querySelectorAll('.ef-tile,.ef-card,.cyber-card,.record-card').length}
+// Vehicle records live in the original database array (also used by the vehicle editor).
+// Do not count filtered DOM rows; search results are not the whole fleet.
+function vehicleCount(){
+ try{if(typeof database!=='undefined'&&Array.isArray(database?.vehicles))return database.vehicles.length;}catch(e){}
+ try{const saved=JSON.parse(localStorage.getItem('everfall_db_records_v1')||'{}');return Array.isArray(saved.vehicles)?saved.vehicles.length:0;}catch(e){return 0;}
+}
+function refreshVehicleStat(){
+ const node=document.getElementById('tacticalVehicleCount');
+ if(node)node.textContent=String(vehicleCount());
+}
+
 function makeDashboard(){
 const root=$('cyberDashboard');if(!root||root.classList.contains('hidden')||rendering)return;
 rendering=true;
 try{
 const files=getFiles(),open=files.filter(f=>!/closed|resolved/i.test(f.status||'')),closed=files.length-open.length;
 const recent=[...files].sort((a,b)=>new Date(b.updated||b.updatedAt||0)-new Date(a.updated||a.updatedAt||0)).slice(0,5);
-const stats=[['fa-folder-open','OPEN CASES',open.length],['fa-clipboard-check','CLOSED CASES',closed],['fa-location-dot','MAP PINS',document.querySelectorAll('.leaflet-marker-icon').length],['fa-people-group','KNOWN GANGS',countById('#extraContent')],['fa-car','TRACKED VEHICLES','—']];
-root.innerHTML=`<div class="tactical-stats">${stats.map(([icon,label,num])=>`<div class="tactical-stat"><i class="fa-solid ${icon}"></i><div><small>${label}</small><strong>${num}</strong></div></div>`).join('')}</div>
+const stats=[['fa-folder-open','OPEN CASES',open.length],['fa-clipboard-check','CLOSED CASES',closed],['fa-location-dot','MAP PINS',document.querySelectorAll('.leaflet-marker-icon').length],['fa-people-group','KNOWN GANGS',countById('#extraContent')],['fa-car','TRACKED VEHICLES',vehicleCount()]];
+root.innerHTML=`<div class="tactical-stats">${stats.map(([icon,label,num])=>`<div class="tactical-stat"><i class="fa-solid ${icon}"></i><div><small>${label}</small><strong${label==='TRACKED VEHICLES'?' id="tacticalVehicleCount"':''}>${num}</strong></div></div>`).join('')}</div>
 <div class="tactical-main-grid"><div class="tactical-hero"><img id="tacticalHeroImage" src="${photos[0]}" alt="LSPD night patrol"><button class="tactical-arrow prev" data-slide="-1" aria-label="Previous image">❮</button><button class="tactical-arrow next" data-slide="1" aria-label="Next image">❯</button><div class="tactical-dots">${photos.map((_,i)=>`<button type="button" data-photo="${i}" class="${i===0?'active':''}" aria-label="Image ${i+1}"></button>`).join('')}</div></div>
 <div class="tactical-side-panels"><article class="tactical-panel tactical-bureau"><div class="tactical-bureau-heading"><img src="assets/lspd-logo.png" alt="LSPD badge"><div><h2>DETECTIVE BUREAU</h2><small>INVESTIGATE &nbsp; • &nbsp; ANALYSE &nbsp; • &nbsp; LINK &nbsp; • &nbsp; RESOLVE</small></div></div><p>The LSPD Detective Bureau is responsible for the investigation, coordination and resolution of major and complex crimes within EverFall and the greater Los Santos area.</p></article>
 <article class="tactical-panel tactical-actions"><h2><i class="fa-solid fa-bolt"></i> QUICK ACTIONS</h2><div class="tactical-action-grid">${[['fa-folder-plus','New Case','new-case'],['fa-map-pin','Add Pin','map'],['fa-car','Add Vehicle','vehicles'],['fa-user-plus','Add Contact','contacts'],['fa-cube','Add Item','items']].map(([icon,label,action])=>`<button type="button" data-action="${action}"><i class="fa-solid ${icon}"></i><span>${label}</span></button>`).join('')}</div></article></div></div>
@@ -51,6 +62,15 @@ let pending=false;
 new MutationObserver(()=>{if(rendering||pending)return; if(dash.classList.contains('hidden')){updateActive();return}if(dash.querySelector('.tactical-stats'))return;pending=true;queueMicrotask(()=>{pending=false;makeDashboard();updateActive()})}).observe(dash,{childList:true,attributes:true,attributeFilter:['class']});
 document.querySelectorAll('.cyber-topnav button').forEach(b=>b.addEventListener('click',()=>setTimeout(updateActive,120)));
 if(!dash.classList.contains('hidden'))makeDashboard();
+// Keep counts live when navigating back, syncing records or switching browser tabs.
+const statRefresh=()=>{if(!dash.classList.contains('hidden'))refreshVehicleStat()};
+window.addEventListener('focus',statRefresh);
+window.addEventListener('storage',statRefresh);
+window.addEventListener('efdb-auth-login',statRefresh);
+document.addEventListener('visibilitychange',statRefresh);
+document.querySelectorAll('.cyber-topnav button,.tactical-side-nav button').forEach(b=>b.addEventListener('click',()=>requestAnimationFrame(statRefresh)));
+new MutationObserver(statRefresh).observe(dash,{attributes:true,attributeFilter:['class']});
+setInterval(statRefresh,4000);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
