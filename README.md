@@ -28,3 +28,7 @@ The public GitHub Pages site is suitable for testing the interface only. Do not 
 
 ## Map tile attribution
 The prototype uses the public tile pyramid at https://viruxe.github.io/gtav-map-tiles/. GTA V and associated artwork belong to their respective rights holders. This is an unofficial fan-made tool.
+
+
+## Cleanup (2026-11-03)
+The previously layered site stylesheets were concatenated **in their original load order** into `eflspddb-combined.css`. JavaScript modules and scripts remain separate to avoid changing their execution scope or timing. Older installation/update notes and demonstrably redundant unreferenced duplicate files were removed. No Supabase database migration or reset is included. This package has not been tested against a live authenticated deployment.
