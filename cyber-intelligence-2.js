@@ -2,7 +2,7 @@
 (()=>{'use strict';
 const KEY='eflspddb_ui_preferences_v1';
 let p={};try{p=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch{}
-if(!p.theme||p.theme==='classic'){p.theme='cyber';try{localStorage.setItem(KEY,JSON.stringify(p))}catch{}}
+if(!p.theme){p.theme='cyber';try{localStorage.setItem(KEY,JSON.stringify(p))}catch{}}
 document.documentElement.setAttribute('data-ef-theme',p.theme);
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -11,10 +11,10 @@ const dashboardGallery=['cruiser.webp','crime-scene.webp','forensic.webp','inter
 function listCaseFiles(){try{return window.EFCaseFiles?.list?.()||[]}catch{return []}}
 function syncThemeSelector(){
  const sel=$('cyberThemeSelect'); if(!sel) return;
- [...sel.querySelectorAll('option')].forEach(opt=>{if(opt.value==='classic')opt.remove()});
- if(sel.value==='classic'||!sel.value) sel.value='cyber';
+ if(!sel.querySelector('option[value="classic"]')){const option=document.createElement('option');option.value='classic';option.textContent='LSPD Classic';sel.appendChild(option)}
+ if(!sel.value) sel.value=p.theme||'cyber';
  sel.addEventListener('change',()=>{let prefs={};try{prefs=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch{};prefs.theme=sel.value;localStorage.setItem(KEY,JSON.stringify(prefs));document.documentElement.setAttribute('data-ef-theme',sel.value);});
- new MutationObserver(()=>{const v=document.documentElement.getAttribute('data-ef-theme');if(v&&v!=='classic'&&v!==sel.value)sel.value=v}).observe(document.documentElement,{attributes:true,attributeFilter:['data-ef-theme']});
+ new MutationObserver(()=>{const v=document.documentElement.getAttribute('data-ef-theme');if(v&&v!==sel.value)sel.value=v}).observe(document.documentElement,{attributes:true,attributeFilter:['data-ef-theme']});
 }
 function syncLayoutMode(){
  const mapView=$('mapView');

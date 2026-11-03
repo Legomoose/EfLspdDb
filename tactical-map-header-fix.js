@@ -1,6 +1,6 @@
 (()=>{'use strict';
 const KEY='eflspddb_ui_preferences_v1';
-function theme(id){if(!['cyber','midnight','emerald','crimson','dark'].includes(id))return;let p={};try{p=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch{}p.theme=id;try{localStorage.setItem(KEY,JSON.stringify(p))}catch{}document.documentElement.setAttribute('data-ef-theme',id);const sel=document.getElementById('cyberThemeSelect');if(sel)sel.value=id;document.querySelectorAll('.ef-update-theme').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.theme===id));const s=b.querySelector('span');if(s)s.textContent=b.dataset.theme===id?'✓ Selected':'Apply theme'})}
+function theme(id){if(!['cyber','classic','midnight','emerald','crimson','dark'].includes(id))return;let p={};try{p=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch{}p.theme=id;try{localStorage.setItem(KEY,JSON.stringify(p))}catch{}document.documentElement.setAttribute('data-ef-theme',id);const sel=document.getElementById('cyberThemeSelect');if(sel)sel.value=id;document.querySelectorAll('.ef-update-theme').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.theme===id));const s=b.querySelector('span');if(s)s.textContent=b.dataset.theme===id?'✓ Selected':'Apply theme'})}
 function init(){
 const ws=document.querySelector('.workspace'),map=document.getElementById('mapView');
 if(!ws||!map)return;

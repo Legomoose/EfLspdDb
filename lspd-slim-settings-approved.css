@@ -1,0 +1,41 @@
+/* November 3 approved slim cinematic header. The entire skyline displays in its own flex column. */
+html body .shell > header#lspdRebuiltHeader.header,
+html body:has(.tactical-sidebar) .shell > header#lspdRebuiltHeader.header{
+  height:78px!important;min-height:78px!important;max-height:78px!important;flex-basis:78px!important;
+  background:#031224!important;overflow:hidden!important;gap:0!important;
+  border-bottom:2px solid #12b8f5!important;
+}
+html body #lspdRebuiltHeader .lspd-rebuilt-brand,
+html body #lspdRebuiltHeader .lspd-rebuilt-controls{z-index:2!important;position:relative!important}
+html body #lspdRebuiltHeader .lspd-rebuilt-brand{flex-shrink:0!important;}
+html body #lspdRebuiltHeader .lspd-rebuilt-controls{flex-shrink:0!important;}
+html body #lspdRebuiltHeader .lspd-rebuilt-skyline{
+  position:relative!important;inset:auto!important;z-index:1!important;
+  display:block!important;flex:1 1 0!important;min-width:24px!important;
+  height:100%!important;width:auto!important;opacity:1!important;
+  mask-image:none!important;
+  background:transparent url('assets/ef2026/header-skyline-approved.webp') center center / contain no-repeat!important;
+  pointer-events:none!important;
+}
+html body #lspdRebuiltHeader .ef-final-header-message{display:none!important}
+/* Settings: preserve existing security, database and recovery controls in their matching tabs. */
+#extraContent .ef-update-shell{width:100%;min-width:0}
+#extraContent .ef-update-originals:not(.ef-update-hidden){margin-top:12px;display:grid;gap:12px}
+#extraContent .ef-update-originals .db-card{margin:0!important}
+#extraContent .ef-update-originals #ef7bNotice{display:block;min-height:20px;color:#bde3f8}
+#extraContent .ef-update-shell .ef-update-theme{position:relative}
+#extraContent .ef-update-shell .ef-update-theme[aria-pressed=true]:after{content:'✓';position:absolute;top:8px;right:10px;font-size:15px}
+@media(max-width:700px){
+ html body #lspdRebuiltHeader .lspd-rebuilt-brand{max-width:52%!important}
+ html body #lspdRebuiltHeader .lspd-rebuilt-controls{max-width:44%!important}
+ html body #lspdRebuiltHeader .lspd-rebuilt-skyline{min-width:0!important}
+}
+#extraContent .ef-update-shell #efResetAppearance,
+#extraContent .ef-update-shell #efUpdateChangeCode,
+#extraContent .ef-update-shell #efClearNotifications,
+#extraContent .ef-update-shell #efUpdateHealth,
+#extraContent .ef-update-shell #efActivityDownload{background:#0d3e67;color:#dff2ff;border:1px solid #267bb0;padding:10px 14px;font-weight:700;cursor:pointer}
+#extraContent .ef-home-choice{cursor:grab;display:flex;justify-content:space-between;flex-direction:column;min-height:76px}
+#extraContent .ef-home-choice label{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700}
+#extraContent .ef-home-choice small{font-size:11px}
+#extraContent .ef-home-choice:active{cursor:grabbing}
