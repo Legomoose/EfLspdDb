@@ -1,0 +1,87 @@
+/* Cyber Intelligence 2.0 — visual presentation ONLY. No pin styles, coordinates, or persistence altered. */
+html[data-ef-theme=cyber]{--ef-bg:#04101e;--ef-panel:#091c31;--ef-panel2:#0d2845;--ef-text:#ecf7ff;--ef-muted:#9bbbd8;--ef-accent:#28b7f2;--ef-border:#24577d;--ef-positive:#4ddcaa}
+html[data-ef-theme=classic]{--ef-bg:#081629;--ef-panel:#152a47;--ef-panel2:#1b3455;--ef-text:#edf5ff;--ef-muted:#aac2df;--ef-accent:#448df5;--ef-border:#345575}
+html[data-ef-theme] body,html[data-ef-theme] .shell{background:var(--ef-bg)!important;color:var(--ef-text)}
+/* The old sidebar used hard-coded !important colours that ignored theme selections. */
+html[data-ef-theme] .workspace>.leftpanel{background:linear-gradient(170deg,var(--ef-bg),var(--ef-panel))!important;border-right:1px solid var(--ef-border)!important;color:var(--ef-text)!important}
+html[data-ef-theme] .leftpanel .ef-primary-navigation.ef-nav-v2{background:transparent!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] .leftpanel .ef-nav-heading,html[data-ef-theme] .leftpanel h3{color:var(--ef-muted)!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] .leftpanel .ef-nav-v2>button[data-section]{color:var(--ef-text)!important;background:transparent!important;border-color:transparent!important}
+html[data-ef-theme] .leftpanel .ef-nav-v2>button[data-section] >i:first-child{background:var(--ef-panel2)!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] .leftpanel .ef-nav-v2>button[data-section]:hover{background:var(--ef-panel2)!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] .leftpanel .ef-nav-v2>button[data-section].on,html[data-ef-theme] .leftpanel .ef-nav-v2>button[data-section].active,html[data-ef-theme] .leftpanel .ef-nav-v2>button[data-section].selected{background:var(--ef-panel2)!important;border-color:var(--ef-accent)!important;box-shadow:inset 3px 0 var(--ef-accent)!important}
+html[data-ef-theme] .leftpanel .ef-nav-v2 .ef-nav-copy strong{color:var(--ef-text)!important}
+html[data-ef-theme] .leftpanel .ef-nav-v2 .ef-nav-copy small,html[data-ef-theme] .leftpanel .ef-nav-arrow{color:var(--ef-muted)!important}
+html[data-ef-theme] .leftpanel .sidebar-dropdown{background:var(--ef-panel)!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] .leftpanel .sidebar-dropdown>summary{background:var(--ef-panel2)!important;color:var(--ef-text)!important}
+html[data-ef-theme] .leftpanel .sidebar-dropdown .category-list button:hover{background:var(--ef-panel2)!important}
+html[data-ef-theme] .leftpanel .category-list em,html[data-ef-theme] .leftpanel .ef-icon-editor-button{background:var(--ef-panel2)!important;color:var(--ef-text)!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] .leftpanel input:not([type=checkbox]),html[data-ef-theme] .leftpanel select{background:var(--ef-bg)!important;color:var(--ef-text)!important;border-color:var(--ef-border)!important}
+html[data-ef-theme] .leftpanel #addPinBtn{background:var(--ef-panel2)!important;border-color:var(--ef-accent)!important;color:var(--ef-text)!important;box-shadow:0 0 15px color-mix(in srgb,var(--ef-accent) 15%,transparent)!important}
+/* Header: reliable height, no stretching of photographic artwork. */
+html body .shell > header.header.ef-new-header{height:104px!important;min-height:104px!important;max-height:104px!important;flex:0 0 104px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;padding:12px 21px!important;background:linear-gradient(90deg,#020e20ed 0%,#05132466 40%,#020d20dc 100%),url('assets/cyber2/skyline-clean.webp') center 45%/cover no-repeat!important;border-bottom:1px solid var(--ef-border)!important;overflow:visible!important}
+html body .shell > header.header.ef-new-header .ef-header-identity{display:flex!important;min-width:0!important;flex:0 1 440px!important;max-width:48%;align-items:center!important;gap:12px!important}
+html body .shell > header.header.ef-new-header .ef-header-identity img{width:54px!important;height:65px!important;object-fit:contain!important;flex:none!important}
+html body .shell > header.header.ef-new-header .ef-header-identity strong{font-size:clamp(18px,2vw,30px)!important;letter-spacing:1.2px!important;line-height:1.1!important}
+html body .shell > header.header.ef-new-header .ef-header-identity small{font-size:9px!important;letter-spacing:.8px!important;line-height:1.4!important;white-space:normal!important}
+html body .shell > header.header.ef-new-header .ef-header-right{background:#031326bd!important;backdrop-filter:blur(7px);border-radius:11px!important;padding:7px 10px!important;flex:0 1 auto!important;max-width:55%!important;gap:9px!important;flex-wrap:nowrap!important;min-width:0!important}
+html body .shell > header.header.ef-new-header #lspdHeaderClock{min-width:88px!important;padding-right:9px!important}
+html body .shell > header.header.ef-new-header #lspdUtcClock{min-width:52px!important;padding-right:9px!important}
+#cyberThemeSelect{width:164px;min-width:122px;max-width:26vw;background:#061b31;border:1px solid #35618b;border-radius:9px;color:#eaf7ff;padding:8px;font-size:11px}
+/* Top section navigation, preserving the legacy side navigation and its event listeners. */
+.cyber-topnav{display:flex;align-items:center;gap:2px;min-height:46px;padding:0 12px;background:#051629;border-bottom:1px solid var(--ef-border);flex:0 0 46px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;white-space:nowrap;position:relative;z-index:5}
+.cyber-topnav button{background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;padding:12px 13px;color:#b3cce4;cursor:pointer;font-size:12px;white-space:nowrap;flex:none}
+.cyber-topnav button i{margin-right:6px;color:var(--ef-accent)}
+.cyber-topnav button:hover,.cyber-topnav button.active{background:var(--ef-panel2);color:white;border-bottom-color:var(--ef-accent)}
+html[data-ef-theme] .workspace .center{background:var(--ef-bg)!important}
+html[data-ef-theme=cyber] .db-card,html[data-ef-theme=cyber] .ef-update-panel{background:linear-gradient(150deg,#0b2238,#061526)!important;border:1px solid #215277!important;box-shadow:0 5px 22px #020a1799}
+/* User approved large map. Preserve Leaflet image scale and markers entirely. */
+html[data-ef-theme] #mapView{min-height:calc(100dvh - 205px)!important}
+html[data-ef-theme] #map{height:calc(100dvh - 265px)!important;min-height:520px!important;width:100%!important;max-height:none!important}
+/* Dashboard only contains live case summaries; empty records stay empty. */
+.cyber-dashboard{width:100%;max-width:1720px;margin:0 auto;box-sizing:border-box;padding:20px 22px 40px;color:var(--ef-text)}
+.cyber-dashboard.hidden{display:none!important}
+.cyber-dashboard button{cursor:pointer}
+.cyber-breadcrumb{color:var(--ef-accent);font-size:11px;margin:0 0 9px}
+.cyber-page-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.cyber-page-heading h1{font-size:24px;margin:0;color:#f5faff}.cyber-page-heading p{font-size:12px;color:var(--ef-muted);margin:5px 0 0}
+.cyber-action{background:linear-gradient(115deg,#0b66b3,#1e81c8);border:1px solid #4a9ad4;border-radius:8px;color:white;padding:10px 14px;font-size:12px}
+.cyber-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:12px 0}
+.cyber-stat,.cyber-panel{background:linear-gradient(140deg,var(--ef-panel),var(--ef-bg));border:1px solid var(--ef-border);border-radius:10px;min-width:0;overflow:hidden;box-shadow:0 6px 20px #0003}
+.cyber-stat{padding:16px;min-height:99px}.cyber-stat small{display:block;color:var(--ef-muted);font-size:11px}.cyber-stat strong{display:block;font-size:28px;color:var(--ef-accent);margin-top:12px}
+.cyber-panel-head{padding:12px 14px;border-bottom:1px solid var(--ef-border);font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cyber-panel-head button{border:0;background:none;color:var(--ef-accent)}
+.cyber-feature{margin-top:12px}.cyber-feature img{display:block;width:100%;height:clamp(190px,22vw,310px);object-fit:cover;object-position:center 54%;border-bottom:1px solid var(--ef-border)}
+.cyber-feature-copy{padding:12px 16px 17px}.cyber-feature-copy small{color:var(--ef-accent);font-size:11px}.cyber-feature-copy strong{display:block;font-size:19px;margin:5px 0 6px}.cyber-feature-copy p{font-size:12px;color:var(--ef-muted);margin:0}.cyber-feature-copy button{margin-top:9px;background:var(--ef-panel2);border:1px solid var(--ef-border);color:var(--ef-text);border-radius:6px;padding:8px 10px}
+.cyber-lower{display:grid;grid-template-columns:1.05fr 1.15fr .9fr;gap:12px;margin-top:12px;align-items:start}
+.cyber-lower .cyber-panel{min-height:230px}.cyber-content{padding:10px 13px}.cyber-case-row{display:flex;width:100%;gap:9px;justify-content:space-between;text-align:left;border:0;border-bottom:1px solid var(--ef-border);background:transparent;color:var(--ef-text);padding:11px 2px;font-size:12px}.cyber-case-row span{overflow-wrap:anywhere}.cyber-case-row small{color:var(--ef-accent);font-size:11px}
+.cyber-media-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.cyber-media-grid button{padding:0;background:var(--ef-bg);border:1px solid var(--ef-border);border-radius:7px;overflow:hidden;min-width:0;color:var(--ef-muted);text-align:left;font-size:10px}.cyber-media-grid img{width:100%;height:75px;object-fit:cover;display:block}.cyber-media-grid span{padding:6px;display:block;overflow-wrap:anywhere}
+.cyber-timeline{padding:0 12px}.cyber-timeline p{border-left:2px solid var(--ef-accent);margin:9px 0;padding:5px 12px;font-size:11px;color:var(--ef-muted)}
+.cyber-scene-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.cyber-scene-gallery .cyber-panel img{width:100%;height:145px;object-fit:cover;display:block}.cyber-scene-gallery .cyber-panel span{display:block;padding:8px;color:var(--ef-muted);font-size:11px}
+/* Case Management: keep original case form, identity, save handlers and sync; give it full-page treatment. */
+#recordsView{padding:20px!important}#recordsView .pagehead{padding:6px 0!important}#recordsView .tablewrap{background:var(--ef-panel)!important;border:1px solid var(--ef-border)!important;border-radius:10px!important;overflow:auto}
+#recordsView .ef-case-number-btn{font-weight:650!important;color:var(--ef-accent)!important}
+#caseEditor.ef-overlay:not(.hidden){padding:0!important;align-items:stretch!important;justify-content:center!important;background:rgba(1,7,17,.96)!important;z-index:200005!important}
+#caseEditor .ef-dialog{position:relative!important;width:min(100%,1700px)!important;max-width:1700px!important;max-height:100dvh!important;height:100dvh!important;margin:0 auto!important;overflow-y:auto!important;border:1px solid var(--ef-border)!important;border-radius:0!important;padding:24px clamp(15px,3vw,48px)!important;background:linear-gradient(#031024ee,#031024dd),url('assets/cyber2/operations.webp') center/cover fixed!important;box-shadow:none!important}
+#caseEditor .ef-dialog-head{position:sticky;top:-24px;background:#071a2bee;z-index:3;border-bottom:1px solid var(--ef-border);padding:12px 0;margin-bottom:14px}
+#caseEditor .ef-dialog-head h2{color:var(--ef-text)!important;font-size:23px!important}
+#caseEditor .ef-formgrid{background:var(--ef-panel);border:1px solid var(--ef-border);padding:20px;border-radius:10px}
+#caseEditor h3{color:var(--ef-accent);border-bottom:1px solid var(--ef-border);padding-bottom:9px;margin-top:24px}
+#caseEditor input,#caseEditor textarea,#caseEditor select{max-width:100%;color:var(--ef-text)}
+#caseEditor .ef-photos img{object-fit:cover!important;object-position:center!important}
+/* Keep pictures clean. HTML provides real headings/labels separate from the image itself. */
+.cyber-dashboard img, #caseEditor .ef-photos img{image-rendering:auto}
+/* Login artwork uses clean original generated scene, not a screenshot containing keypad text. */
+.lspd-login-gate .lspd-login-backdrop{background:linear-gradient(90deg,#020b1a6b,#020b1a33),linear-gradient(0deg,#020918bb,transparent 70%),url('assets/cyber2/login-helicopters.webp') center center/cover no-repeat!important;transform:none!important;filter:saturate(1.08) brightness(.85)!important}
+@media(max-width:1180px){html body .shell > header.header.ef-new-header #lspdUtcClock{display:none!important}html body .shell > header.header.ef-new-header .ef-header-identity{max-width:46%}.cyber-topnav button{padding:12px 9px}.cyber-lower{grid-template-columns:1fr 1fr}.cyber-lower .cyber-panel:last-child{grid-column:1 / -1}}
+@media(max-width:850px){html body .shell > header.header.ef-new-header{height:86px!important;min-height:86px!important;max-height:86px!important;flex-basis:86px!important;padding:9px!important}html body .shell > header.header.ef-new-header #lspdHeaderClock{display:none!important}html body .shell > header.header.ef-new-header .ef-header-identity{max-width:55%}html body .shell > header.header.ef-new-header .ef-header-identity img{width:40px!important;height:48px!important}html body .shell > header.header.ef-new-header .ef-header-right{max-width:45%!important}#cyberThemeSelect{max-width:150px}.cyber-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.cyber-dashboard{padding:15px}.cyber-lower{grid-template-columns:1fr}.cyber-lower .cyber-panel:last-child{grid-column:auto}}
+@media(max-width:540px){#cyberThemeSelect{max-width:102px;font-size:9px}html body .shell > header.header.ef-new-header .ef-header-identity strong{font-size:17px!important}.cyber-page-heading h1{font-size:18px}.cyber-media-grid{grid-template-columns:repeat(2,1fr)}.cyber-scene-gallery{grid-template-columns:1fr}.cyber-dashboard{padding:10px}.cyber-stat{padding:10px;min-height:75px}.cyber-stat strong{font-size:23px}}
+
+/* Photographic section banners and left-rail artwork, with no image distortion. */
+.cyber-section-banner{height:clamp(135px,19vw,250px);border:1px solid var(--ef-border);border-radius:11px;overflow:hidden;margin:10px 0 18px;background:var(--ef-panel)}
+.cyber-section-banner img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.cyber-sidebar-art{position:relative;border:1px solid var(--ef-border);border-radius:10px;overflow:hidden;margin:17px 7px 15px;min-height:210px;background:var(--ef-panel)}
+.cyber-sidebar-art img{display:block;width:100%;height:245px;object-fit:cover;object-position:50% 58%;}
+.cyber-sidebar-art span{position:absolute;bottom:0;left:0;right:0;padding:16px 10px 10px;background:linear-gradient(transparent,#020b1af5);color:#eaf7ff;font-size:10px;font-weight:700;letter-spacing:1.5px;line-height:1.6}
+.cyber-case-cover{height:clamp(130px,18vh,235px);border:1px solid var(--ef-border);border-radius:10px;margin:10px 0 18px;overflow:hidden}
+.cyber-case-cover img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
