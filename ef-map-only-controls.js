@@ -1,18 +1,31 @@
-(()=>{'use strict';function init(){
-const ws=document.querySelector('.workspace'),view=document.getElementById('mapView'),left=ws?.querySelector(':scope > .leftpanel'),right=ws?.querySelector(':scope > .rightpanel');if(!ws||!view||!left||!right)return;
-ws.classList.add('ef-map-only-layout');
-let btn=document.getElementById('efMapOnlyToolsBtn');if(!btn){btn=document.createElement('button');btn.id='efMapOnlyToolsBtn';btn.type='button';view.appendChild(btn)}
-btn.className='ef-map-tools-button';btn.innerHTML='<i class="fa-solid fa-layer-group"></i> Pins & Filters';btn.setAttribute('aria-controls','efMapToolsDrawer');left.id='efMapToolsDrawer';
-left.querySelectorAll('.ef-map-tools-close').forEach((b,i)=>{if(i)b.remove()});let close=left.querySelector('.ef-map-tools-close');if(!close){close=document.createElement('button');close.className='ef-map-tools-close';close.type='button';left.prepend(close)}close.innerHTML='<i class="fa-solid fa-xmark"></i> Close';
-// Remove redundant close button introduced by previous patch.
-right.querySelectorAll('.ef-repair-detail-close').forEach(b=>b.remove());
-const rightToggle=document.getElementById('toggleRightPanel');if(rightToggle){rightToggle.innerHTML='<i class="fa-solid fa-xmark"></i>';rightToggle.title='Close location information';rightToggle.setAttribute('aria-label','Close location information');rightToggle.addEventListener('click',e=>{e.stopImmediatePropagation();e.preventDefault();ws.classList.remove('ef-map-detail-open')},true)}
-function active(){return !view.classList.contains('hidden')&&view.getClientRects().length>0}
-function open(v){const yes=!!v&&active();ws.classList.toggle('ef-map-tools-open',yes);btn.setAttribute('aria-expanded',String(yes));if(yes)ws.classList.remove('left-collapsed');window.dispatchEvent(new Event('resize'))}
-btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();open(!ws.classList.contains('ef-map-tools-open'))});close.addEventListener('click',()=>open(false));
-function sync(){const yes=active();ws.classList.toggle('ef-map-page',yes);document.body.classList.toggle('ef-map-unified-active',yes);if(!yes){open(false);ws.classList.remove('ef-map-detail-open')}}
-new MutationObserver(sync).observe(view,{attributes:true,attributeFilter:['class','style']});
-// React directly to a selected pin's detail heading rather than observing its content rebuild.
-const detail=document.getElementById('detailCase');if(detail)new MutationObserver(()=>{if(active()&&detail.textContent.trim()!=='CASE OVERVIEW')ws.classList.add('ef-map-detail-open')}).observe(detail,{childList:true,characterData:true,subtree:true});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){open(false);ws.classList.remove('ef-map-detail-open')}});sync();
-}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();})();
+(()=>{'use strict';
+function init(){
+ const ws=document.querySelector('.workspace'),mapView=document.getElementById('mapView');
+ const left=ws?.querySelector(':scope > .leftpanel'),right=ws?.querySelector(':scope > .rightpanel');
+ if(!ws||!mapView||!left||!right)return;
+ let btn=document.getElementById('efMapOnlyToolsBtn');
+ if(!btn){btn=document.createElement('button');btn.id='efMapOnlyToolsBtn';btn.type='button';mapView.appendChild(btn)}
+ btn.className='ef-map-tools-button';btn.innerHTML='<i class="fa-solid fa-layer-group" aria-hidden="true"></i> Pins & Filters';
+ left.id='efMapToolsDrawer';btn.setAttribute('aria-controls',left.id);
+ // One close control per panel. Old right-panel X remains the only one.
+ left.querySelectorAll('.ef-map-tools-close').forEach(b=>b.remove());
+ const close=document.createElement('button');close.type='button';close.className='ef-map-tools-close';close.textContent='× Close';left.prepend(close);
+ right.querySelectorAll('.ef-repair-detail-close').forEach(b=>b.remove());
+ const oldRight=document.getElementById('toggleRightPanel');
+ if(oldRight){oldRight.innerHTML='<i class="fa-solid fa-xmark"></i>';oldRight.setAttribute('aria-label','Close location information');
+ oldRight.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();ws.classList.remove('ef-map-detail-open')},true)}
+ const active=()=>!mapView.classList.contains('hidden')&&!mapView.closest('.hidden')&&mapView.getClientRects().length>0;
+ function showTools(v){const on=!!v&&active();ws.classList.toggle('ef-map-tools-open',on);btn.setAttribute('aria-expanded',String(on));if(on)ws.classList.remove('left-collapsed')}
+ btn.addEventListener('click',e=>{e.stopImmediatePropagation();e.preventDefault();showTools(!ws.classList.contains('ef-map-tools-open'))},true);
+ close.addEventListener('click',e=>{e.preventDefault();showTools(false)});
+ function sync(){const on=active();document.body.classList.toggle('ef-map-unified-active',on);ws.classList.toggle('ef-map-page',on);if(!on){ws.classList.remove('ef-map-tools-open','ef-map-detail-open')}else{btn.setAttribute('aria-expanded',String(ws.classList.contains('ef-map-tools-open')))}}
+ new MutationObserver(sync).observe(mapView,{attributes:true,attributeFilter:['class','style']});
+ const dash=document.getElementById('cyberDashboard');if(dash)new MutationObserver(sync).observe(dash,{attributes:true,attributeFilter:['class','style']});
+ document.querySelectorAll('.cyber-topnav button,.tactical-side-nav button').forEach(b=>b.addEventListener('click',()=>setTimeout(sync,30)));
+ // Existing pin code populates detailCase when selecting any marker.
+ const heading=document.getElementById('detailCase');if(heading)new MutationObserver(()=>{if(active()&&heading.textContent.trim()&&!/CASE OVERVIEW/i.test(heading.textContent.trim()))ws.classList.add('ef-map-detail-open')}).observe(heading,{childList:true,subtree:true,characterData:true});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){showTools(false);ws.classList.remove('ef-map-detail-open')}});
+ sync();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
