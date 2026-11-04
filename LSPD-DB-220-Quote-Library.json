@@ -1,0 +1,2239 @@
+{
+  "name": "LSPD DB — Quote of the Week Library",
+  "version": 1,
+  "created": "2026-11-04",
+  "copyright_note": "All entries are newly written original lines. Show titles in inspired_by indicate themes only; none is represented as dialogue quoted from those programmes.",
+  "proposed_rotation": {
+    "frequency": "weekly",
+    "change_day": "monday",
+    "timezone": "Europe/London",
+    "selection": "shared deterministic rotation or persisted server selection",
+    "no_repeat_until_all_shown": true,
+    "high_command_override": true,
+    "deployed": false
+  },
+  "total_quotes": 220,
+  "quotes": [
+    {
+      "id": "Q001",
+      "text": "A calm entry starts long before the door opens.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q002",
+      "text": "The best team is the one that hears the quietest voice.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q003",
+      "text": "Control the moment; don't let the moment control you.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q004",
+      "text": "A clear plan beats a loud command.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q005",
+      "text": "Nobody works alone just because they stand at the front.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q006",
+      "text": "The first tool on any call is communication.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q007",
+      "text": "Fast feet mean little without a steady mind.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q008",
+      "text": "A good leader makes room for a better idea.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q009",
+      "text": "When the situation changes, the plan has to breathe.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q010",
+      "text": "The team is only as strong as its last unanswered question.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q011",
+      "text": "Courage is knowing when not to rush.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q012",
+      "text": "Winning a scene means everyone gets a chance to go home.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q013",
+      "text": "Discipline is what holds a team together when the radio gets loud.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q014",
+      "text": "One officer sees a corner; a team sees the whole picture.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q015",
+      "text": "The most important order may be the one that prevents a mistake.",
+      "category": "Tactical teamwork",
+      "inspired_by": [
+        "S.W.A.T."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q016",
+      "text": "Trust is built on the boring days and tested on the hard ones.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q017",
+      "text": "You don't rise to the noise; you return to your training.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q018",
+      "text": "The mission matters, but so do the people beside you.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q019",
+      "text": "A strong team doesn't hide its weak spots; it covers them.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q020",
+      "text": "Adaptability is preparation put to work.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q021",
+      "text": "No rank makes you too important to listen.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q022",
+      "text": "Pressure reveals habits, so build good ones early.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q023",
+      "text": "The job isn't finished until the last person is accounted for.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q024",
+      "text": "Sometimes leadership means carrying the uncertainty for others.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q025",
+      "text": "Fatigue is real; pretending otherwise helps nobody.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q026",
+      "text": "A team that can disagree honestly can move together confidently.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q027",
+      "text": "The toughest decision is often the one that keeps everyone safe.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q028",
+      "text": "Confidence without humility is a liability.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q029",
+      "text": "Keep your promises small enough to honour and big enough to matter.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q030",
+      "text": "You can be exhausted and still be responsible.",
+      "category": "Service and resilience",
+      "inspired_by": [
+        "SEAL Team"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q031",
+      "text": "Every experienced officer was once somebody's rookie.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q032",
+      "text": "Questions are cheaper than preventable mistakes.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q033",
+      "text": "Experience isn't a shortcut around good judgement.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q034",
+      "text": "The lesson isn't that you were wrong; it's what you do next.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q035",
+      "text": "Keep your eyes open and your assumptions on probation.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q036",
+      "text": "Being new is temporary; being unwilling to learn is a choice.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q037",
+      "text": "The best answer on patrol is sometimes, 'I need to check.'",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q038",
+      "text": "A badge won't do your thinking for you.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q039",
+      "text": "You earn confidence by making careful decisions repeatedly.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q040",
+      "text": "Don't confuse an ordinary call with an unimportant one.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q041",
+      "text": "Respect starts before you know someone's name.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q042",
+      "text": "A mistake becomes experience only when you change something.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q043",
+      "text": "The person you're helping may remember this day forever.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q044",
+      "text": "Good instincts grow from good habits, not good luck.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q045",
+      "text": "Your first responsibility is to notice what's actually happening.",
+      "category": "Learning and judgement",
+      "inspired_by": [
+        "The Rookie"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q046",
+      "text": "The street tells a story, but it never tells it in order.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q047",
+      "text": "An easy answer should make a detective curious, not comfortable.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q048",
+      "text": "Pressure can move a case; it can also break it.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q049",
+      "text": "Respect the neighbourhood if you want the neighbourhood to trust you.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q050",
+      "text": "A lead is a direction, not a verdict.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q051",
+      "text": "The truth doesn't care how long your shift has been.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q052",
+      "text": "Good police work is measured in facts, not noise.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q053",
+      "text": "You can't protect trust by taking shortcuts through it.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q054",
+      "text": "An arrest might end a pursuit; it doesn't end the questions.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q055",
+      "text": "Listen twice before deciding what you heard once.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q056",
+      "text": "An overlooked witness can change the whole investigation.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q057",
+      "text": "What happens off camera can still matter on the record.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q058",
+      "text": "The toughest cases require the softest questions.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q059",
+      "text": "A clean report gives the truth somewhere to stand.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q060",
+      "text": "A detective's job is to test the theory, not defend it.",
+      "category": "Street-level investigations",
+      "inspired_by": [
+        "Chicago P.D."
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q061",
+      "text": "A badge carries a standard, not an exemption.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q062",
+      "text": "Leadership begins where excuses end.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q063",
+      "text": "Your reputation walks into a room before you do.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q064",
+      "text": "The public doesn't owe us trust; we owe them reasons for it.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q065",
+      "text": "A difficult right choice stays right even when it's unpopular.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q066",
+      "text": "The chain of command should carry responsibility in both directions.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q067",
+      "text": "Policy means little if it disappears under pressure.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q068",
+      "text": "A supervisor's example travels farther than their orders.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q069",
+      "text": "Honour is what remains when nobody is keeping score.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q070",
+      "text": "Correct your people in private when you can, and protect the public in every case.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q071",
+      "text": "The uniform is shared; accountability is personal.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q072",
+      "text": "A good commander knows the difference between loyalty and silence.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q073",
+      "text": "Respect doesn't require agreement; it requires professionalism.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q074",
+      "text": "The hardest part of command is being fair when it's inconvenient.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q075",
+      "text": "The next generation learns from what we tolerate today.",
+      "category": "Integrity and command",
+      "inspired_by": [
+        "Blue Bloods"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q076",
+      "text": "Evidence is patient; investigators have to be just as patient.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q077",
+      "text": "A tiny inconsistency can carry a very large truth.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q078",
+      "text": "The evidence doesn't argue; people argue about it.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q079",
+      "text": "If the scene looks simple, take another look.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q080",
+      "text": "A missing detail is still a detail worth documenting.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q081",
+      "text": "The lab can answer a question, but only if we ask the right one.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q082",
+      "text": "Every item has a history; preserve it before interpreting it.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q083",
+      "text": "A photograph remembers what an exhausted mind forgets.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q084",
+      "text": "A good chain of custody protects a good investigation.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q085",
+      "text": "One fibre won't solve everything, but ignoring it might solve nothing.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q086",
+      "text": "The timeline is a witness that never speaks aloud.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q087",
+      "text": "When facts disagree, recheck the facts before blaming the witness.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q088",
+      "text": "Precision is not perfection; it's care that can be repeated.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q089",
+      "text": "A conclusion should never outrun the evidence.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q090",
+      "text": "The strongest case is the one that survives a second look.",
+      "category": "Evidence and forensics",
+      "inspired_by": [
+        "NCIS",
+        "CSI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q091",
+      "text": "Patterns are useful until you mistake them for people.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q092",
+      "text": "Understanding a motive isn't the same as excusing an act.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q093",
+      "text": "The question behind the answer is often the important one.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q094",
+      "text": "A profile is a working idea, not a person in handcuffs.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q095",
+      "text": "Every interview begins with a human being, not a theory.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q096",
+      "text": "Intelligence improves when teams challenge their own assumptions.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q097",
+      "text": "A silence can mean fear, confusion or thought; don't decide too quickly.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q098",
+      "text": "The smallest change in a routine can reveal the biggest shift.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q099",
+      "text": "Information becomes intelligence when context gives it meaning.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q100",
+      "text": "A suspect's story deserves scrutiny; so does our first impression.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q101",
+      "text": "Good questions open doors that pressure only closes.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q102",
+      "text": "A shared lead is worth more than a hidden victory.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q103",
+      "text": "A database is useful only when the details inside it are trustworthy.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q104",
+      "text": "Don't confuse access to information with understanding it.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q105",
+      "text": "The best investigators know when a pattern has stopped fitting.",
+      "category": "Behaviour and intelligence",
+      "inspired_by": [
+        "Criminal Minds",
+        "FBI"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q106",
+      "text": "A strong case starts with a lawful first step.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q107",
+      "text": "If you can't explain the decision, examine the decision.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q108",
+      "text": "The report should describe what happened, not what sounds better.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q109",
+      "text": "Procedure protects the public and the officer who follows it.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q110",
+      "text": "The facts don't become stronger when you shout them.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q111",
+      "text": "A fair investigation leaves room for the possibility you were wrong.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q112",
+      "text": "Nobody outranks the need for an honest record.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q113",
+      "text": "Evidence deserves protection from both carelessness and certainty.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q114",
+      "text": "Accountability isn't a punishment; it's part of the job.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q115",
+      "text": "The process matters most when the result feels obvious.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q116",
+      "text": "A shortcut today can become a problem in court tomorrow.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q117",
+      "text": "The right questions are often the uncomfortable ones.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q118",
+      "text": "Integrity is most visible when it costs you something.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q119",
+      "text": "A good supervisor investigates the concern, not the personality.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q120",
+      "text": "Justice needs more than a confident conclusion.",
+      "category": "Procedure and accountability",
+      "inspired_by": [
+        "Law & Order",
+        "Line of Duty"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q121",
+      "text": "Every city keeps secrets in plain sight.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q122",
+      "text": "A closed door isn't the same as a closed case.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q123",
+      "text": "The case won't solve itself while you admire your first theory.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q124",
+      "text": "The truth usually arrives in pieces, not speeches.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q125",
+      "text": "A city is more than its crime statistics.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q126",
+      "text": "Follow the detail nobody thought was worth writing down.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q127",
+      "text": "Being stubborn helps only when you're stubborn about the facts.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q128",
+      "text": "The victim is not a footnote in the investigation.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q129",
+      "text": "The system can miss people; a careful detective shouldn't.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q130",
+      "text": "Some answers take weeks because the questions were wrong for days.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q131",
+      "text": "A lead that goes nowhere still tells you where not to go.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q132",
+      "text": "Never let the size of the problem make one person invisible.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q133",
+      "text": "A good investigator can hold doubt without losing direction.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q134",
+      "text": "What a witness doesn't know matters too.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q135",
+      "text": "Persistence means revisiting the evidence, not repeating the mistake.",
+      "category": "Persistence and the bigger picture",
+      "inspired_by": [
+        "Bosch",
+        "The Wire",
+        "True Detective"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q136",
+      "text": "A steady voice can change the outcome of a chaotic minute.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q137",
+      "text": "In a crisis, clarity is a form of protection.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q138",
+      "text": "The most useful person in the room is the one who notices what changed.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q139",
+      "text": "Urgency is real; panic is optional.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q140",
+      "text": "Pass the right information before you pass the problem.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q141",
+      "text": "One clear update can save five confused decisions.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q142",
+      "text": "A useful briefing says what we know and what we don't.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q143",
+      "text": "Every response has two clocks: the situation and the people inside it.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q144",
+      "text": "The public sees the moment; command must also see the aftermath.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q145",
+      "text": "The smartest plan leaves space for an unexpected call.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q146",
+      "text": "The signal matters, but so does the source.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q147",
+      "text": "A lead shared early is often more useful than a perfect lead shared late.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q148",
+      "text": "When everything looks urgent, decide what actually matters first.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q149",
+      "text": "A calm dispatcher can be an unseen part of the rescue.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q150",
+      "text": "Prepare for the next problem without forgetting the one in front of you.",
+      "category": "Emergency response and intelligence work",
+      "inspired_by": [
+        "9-1-1",
+        "Jack Ryan",
+        "24",
+        "The Night Agent"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q151",
+      "text": "Every detail tells a story. Your job is to find the truth.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q152",
+      "text": "The truth is in the details. Never overlook what others choose to ignore.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q153",
+      "text": "In EverFall, the map is wide; the responsibility is wider.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q154",
+      "text": "A postal is a location, not an explanation.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q155",
+      "text": "Behind every pin is a question waiting for an answer.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q156",
+      "text": "The Detective Bureau doesn't chase rumours; it follows evidence.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q157",
+      "text": "A case file is the memory of an investigation. Keep it honest.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q158",
+      "text": "The badge gets you to the door. Your conduct earns the conversation.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q159",
+      "text": "Good intelligence connects records, not assumptions.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q160",
+      "text": "From Sandy Shores to Los Santos, facts travel farther than gossip.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q161",
+      "text": "Write the report as though another detective will need it tomorrow.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q162",
+      "text": "Your next lead might be hiding in your last note.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q163",
+      "text": "The city changes every shift; our standards shouldn't.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q164",
+      "text": "A locked pin protects a location, not a weak investigation.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q165",
+      "text": "Respect the scene, preserve the evidence, then follow the facts.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q166",
+      "text": "No callsign is more important than a good decision.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q167",
+      "text": "A case belongs to the truth, not the detective who opened it.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q168",
+      "text": "A clean timeline can turn ten rumours into one answer.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q169",
+      "text": "The case is bigger than the moment you arrived.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q170",
+      "text": "The best detective is the one who can say, 'I was wrong.'",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q171",
+      "text": "Every shift leaves a record. Make yours worth trusting.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q172",
+      "text": "An empty map is an opportunity to get the first pin right.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q173",
+      "text": "The most valuable evidence is the evidence nobody altered.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q174",
+      "text": "Good command protects good investigations from bad shortcuts.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q175",
+      "text": "Los Santos has plenty of stories; we're here for the facts.",
+      "category": "EverFall LSPD originals",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q176",
+      "text": "Detective work: ninety per cent notes, ten per cent finding the notes.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q177",
+      "text": "If the suspect's story changes faster than the radio traffic, take another statement.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q178",
+      "text": "Every detective has a favourite pen until someone borrows it.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q179",
+      "text": "The coffee is cold, but the lead is warmer.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q180",
+      "text": "A clean desk is suspicious; a clean evidence log is essential.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q181",
+      "text": "Before you call it a conspiracy, check the spelling on the report.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q182",
+      "text": "The best plot twist is finding the missing attachment.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q183",
+      "text": "Your investigation is not complete until the file actually saves.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q184",
+      "text": "If it isn't in the report, tomorrow-you is going to be angry.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q185",
+      "text": "A detective's sixth sense is usually the fifth reread of the same statement.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q186",
+      "text": "The only thing more elusive than a suspect is a working printer.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q187",
+      "text": "There are two kinds of leads: good leads and 'who wrote this?' leads.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q188",
+      "text": "Crime never sleeps, but detectives should occasionally try.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q189",
+      "text": "A case number is not a personality trait.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q190",
+      "text": "The radio works best when everyone remembers the listening part.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q191",
+      "text": "You know it's a long shift when the evidence labels start looking like poetry.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q192",
+      "text": "Nothing tests teamwork quite like agreeing on a folder name.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q193",
+      "text": "If the map pin is in the ocean, check the postal before calling Marine Unit.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q194",
+      "text": "The report said 'brief pursuit'. The bodycam disagreed.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q195",
+      "text": "Some mysteries are solved with fingerprints; others with Ctrl+F.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q196",
+      "text": "The fastest way to lose a lead is to promise you'll remember it.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q197",
+      "text": "A great detective can find a witness. An organised one can find the interview file.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q198",
+      "text": "The real cold case is yesterday's untouched coffee.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q199",
+      "text": "High Command would like to remind you that 'because vibes' is not evidence.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q200",
+      "text": "We didn't lose the case. We filed it under a very creative name.",
+      "category": "Detective Bureau humour",
+      "inspired_by": [],
+      "type": "original_everfall",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q201",
+      "text": "A strong task force is built on trust, not matching opinions.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q202",
+      "text": "When your partner questions the plan, hear them before you charge ahead.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q203",
+      "text": "No island is small enough to hide the truth forever.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q204",
+      "text": "The best backup is the person who knows what you're about to do before you say it.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q205",
+      "text": "Leadership is knowing when to take the lead and when to let your partner speak.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q206",
+      "text": "A bold plan still needs someone brave enough to ask about the exit.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q207",
+      "text": "Loyalty doesn't mean silence; sometimes it means saying, 'That's a terrible idea.'",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q208",
+      "text": "A badge gets you through the door. Trust is what keeps the team together.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q209",
+      "text": "Good partners disagree loudly and show up quietly when it matters.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q210",
+      "text": "The ocean can wash away footprints, but it can't erase a motive.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q211",
+      "text": "You can chase a suspect across the island; you still have to prove the case.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q212",
+      "text": "When the radio goes quiet, remember the voices counting on you to come home.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q213",
+      "text": "The job is dangerous enough without turning every plan into a competition.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q214",
+      "text": "A good detective follows the evidence. A good partner remembers to bring water.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q215",
+      "text": "The difference between confidence and recklessness is usually a briefing.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q216",
+      "text": "No case is worth losing the people who help you solve it.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q217",
+      "text": "If your partner starts with 'Hear me out,' check whether the getaway car has doors.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q218",
+      "text": "Two detectives, three theories, and one cold coffee: the case is officially underway.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q219",
+      "text": "The person complaining about your driving is probably the one keeping you alive.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    },
+    {
+      "id": "Q220",
+      "text": "Save the dramatic entrance for the television cameras; the evidence prefers patience.",
+      "category": "Task force teamwork and partner banter",
+      "inspired_by": [
+        "Hawaii Five-0"
+      ],
+      "type": "original_tv_inspired",
+      "display_credit": "LSPD DB Quote Library"
+    }
+  ],
+  "updated": "2026-11-04"
+}
