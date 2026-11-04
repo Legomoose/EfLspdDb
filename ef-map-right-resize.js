@@ -12,8 +12,8 @@
   function sizes(){
    const w=ws.getBoundingClientRect().width||window.innerWidth;
    const narrow=w<=1050;
-   const nav=w>1450?220:w>1050?205:w>700?72:65;
-   const tools=ws.classList.contains('ef-map-tools-collapsed')?0:w>1450?286:w>1050?245:w>700?230:0;
+   const nav=w>=1600?220:w>1050?205:w>700?72:65;
+   const tools=ws.classList.contains('ef-map-tools-collapsed')?0:w>=1600?335:w>1050?305:w>700?275:0;
    const min= w>1450?318: w>1050?280:Math.min(280,Math.max(170,w-nav-12));
    const max=narrow?Math.max(min,Math.min(500,w-nav-20)):
            Math.max(min,Math.min(560,w-nav-tools-270));

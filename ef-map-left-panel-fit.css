@@ -1,0 +1,136 @@
+/* LSPD DB Map Intelligence · Left Pins & Filters panel layout fix
+   Presentation only. Protects the controls from clipping behind the map.
+   Loaded AFTER the legacy map styles so one grid definition owns sizing. */
+
+/* Desktop: reserve the full width that the existing controls actually need. */
+@media (min-width:1600px) {
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace {
+    grid-template-columns:220px 335px minmax(0,1fr) var(--ef-map-right-width,318px)!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace.ef-map-tools-collapsed {
+    grid-template-columns:220px 0 minmax(0,1fr) var(--ef-map-right-width,318px)!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace.ef-map-detail-closed {
+    grid-template-columns:220px 335px minmax(0,1fr) 0!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace.ef-map-tools-collapsed.ef-map-detail-closed {
+    grid-template-columns:220px 0 minmax(0,1fr) 0!important;
+  }
+}
+@media (min-width:1051px) and (max-width:1599px) {
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace {
+    grid-template-columns:205px 305px minmax(0,1fr) var(--ef-map-right-width,280px)!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace.ef-map-tools-collapsed {
+    grid-template-columns:205px 0 minmax(0,1fr) var(--ef-map-right-width,280px)!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace.ef-map-detail-closed {
+    grid-template-columns:205px 305px minmax(0,1fr) 0!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace.ef-map-tools-collapsed.ef-map-detail-closed {
+    grid-template-columns:205px 0 minmax(0,1fr) 0!important;
+  }
+}
+@media (min-width:701px) and (max-width:1050px) {
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace {
+    grid-template-columns:72px 275px minmax(0,1fr)!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace.ef-map-tools-collapsed {
+    grid-template-columns:72px 0 minmax(0,1fr)!important;
+  }
+}
+
+/* The map and control panel are siblings. The map must not paint over controls. */
+html body.ef-map-unified-active:has(.tactical-sidebar) .workspace > .leftpanel {
+  grid-column:2!important;
+  box-sizing:border-box!important;
+  min-width:0!important;
+  width:auto!important;
+  max-width:100%!important;
+  padding:0!important;
+  overflow:hidden!important;
+  z-index:35!important;
+  isolation:isolate!important;
+}
+html body.ef-map-unified-active:has(.tactical-sidebar) .workspace > .center {
+  box-sizing:border-box!important;
+  min-width:0!important;
+  z-index:1!important;
+}
+html body.ef-map-unified-active:has(.tactical-sidebar) .workspace > .leftpanel > .panel-inner {
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  padding:15px 15px 20px!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel :is(
+  .sidebar-dropdown, .ef-final-map-search, .ef8g-sidebar-search,
+  .searchfield, .category-list, #addPinBtn, #efEditSidebarIcons,
+  .separator, .map-type-filters
+) {
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel :is(
+  .ef8g-sidebar-search, .ef-final-map-search input, .searchfield input,
+  .sidebar-dropdown button, #addPinBtn, #efEditSidebarIcons
+) {
+  max-width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel .ef8g-sidebar-search span {
+  min-width:0!important;flex:1 1 auto!important;white-space:nowrap!important;
+  overflow:hidden!important;text-overflow:ellipsis!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel .ef8g-sidebar-search kbd {
+  flex:0 0 auto!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel .category-list button {
+  display:flex!important;
+  align-items:center!important;
+  gap:9px!important;
+  width:100%!important;
+  min-width:0!important;
+  padding-left:7px!important;
+  padding-right:7px!important;
+}
+html body.ef-map-unified-active .workspace > .leftpanel .category-list button > em {
+  margin-left:auto!important;flex:0 0 auto!important;
+}
+html body.ef-map-unified-active .workspace .ef-map-tools-close {
+  position:relative!important;
+  flex:0 0 auto!important;
+  max-width:calc(100% - 24px)!important;
+  white-space:nowrap!important;
+  box-sizing:border-box!important;
+}
+
+/* Smaller screens: the tools become a drawer above, never underneath, the map. */
+@media (max-width:700px) {
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace > .leftpanel {
+    position:absolute!important;
+    top:128px!important;
+    left:70px!important;
+    right:auto!important;
+    bottom:5px!important;
+    grid-column:auto!important;
+    width:min(320px,calc(100vw - 82px))!important;
+    max-width:calc(100vw - 82px)!important;
+    height:auto!important;
+    margin:0!important;
+    z-index:1200!important;
+    box-shadow:10px 0 28px #0009!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace.ef-map-tools-collapsed > .leftpanel {
+    display:none!important;
+  }
+  html body.ef-map-unified-active:has(.tactical-sidebar) .workspace > .center {
+    grid-column:2!important;
+  }
+}
