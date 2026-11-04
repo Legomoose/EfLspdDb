@@ -1,0 +1,467 @@
+/* LSPD DB — Cyber Intelligence Typography System, 2026-11-03
+   Typography-only enhancement: it does not change accounts, data, authorisation,
+   any JS workflow, the existing map, or the approved 70px skyline header.
+   Uses hosted Google fonts; excellent native fallbacks remain when offline. */
+:root {
+  --ef-font-display: 'Oxanium', 'Bahnschrift', 'Arial Narrow', sans-serif;
+  --ef-font-body: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --ef-font-code: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+  --ef-font-mini:11px;
+  --ef-font-small:12px;
+  --ef-font-copy:13.5px;
+  --ef-font-standard:14px;
+  --ef-font-subheading:17px;
+  --ef-font-heading:23px;
+  --ef-font-display-size:31px;
+  font-family:var(--ef-font-body)!important;
+  font-size:14px!important;
+  font-optical-sizing:auto;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+html body, html body .shell,html body .workspace,
+html body .center,html body .tactical-sidebar,
+html body #extraView,html body #recordsView,
+html body #cyberDashboard,html body .modal,
+html body .access-card,html body .leaflet-popup-content,
+html body .leaflet-tooltip {
+  font-family:var(--ef-font-body)!important;
+  line-height:1.5;
+}
+html body :where(button,input,textarea,select,option,label,summary,legend){
+  font-family:var(--ef-font-body)!important;
+  font-optical-sizing:auto;
+}
+html body :where(button,select,input,textarea){line-height:1.35;}
+html body :where(h1,h2,h3,h4,h5,h6){
+  font-family:var(--ef-font-display)!important;
+  font-weight:700;
+  line-height:1.22;
+  letter-spacing:.025em;
+  text-wrap:pretty;
+}
+html body :where(p,li,td,dd,dt,blockquote){
+  font-family:var(--ef-font-body);
+  line-height:1.58;
+}
+html body :where(i.fa-solid,i.fa-regular,i.fa-brands,i.fas,i.far,i.fab,.fa,.fa-solid,.fa-regular,.fa-brands){
+  /* Font Awesome continues to own its icon font: never override these families. */
+  font-family:var(--fa-style-family, 'Font Awesome 6 Free');
+}
+/* Brand: display face only, still fits the exact-height panorama header. */
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark strong {
+  font-family:var(--ef-font-display)!important;
+  font-size:clamp(19px,1.56vw,28px)!important;
+  font-weight:800!important;
+  letter-spacing:.035em!important;
+  line-height:1.02!important;
+}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark span {
+  font-family:var(--ef-font-display)!important;
+  font-size:clamp(8px,.7vw,10px)!important;
+  font-weight:700!important;
+  letter-spacing:.12em!important;
+}
+html body #lspdRebuiltHeader .lspd-rebuilt-wordmark small {
+  font-family:var(--ef-font-code)!important;
+  font-size:7px!important;
+  font-weight:500!important;
+  letter-spacing:.04em!important;
+}
+html body #lspdRebuiltHeader .lspd-clock-time,
+html body #lspdRebuiltHeader #lspdUtcClock strong {
+  font-family:var(--ef-font-code)!important;
+  font-size:13.5px!important;
+  font-weight:700!important;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.045em!important;
+}
+html body #lspdRebuiltHeader .lspd-clock-date,
+html body #lspdRebuiltHeader #lspdUtcClock small {
+  font-family:var(--ef-font-code)!important;
+  font-size:8px!important;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.025em!important;
+}
+html body #lspdRebuiltHeader .ef-header-account strong {
+  font-family:var(--ef-font-body)!important;
+  font-size:11.5px!important;
+  font-weight:700!important;
+}
+html body #lspdRebuiltHeader .ef-header-account small {
+  font-family:var(--ef-font-body)!important;
+  font-size:9.5px!important;
+  font-weight:500!important;
+}
+/* Navigation: stronger hierarchy with readable labels and compact map controls. */
+html body .tactical-sidebar .tactical-side-nav button {
+  font-family:var(--ef-font-body)!important;
+  font-size:13.5px!important;
+  font-weight:650!important;
+  line-height:1.25!important;
+  letter-spacing:.004em!important;
+}
+html body .tactical-sidebar .tactical-side-nav button i {font-size:17px!important;}
+html body .tactical-sidebar .tactical-side-foot,
+html body .footer {font-family:var(--ef-font-code)!important;font-size:10px!important;letter-spacing:0!important;}
+html body .cyber-topnav button,
+html body .ef-primary-navigation button,
+html body .leftpanel button,
+html body .rightpanel button,
+html body .detailtabs button,
+html body .intel-topnav button {
+  font-family:var(--ef-font-body)!important;
+  font-size:12.5px;
+  font-weight:600;
+}
+html body .leftpanel h3,
+html body .rightpanel .caseheadline h2,
+html body .sidebar-dropdown summary,
+html body .ef-nav-heading,
+html body .filter-caption {
+  font-family:var(--ef-font-display)!important;
+  font-weight:700!important;
+  letter-spacing:.05em!important;
+}
+html body .leftpanel h3,
+html body .sidebar-dropdown summary{font-size:15px!important;}
+html body .rightpanel .caseheadline h2{font-size:20px!important;}
+html body .leftpanel label,
+html body .category-list button,
+html body .map-type-filters label {font-size:12.5px!important;line-height:1.4!important;}
+/* Dashboard stat numbers + labels. Avoid increasing column heights in the 5-card row. */
+html body .tactical-stat{gap:14px!important;min-width:0;}
+html body .tactical-stat small{
+  font-family:var(--ef-font-display)!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  line-height:1.2!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase;
+}
+html body .tactical-stat strong{
+  font-family:var(--ef-font-display)!important;
+  font-size:34px!important;
+  font-weight:800!important;
+  line-height:1.05!important;
+  letter-spacing:-.02em!important;
+  font-variant-numeric:tabular-nums;
+}
+html body .tactical-stat>i {font-size:29px!important;}
+html body .tactical-bureau-heading h2{
+  font-family:var(--ef-font-display)!important;
+  font-size:clamp(24px,1.8vw,29px)!important;
+  font-weight:750!important;
+  letter-spacing:.028em!important;
+}
+html body .tactical-bureau-heading small{
+  font-family:var(--ef-font-code)!important;
+  font-size:10px!important;
+  font-weight:500!important;
+  letter-spacing:.015em!important;
+  line-height:1.45!important;
+}
+html body .tactical-bureau p{
+  font-family:var(--ef-font-body)!important;
+  font-size:13.5px!important;
+  line-height:1.58!important;
+  font-weight:450;
+}
+html body .tactical-actions h2,
+html body .tactical-bottom-grid .tactical-panel>h2 {
+  font-family:var(--ef-font-display)!important;
+  font-size:18px!important;
+  font-weight:750!important;
+  letter-spacing:.03em!important;
+}
+html body .tactical-action-grid button {
+  font-family:var(--ef-font-body)!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  line-height:1.2!important;
+}
+html body .tactical-tool-grid button strong {
+  font-family:var(--ef-font-body)!important;
+  font-size:13px!important;
+  font-weight:700!important;
+  line-height:1.3!important;
+}
+html body .tactical-tool-grid button small{
+  font-family:var(--ef-font-body)!important;
+  font-size:11.5px!important;
+  line-height:1.35!important;
+}
+html body .tactical-bottom-grid h2 button,
+html body .tactical-empty,
+html body .tactical-case-row,
+html body .tactical-activity {
+  font-family:var(--ef-font-body)!important;
+  font-size:12.5px!important;
+  line-height:1.5!important;
+}
+html body .tactical-case-id,
+html body .tactical-case-row em,
+html body .tactical-activity small {
+  font-family:var(--ef-font-code)!important;
+  font-size:11px!important;
+  font-variant-numeric:tabular-nums;
+}
+/* Page titles, cards, lists, gang profiles, personnel, vehicle/item tiles. */
+html body #recordsView .pagehead h2,
+html body #extraView .pagehead h2,
+html body .hybrid-hero h1,
+html body .cyber-page-title,
+html body .cyber-title,
+html body .ef-main-title {
+  font-family:var(--ef-font-display)!important;
+  font-size:clamp(22px,1.65vw,30px)!important;
+  font-weight:750!important;
+  letter-spacing:.025em!important;
+  line-height:1.18!important;
+}
+html body .hybrid-hero .hybrid-eyebrow,
+html body .hybrid-hero .hybrid-kicker,
+html body .cyber-breadcrumb {
+  font-family:var(--ef-font-code)!important;
+  font-size:10.5px!important;
+  font-weight:600!important;
+  letter-spacing:.055em!important;
+}
+html body .db-card h2,
+html body .db-card h3,
+html body .cyber-panel h2,
+html body .cyber-panel h3,
+html body .ef8g-vehicle h3,
+html body .ef8g-detective h3,
+html body .ef-gang-tile h3,
+html body .ef8g-item h3,
+html body .ef8g-contact h3,
+html body .ef-final-card h3 {
+  font-family:var(--ef-font-display)!important;
+  font-size:18px!important;
+  font-weight:700!important;
+  letter-spacing:.018em!important;
+  line-height:1.3!important;
+}
+html body .db-card,
+html body .cyber-panel,
+html body .ef8g-vehicle,
+html body .ef8g-detective,
+html body .ef-gang-tile,
+html body .ef8g-item,
+html body .ef8g-contact,
+html body .ef-final-card,
+html body .info-box,
+html body .mini-item {
+  font-family:var(--ef-font-body)!important;
+  font-size:13.5px;
+  line-height:1.55;
+}
+html body :is(#recordsView,#extraView) :where(p,li,dd,dt,span:not(.fa-solid):not(.fa-regular)) {
+  overflow-wrap:break-word;
+}
+/* Tables: readable body / small data labels. Case IDs remain easy to scan. */
+html body #recordsView table,
+html body #extraView table,
+html body .db-card table {
+  font-family:var(--ef-font-body)!important;
+  font-size:13.5px!important;
+}
+html body #recordsView table th,
+html body #extraView table th,
+html body .db-card table th {
+  font-family:var(--ef-font-display)!important;
+  font-size:12.5px!important;
+  font-weight:750!important;
+  letter-spacing:.07em!important;
+  line-height:1.35!important;
+  text-transform:uppercase;
+}
+html body #recordsView table td,
+html body #extraView table td,
+html body .db-card table td {
+  font-family:var(--ef-font-body)!important;
+  font-size:13.25px!important;
+  font-weight:450;
+  line-height:1.55!important;
+}
+html body :where(.case-number,.case-id,.ef-case-number,.case-tag,.status-tag,
+  .ef8g-vehicle-plate,.plate,.postal-code,.badge-id,.ef-id,.record-id){
+  font-family:var(--ef-font-code)!important;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.01em;
+}
+html body :where(.status-tag,.ef-status-tag){font-size:10.5px!important;font-weight:700!important;}
+/* Editor, filters, pin controls, login and popovers. */
+html body .modalhead h2,
+html body .modal h2,
+html body .access-card h2,
+html body .lspd-login-card h2{
+  font-family:var(--ef-font-display)!important;
+  font-size:25px!important;
+  font-weight:750!important;
+  letter-spacing:.02em!important;
+}
+html body .formgrid label,
+html body .modal label,
+html body .db-card label,
+html body #efUpdateShell label,
+html body .panel-inner label{
+  font-family:var(--ef-font-body)!important;
+  font-size:12.5px!important;
+  font-weight:600;
+  line-height:1.45!important;
+}
+html body :is(.modal,.db-card,#extraView,#recordsView,#efUpdateShell,.leftpanel,.rightpanel)
+  :where(input:not([type='checkbox']):not([type='radio']):not([type='range']),textarea,select){
+  font-family:var(--ef-font-body)!important;
+  font-size:13.5px!important;
+  line-height:1.4!important;
+  min-height:34px;
+}
+html body :is(.modal,.db-card,#extraView,#recordsView,#efUpdateShell)
+  :where(button:not(.tactical-arrow),.blue,.secondary){
+  font-family:var(--ef-font-body)!important;
+  font-size:12.75px!important;
+  font-weight:650;
+}
+html body .lspd-login-card .lspd-login-brandname strong{
+  font-family:var(--ef-font-display)!important;
+  font-size:29px!important;
+  letter-spacing:.08em!important;
+}
+html body .lspd-login-card .lspd-login-brandname :is(span,small),
+html body .lspd-login-card .lspd-login-authorized,
+html body .lspd-login-card .lspd-login-footer{
+  font-family:var(--ef-font-code)!important;
+  font-size:10px!important;
+  letter-spacing:.035em!important;
+}
+html body .lspd-login-card .lspd-login-subtitle,
+html body .lspd-login-card #accessHint{font-family:var(--ef-font-body)!important;font-size:13.5px!important;line-height:1.55!important;}
+html body .lspd-login-card .lspd-login-pad button{
+  font-family:var(--ef-font-code)!important;
+  font-size:21px!important;
+  font-weight:600!important;
+}
+html body .leaflet-popup-content,
+html body .leaflet-tooltip,
+html body #detailContent,
+html body .detailbody{
+  font-family:var(--ef-font-body)!important;
+  font-size:13px!important;
+  line-height:1.5!important;
+}
+html body .detailtabs button{font-family:var(--ef-font-display)!important;font-size:12px!important;font-weight:700!important;letter-spacing:.03em!important;}
+html body .detailbody h4{font-family:var(--ef-font-display)!important;font-size:15px!important;font-weight:700!important;}
+html body .info-row{font-size:12.5px!important;}
+html body .mapfoot,
+html body .maptoolbar #postalNotice{
+  font-family:var(--ef-font-code)!important;
+  font-size:10px!important;
+  letter-spacing:.04em!important;
+}
+/* Admin/Settings: make action names, descriptions and values distinct. */
+html body #efUpdateShell .ef-update-top h2 {
+  font-family:var(--ef-font-display)!important;
+  font-size:27px!important;
+  font-weight:750!important;
+  letter-spacing:.025em!important;
+}
+html body #efUpdateShell .ef-update-top p{
+  font-family:var(--ef-font-body)!important;
+  font-size:13px!important;
+  font-weight:450!important;
+}
+html body #efUpdateShell .ef-update-tabs button {
+  font-family:var(--ef-font-body)!important;
+  font-size:13.5px!important;
+  font-weight:650!important;
+}
+html body #efUpdateShell .ef-update-panel h3 {
+  font-family:var(--ef-font-display)!important;
+  font-size:20px!important;
+  font-weight:750!important;
+  letter-spacing:.02em!important;
+}
+html body #efUpdateShell .ef-update-panel :is(p,label),
+html body #efUpdateShell .ef-update-note,
+html body #efUpdateShell .ef-account-profile p {
+  font-family:var(--ef-font-body)!important;
+  font-size:13px!important;
+  line-height:1.58!important;
+}
+html body #efUpdateShell .ef-account-profile h4 {
+  font-family:var(--ef-font-display)!important;
+  font-size:23px!important;
+  font-weight:750!important;
+}
+html body #efUpdateShell .ef-account-actions button {
+  font-family:var(--ef-font-body)!important;
+  font-size:13.5px!important;
+  font-weight:700!important;
+}
+html body #efUpdateShell .ef-account-foot,
+html body #efUpdateShell .ef-account-status {
+  font-family:var(--ef-font-code)!important;
+  font-size:10.5px!important;
+  font-variant-numeric:tabular-nums;
+}
+html body #efUpdateShell .ef-update-theme {
+  font-family:var(--ef-font-body)!important;
+  font-size:13.5px!important;
+  font-weight:650!important;
+}
+/* Highly constrained widths: do not clip headings or collapse mobile navigation. */
+@media (max-width:1300px){
+  html body .tactical-stat small{font-size:11.5px!important;}
+  html body .tactical-stat strong{font-size:30px!important;}
+  html body .tactical-stat{gap:9px!important;}
+  html body .tactical-bureau-heading h2{font-size:23px!important;}
+  html body .tactical-bureau p{font-size:12.5px!important;}
+  html body .tactical-sidebar .tactical-side-nav button{font-size:12.5px!important;}
+}
+@media (max-width:950px){
+  html body .tactical-sidebar .tactical-side-nav button{font-size:13px!important;}
+  html body #recordsView .pagehead h2,html body #extraView .pagehead h2{font-size:22px!important;}
+  html body .tactical-bureau p{margin-left:0!important;}
+}
+@media (max-width:650px){
+  html body #lspdRebuiltHeader .lspd-rebuilt-wordmark strong{font-size:16px!important;}
+  html body #lspdRebuiltHeader .lspd-rebuilt-wordmark span{font-size:7px!important;}
+  html body #lspdRebuiltHeader .lspd-clock-time{font-size:11px!important;}
+  html body #lspdRebuiltHeader .lspd-clock-date{font-size:7px!important;}
+  html body #lspdRebuiltHeader .ef-header-account strong{font-size:10px!important;}
+  html body .tactical-stat small{font-size:11px!important;}
+  html body .tactical-stat strong{font-size:27px!important;}
+  html body .tactical-actions h2,html body .tactical-bottom-grid .tactical-panel>h2{font-size:16px!important;}
+  html body #efUpdateShell .ef-update-top h2{font-size:23px!important;}
+  html body #efUpdateShell .ef-update-panel h3{font-size:18px!important;}
+  html body #efUpdateShell .ef-account-profile h4{font-size:19px!important;}
+}
+@media (prefers-reduced-motion:reduce){html body *{scroll-behavior:auto!important;}}
+
+/* Honor Settings > Appearance > Text size across the entire website.
+   Previously the “Large” option affected almost exclusively the Settings panel. */
+html[data-ef-font="large"] body :is(
+ .tactical-sidebar .tactical-side-nav button,
+ .cyber-topnav button, .ef-primary-navigation button,
+ .tactical-action-grid button,.tactical-tool-grid button strong,
+ .tactical-case-row,.tactical-activity,.tactical-empty,
+ .category-list button,.map-type-filters label,
+ .db-card,.cyber-panel,.ef8g-vehicle,.ef8g-detective,.ef-gang-tile,
+ .ef8g-item,.ef8g-contact,
+ .modal label,.formgrid label,
+ #efUpdateShell .ef-update-panel p,#efUpdateShell .ef-update-panel label,
+ #efUpdateShell .ef-update-tabs button,#efUpdateShell .ef-account-actions button,
+ .tactical-bureau p) {font-size:15px!important;}
+html[data-ef-font="large"] body :is(
+ #recordsView table td,#extraView table td,.db-card table td,
+ .leaflet-popup-content,.leaflet-tooltip,.detailbody,
+ .tactical-tool-grid button small,.ef-update-note) {font-size:14.5px!important;}
+html[data-ef-font="large"] body :is(
+ .tactical-actions h2,.tactical-bottom-grid .tactical-panel>h2,
+ .db-card h3,.cyber-panel h3,.ef8g-vehicle h3,.ef8g-detective h3) {font-size:20px!important;}
+html[data-ef-font="large"] body :is(.tactical-stat small,#recordsView table th,#extraView table th){font-size:14px!important;}
+html[data-ef-font="large"] body #efUpdateShell .ef-update-panel h3{font-size:22px!important;}
+/* Header and dashboard numbers stay fixed to avoid overflow at narrow widths. */

@@ -1,0 +1,36 @@
+LSPD DB — System Status Live Integration
+4 November 2026
+
+What changed
+------------
+- System Status reads actual Supabase database/file-storage byte totals from the existing, permission-protected /storage-usage API response.
+- Reuses the existing Cloudflare Worker /health and authenticated /live-records check, without an ongoing poll.
+- Refreshes the check automatically once when the Settings Control Centre opens, caching the result for five minutes; the "Check now" button forces a fresh check.
+- Adds actual status colours: green confirmed, amber checking, red failure, grey not tracked or unavailable.
+- Displays a real-time Worker reachability result, clearly labelled as "Online now" rather than a historical uptime percentage.
+- Users online: "Not tracked" because active-session presence counting is not available from the current backend.
+- Uptime: "Not monitored" because no historical uptime monitor is connected.
+- Handles lack of storage-usage permission as "Restricted", without falsely reporting an outage.
+- Clears old measurements after logout/login.
+- Reuses the existing Storage & Usage request rather than issuing additional duplicate requests on initial mount.
+
+Important limits
+----------------
+- No new Cloudflare Worker endpoint, database schema or Supabase secrets are added or required by this front-end update.
+- Existing /storage-usage must already be deployed and correctly configured to show cloud byte totals. Its permissions and provider API setup determine whether live usage is available.
+- Online-user totals would require server-side session/presence tracking; historical uptime needs an external or scheduled monitor. Neither is invented by this build.
+- One read-only authenticated database request is made for a health check; no continuous monitoring or polling is introduced.
+- The ZIP has been syntax and offline UI tested using mocked backend responses. It has NOT been authenticated against your live Supabase/Cloudflare account.
+
+Updates included
+----------------
+- All prior Settings Control Centre and map-left-panel fit work from the 4 November full ZIP.
+- Restores the previously supplied site-wide theme and cyber-typography style files that were absent from the latest map-fix full ZIP.
+
+Install
+-------
+1. Extract the FULL ZIP or UPDATE-ONLY ZIP directly into the GitHub repository root.
+2. Replace matching files. Do not add an extra outer folder.
+3. Wait for GitHub Pages deployment then hard-refresh (Ctrl + F5).
+4. Open Settings > My Account > System Status and press "Check now".
+5. If metrics show Restricted/Unavailable, confirm the signed-in role has View Storage & Usage permission and the Worker /storage-usage integration is configured.

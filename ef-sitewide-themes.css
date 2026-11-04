@@ -1,0 +1,330 @@
+/* EFLSPDDB — Site-wide theme compatibility patch, 2026-11-03.
+   Loaded LAST to override older fixed blue/purple skin rules.
+   Presentation only: data, authentication, maps and actions unchanged. */
+
+/* Theme tokens: all six Settings choices control the same website-wide surfaces. */
+html[data-ef-theme="cyber"] {
+  --ef-bg:#04101e;--ef-panel:#091c31;--ef-panel2:#0d2845;--ef-text:#ecf7ff;
+  --ef-muted:#9bbbd8;--ef-accent:#28b7f2;--ef-border:#24577d;--ef-positive:#4ddcaa;
+  --ef-nav:#05172b;--ef-card:#0a2036;--ef-raised:#113452;--ef-panel-gradient:#09233c;
+  --ef-shadow:rgba(5,133,203,.17);--ef-highlight:rgba(40,183,242,.14);--ef-accent-text:#071828;
+}
+html[data-ef-theme="classic"] {
+  --ef-bg:#081629;--ef-panel:#152a47;--ef-panel2:#1b3455;--ef-text:#edf5ff;
+  --ef-muted:#aac2df;--ef-accent:#448df5;--ef-border:#345575;--ef-positive:#53d7a1;
+  --ef-nav:#0b2039;--ef-card:#183452;--ef-raised:#224366;--ef-panel-gradient:#203f5f;
+  --ef-shadow:rgba(36,93,193,.18);--ef-highlight:rgba(68,141,245,.16);--ef-accent-text:#f7faff;
+}
+html[data-ef-theme="midnight"] {
+  --ef-bg:#100d20;--ef-panel:#25203c;--ef-panel2:#342b50;--ef-text:#faf5ff;
+  --ef-muted:#c8bce4;--ef-accent:#af90ff;--ef-border:#67528c;--ef-positive:#6fd9b9;
+  --ef-nav:#19142d;--ef-card:#2a2345;--ef-raised:#46365f;--ef-panel-gradient:#342650;
+  --ef-shadow:rgba(126,82,222,.24);--ef-highlight:rgba(175,144,255,.16);--ef-accent-text:#160d2b;
+}
+html[data-ef-theme="emerald"] {
+  --ef-bg:#081b19;--ef-panel:#15332e;--ef-panel2:#1e4940;--ef-text:#effff8;
+  --ef-muted:#a6d2c5;--ef-accent:#38d5a0;--ef-border:#317464;--ef-positive:#71e5b7;
+  --ef-nav:#0b2420;--ef-card:#173d35;--ef-raised:#225c4f;--ef-panel-gradient:#174f40;
+  --ef-shadow:rgba(36,161,112,.2);--ef-highlight:rgba(56,213,160,.14);--ef-accent-text:#062319;
+}
+html[data-ef-theme="crimson"] {
+  --ef-bg:#1e0d17;--ef-panel:#35202b;--ef-panel2:#4d2a3a;--ef-text:#fff2f5;
+  --ef-muted:#e3b8c7;--ef-accent:#ff829d;--ef-border:#8a4b63;--ef-positive:#7fe3b2;
+  --ef-nav:#290f1d;--ef-card:#452536;--ef-raised:#65334a;--ef-panel-gradient:#5a2e43;
+  --ef-shadow:rgba(212,63,110,.19);--ef-highlight:rgba(255,130,157,.15);--ef-accent-text:#320c18;
+}
+html[data-ef-theme="dark"] {
+  --ef-bg:#121419;--ef-panel:#242830;--ef-panel2:#343943;--ef-text:#f1f3f5;
+  --ef-muted:#bac1cb;--ef-accent:#a5b2c7;--ef-border:#505967;--ef-positive:#6fd0a9;
+  --ef-nav:#191d24;--ef-card:#2b3039;--ef-raised:#3d4550;--ef-panel-gradient:#323946;
+  --ef-shadow:rgba(122,139,165,.15);--ef-highlight:rgba(165,178,199,.13);--ef-accent-text:#151b23;
+}
+
+/* Page canvas, footer and permanent side navigation. Do not recolour raster artwork. */
+html[data-ef-theme] body,
+html[data-ef-theme] body:has(.tactical-sidebar),
+html[data-ef-theme] body .shell,
+html[data-ef-theme] body .workspace,
+html[data-ef-theme] body:has(.tactical-sidebar) .workspace>.center,
+html[data-ef-theme] body:has(.tactical-sidebar) #cyberDashboard,
+html[data-ef-theme] body #recordsView,
+html[data-ef-theme] body #extraView {
+  background:var(--ef-bg)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body:has(.tactical-sidebar) .workspace>.tactical-sidebar {
+  background:linear-gradient(180deg,var(--ef-nav) 2%,var(--ef-panel) 72%,var(--ef-bg))!important;
+  border-right-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body .tactical-sidebar .tactical-side-nav button {
+  color:var(--ef-text)!important;border-color:transparent!important;background:transparent!important;
+}
+html[data-ef-theme] body .tactical-sidebar .tactical-side-nav button i {
+  color:var(--ef-accent)!important;
+}
+html[data-ef-theme] body .tactical-sidebar .tactical-side-nav button:hover {
+  background:var(--ef-highlight)!important;border-color:var(--ef-border)!important;
+}
+html[data-ef-theme] body .tactical-sidebar .tactical-side-nav button.active {
+  background:linear-gradient(95deg,var(--ef-panel2),var(--ef-highlight))!important;
+  border-color:var(--ef-accent)!important;color:var(--ef-text)!important;
+  box-shadow:inset 3px 0 var(--ef-accent),0 0 14px var(--ef-shadow)!important;
+}
+html[data-ef-theme] body .tactical-sidebar .tactical-side-foot {
+  background:var(--ef-nav)!important;border-color:var(--ef-border)!important;color:var(--ef-muted)!important;
+}
+/* Keep the same HQ/sidebar image, tint the overlay to match the selected theme. */
+html[data-ef-theme] body .tactical-sidebar .ef-final-sidebar-art {
+  border-color:var(--ef-border)!important;
+  background-image:linear-gradient(to bottom,var(--ef-nav),transparent 33%,transparent 72%,var(--ef-nav)),url('assets/ef2026/sidebar-patrol.webp')!important;
+}
+
+/* Site-wide tactical home dashboard: the hard-coded CSS was overriding theme changes. */
+html[data-ef-theme] body .tactical-stat,
+html[data-ef-theme] body .tactical-panel {
+  background:linear-gradient(145deg,var(--ef-card),var(--ef-panel))!important;
+  border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+  box-shadow:0 3px 15px var(--ef-shadow)!important;
+}
+html[data-ef-theme] body .tactical-stat:first-child {
+  border-color:var(--ef-accent)!important;
+  box-shadow:0 0 12px var(--ef-shadow),inset 0 1px var(--ef-highlight)!important;
+}
+html[data-ef-theme] body .tactical-stat>i,
+html[data-ef-theme] body .tactical-actions h2 i,
+html[data-ef-theme] body .tactical-bottom-grid h2 i,
+html[data-ef-theme] body .tactical-action-grid button i,
+html[data-ef-theme] body .tactical-tool-grid button i,
+html[data-ef-theme] body .tactical-activity>i {color:var(--ef-accent)!important;}
+html[data-ef-theme] body .tactical-stat strong,
+html[data-ef-theme] body .tactical-stat small,
+html[data-ef-theme] body .tactical-panel h2,
+html[data-ef-theme] body .tactical-bureau-heading h2,
+html[data-ef-theme] body .tactical-actions h2,
+html[data-ef-theme] body .tactical-bottom-grid .tactical-panel>h2 {color:var(--ef-text)!important;}
+html[data-ef-theme] body .tactical-bureau {
+  background:radial-gradient(circle at 85% 50%,var(--ef-highlight),transparent 40%),linear-gradient(135deg,var(--ef-card),var(--ef-panel))!important;
+}
+html[data-ef-theme] body .tactical-bureau p,
+html[data-ef-theme] body .tactical-bureau-heading small,
+html[data-ef-theme] body .tactical-empty,
+html[data-ef-theme] body .tactical-tool-grid small,
+html[data-ef-theme] body .tactical-activity small {color:var(--ef-muted)!important;}
+html[data-ef-theme] body .tactical-bottom-grid .tactical-panel>h2 {border-bottom-color:var(--ef-border)!important;}
+html[data-ef-theme] body .tactical-action-grid button,
+html[data-ef-theme] body .tactical-tool-grid button {
+  background:linear-gradient(140deg,var(--ef-panel2),var(--ef-card))!important;
+  border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body .tactical-action-grid button:hover,
+html[data-ef-theme] body .tactical-tool-grid button:hover {
+  border-color:var(--ef-accent)!important;background:var(--ef-raised)!important;
+  box-shadow:0 0 13px var(--ef-shadow)!important;
+}
+html[data-ef-theme] body .tactical-bottom-grid h2 button {color:var(--ef-accent)!important;}
+html[data-ef-theme] body .tactical-case-row,
+html[data-ef-theme] body .tactical-activity {
+  border-bottom-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body .tactical-case-id,
+html[data-ef-theme] body .tactical-case-row em {
+  background:var(--ef-raised)!important;color:var(--ef-text)!important;border-color:var(--ef-accent)!important;
+}
+html[data-ef-theme] body .tactical-hero,
+html[data-ef-theme] body .tactical-arrow,
+html[data-ef-theme] body .tactical-dots button,
+html[data-ef-theme] body .tactical-dots button.active {border-color:var(--ef-border)!important;}
+html[data-ef-theme] body .tactical-arrow {background:var(--ef-nav)!important;color:var(--ef-text)!important;}
+html[data-ef-theme] body .tactical-dots button.active {background:var(--ef-accent)!important;border-color:var(--ef-accent)!important;}
+
+/* Shared cards and all other pages: cases, gangs, vehicles, items, contacts, personnel, docs. */
+html[data-ef-theme] body .db-card,
+html[data-ef-theme] body .cyber-panel,
+html[data-ef-theme] body .cyber-stat,
+html[data-ef-theme] body #recordsView .tablewrap,
+html[data-ef-theme] body #extraView .ef8g-vehicle,
+html[data-ef-theme] body #extraView .ef8g-detective,
+html[data-ef-theme] body #extraView .ef-gang-tile,
+html[data-ef-theme] body #extraView #efDirectoryGrid .ef8g-detective,
+html[data-ef-theme] body #extraView.ef-main-gangs #extraContent>.db-card,
+html[data-ef-theme] body #extraView.ef-main-items #extraContent>.db-card,
+html[data-ef-theme] body #extraView.ef-main-contacts #extraContent>.db-card {
+  background:linear-gradient(140deg,var(--ef-card),var(--ef-panel))!important;
+  color:var(--ef-text)!important;border-color:var(--ef-border)!important;
+}
+html[data-ef-theme] body #recordsView .pagehead,
+html[data-ef-theme] body #extraView .pagehead,
+html[data-ef-theme] body #extraView>.hybrid-hero,
+html[data-ef-theme] body #recordsView>.hybrid-hero {
+  border-color:var(--ef-border)!important;
+}
+html[data-ef-theme] body #recordsView .pagehead,
+html[data-ef-theme] body #extraView .pagehead {
+  background:var(--ef-panel)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body #extraView>.hybrid-hero h1,
+html[data-ef-theme] body #recordsView>.hybrid-hero h1,
+html[data-ef-theme] body .cyber-breadcrumb,
+html[data-ef-theme] body .hybrid-hero .hybrid-kicker,
+html[data-ef-theme] body .hybrid-hero .hybrid-eyebrow {
+  color:var(--ef-accent)!important;
+}
+html[data-ef-theme] body #extraView .ef-gang-list .ef-gang-tile p,
+html[data-ef-theme] body #extraView .ef8g-vehicle-col small,
+html[data-ef-theme] body #extraView .ef8g-detective small {color:var(--ef-muted)!important;}
+html[data-ef-theme] body #recordsView .tablewrap th,
+html[data-ef-theme] body #recordsView .tablewrap td {
+  background:var(--ef-panel)!important;border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body #recordsView .tablewrap tr:nth-child(even) td {background:var(--ef-panel2)!important;}
+html[data-ef-theme] body .cyber-panel-head,
+html[data-ef-theme] body .ef-dialog-head {border-color:var(--ef-border)!important;}
+
+/* Map chrome and side drawers: do not touch map tiles or marker colours. */
+html[data-ef-theme] body .workspace>.leftpanel,
+html[data-ef-theme] body.tactical-map .workspace.ef-map-tools-open>.leftpanel,
+html[data-ef-theme] body .workspace>.rightpanel {
+  background:var(--ef-nav)!important;border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body .workspace .sidebar-dropdown,
+html[data-ef-theme] body #mapView .maptoolbar,
+html[data-ef-theme] body #mapView .postalbar,
+html[data-ef-theme] body .workspace .rightpanel .panel-inner {
+  background:var(--ef-panel)!important;border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body #efMapOnlyToolsBtn,
+html[data-ef-theme] body.tactical-map .workspace #efMapOnlyToolsBtn,
+html[data-ef-theme] body #mapView .maptoolbar button {
+  background:var(--ef-panel2)!important;border-color:var(--ef-accent)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body #mapView .postalbar input,
+html[data-ef-theme] body #mapView .maptoolbar input,
+html[data-ef-theme] body #mapView .maptoolbar select,
+html[data-ef-theme] body #extraView input:not([type="checkbox"]):not([type="color"]),
+html[data-ef-theme] body #extraView select,
+html[data-ef-theme] body #recordsView input:not([type="checkbox"]):not([type="color"]),
+html[data-ef-theme] body #recordsView select,
+html[data-ef-theme] body #extraView textarea {
+  background:var(--ef-panel2)!important;border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body #extraView input::placeholder,
+html[data-ef-theme] body #recordsView input::placeholder,
+html[data-ef-theme] body #mapView input::placeholder {color:var(--ef-muted)!important;}
+
+/* Dialog surfaces and edit forms; preserve destructive and confirmation button meanings. */
+html[data-ef-theme] body .ef-dialog,
+html[data-ef-theme] body #caseEditor .ef-dialog,
+html[data-ef-theme] body .modal,
+html[data-ef-theme] body .modal-backdrop .modal,
+html[data-ef-theme] body .ef-formgrid,
+html[data-ef-theme] body #caseEditor .ef-formgrid {
+  background:var(--ef-panel)!important;border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body .modal input:not([type="color"]),
+html[data-ef-theme] body .modal textarea,
+html[data-ef-theme] body .modal select,
+html[data-ef-theme] body .ef-dialog input:not([type="color"]),
+html[data-ef-theme] body .ef-dialog textarea,
+html[data-ef-theme] body .ef-dialog select {
+  background:var(--ef-panel2)!important;border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body .ef-dialog .blue:not(.danger),
+html[data-ef-theme] body .modal .blue:not(.danger),
+html[data-ef-theme] body #extraView button.blue:not(.danger),
+html[data-ef-theme] body #recordsView button.blue:not(.danger) {
+  background:var(--ef-raised)!important;border-color:var(--ef-accent)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body .ef-dialog .blue:not(.danger):hover,
+html[data-ef-theme] body .modal .blue:not(.danger):hover,
+html[data-ef-theme] body #extraView button.blue:not(.danger):hover,
+html[data-ef-theme] body #recordsView button.blue:not(.danger):hover {
+  background:var(--ef-accent)!important;color:var(--ef-accent-text)!important;
+}
+
+/* Settings: the previous approved Settings redesign specified fixed blue colours.
+   Recolour those same controls with higher specificity, without changing layout. */
+html[data-ef-theme] body #efUpdateShell,
+html[data-ef-theme] body #efUpdateShell .ef-update-top h2,
+html[data-ef-theme] body #efUpdateShell .ef-update-panel h3,
+html[data-ef-theme] body #efUpdateShell .ef-account-profile h4 {
+  color:var(--ef-text)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-update-top,
+html[data-ef-theme] body #efUpdateShell .ef-update-panel,
+html[data-ef-theme] body #efUpdateShell .ef-update-card,
+html[data-ef-theme] body #efUpdateShell .ef-update-originals .db-card {
+  background:linear-gradient(140deg,var(--ef-card),var(--ef-panel))!important;
+  border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-update-tabs {
+  background:linear-gradient(165deg,var(--ef-nav),var(--ef-panel))!important;
+  border-color:var(--ef-border)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-update-tabs button {
+  background:transparent!important;color:var(--ef-muted)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-update-tabs button:hover {
+  background:var(--ef-panel2)!important;border-color:var(--ef-border)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-update-tabs button.ef-selected {
+  background:linear-gradient(100deg,var(--ef-raised),var(--ef-highlight))!important;
+  border-color:var(--ef-accent)!important;color:var(--ef-text)!important;
+  box-shadow:inset 3px 0 var(--ef-accent),0 0 10px var(--ef-shadow)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-update-panel p,
+html[data-ef-theme] body #efUpdateShell .ef-update-panel label,
+html[data-ef-theme] body #efUpdateShell .ef-update-top p,
+html[data-ef-theme] body #efUpdateShell .ef-update-note,
+html[data-ef-theme] body #efUpdateShell .ef-account-profile p,
+html[data-ef-theme] body #efUpdateShell .ef-account-foot {
+  color:var(--ef-muted)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-account-profile,
+html[data-ef-theme] body #efUpdateShell .ef-account-foot span {
+  border-color:var(--ef-border)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-account-profile-avatar,
+html[data-ef-theme] body #efUpdateShell .ef-account-foot span,
+html[data-ef-theme] body #efUpdateShell .ef-account-actions button:not(.ef-signout),
+html[data-ef-theme] body #efUpdateShell .ef-notify-button {
+  background:var(--ef-panel2)!important;
+  border-color:var(--ef-border)!important;color:var(--ef-text)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-account-actions button:not(.ef-signout):hover,
+html[data-ef-theme] body #efUpdateShell .ef-notify-button:hover {
+  background:var(--ef-raised)!important;border-color:var(--ef-accent)!important;
+}
+html[data-ef-theme] body #efUpdateShell .ef-account-profile-avatar i,
+html[data-ef-theme] body #efUpdateShell .ef-account-status,
+html[data-ef-theme] body #efUpdateShell .ef-update-panel h3 i {
+  color:var(--ef-accent)!important;
+}
+html[data-ef-theme] body #efUpdateShell button:focus-visible,
+html[data-ef-theme] body .tactical-side-nav button:focus-visible,
+html[data-ef-theme] body .tactical-action-grid button:focus-visible {
+  outline:2px solid var(--ef-accent)!important;outline-offset:2px!important;
+}
+/* Theme selectors intentionally keep their unique palette swatches. */
+html[data-ef-theme] body #efUpdateShell .ef-update-theme[aria-pressed="true"] {
+  outline-color:var(--ef-accent)!important;
+}
+
+/* Header retains the approved 2048x70 skyline, but the readable account plate and
+   accent border follow the palette. No cropping/stretching introduced. */
+html[data-ef-theme] body #lspdRebuiltHeader,
+html[data-ef-theme] body .shell>header#lspdRebuiltHeader {
+  border-bottom-color:var(--ef-accent)!important;
+}
+html[data-ef-theme] body #lspdRebuiltHeader .lspd-rebuilt-controls.ef-header-right {
+  background:color-mix(in srgb,var(--ef-nav) 91%,transparent)!important;
+  border-color:var(--ef-border)!important;
+}
+html[data-ef-theme] body #lspdRebuiltHeader .lspd-rebuilt-wordmark span,
+html[data-ef-theme] body #lspdRebuiltHeader #lspdUtcClock small {
+  color:var(--ef-accent)!important;
+}
+html[data-ef-theme] body .shell footer,
+html[data-ef-theme] body .ef-footer {
+  background:var(--ef-nav)!important;color:var(--ef-muted)!important;border-color:var(--ef-border)!important;
+}
+/* Preserve explicit statuses, evidence marker colours and police imagery. */
+@media(prefers-reduced-motion:reduce){html[data-ef-theme] body *{transition-duration:.01ms!important;animation-duration:.01ms!important}}

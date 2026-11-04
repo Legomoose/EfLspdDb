@@ -1,0 +1,22 @@
+/* EFLSPDDB · read-only System Status panel, 2026-11-04.
+   Source-driven indicators; do not imply uptime or user presence where no backend exists. */
+html body #efUpdateShell #efSystemStatus .ef-ctrl-status-row{align-items:center;min-width:0}
+html body #efUpdateShell #efSystemStatus .ef-ctrl-status-row span{min-width:0}
+html body #efUpdateShell #efSystemStatus .ef-ctrl-status-row strong{min-width:0;max-width:58%;text-align:right;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+html body #efUpdateShell #efSystemStatus [data-ef-status="online"] span:before{color:#4ced93!important}
+html body #efUpdateShell #efSystemStatus [data-ef-status="checking"] span:before{color:#ffcd61!important}
+html body #efUpdateShell #efSystemStatus [data-ef-status="error"] span:before{color:#ff6279!important}
+html body #efUpdateShell #efSystemStatus [data-ef-status="unknown"] span:before{color:#7d96ad!important}
+html body #efUpdateShell #efSystemStatus [data-ef-status="error"] strong{color:#ff98aa!important}
+html body #efUpdateShell #efSystemStatus [data-ef-status="checking"] strong{color:#ffe3a5!important}
+html body #efUpdateShell #efSystemStatus .ef-ctrl-status-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:12px 2px 5px}
+html body #efUpdateShell #efSystemStatus #efSystemWorkerState{font-size:13px;font-weight:700;color:#a5c6df}
+html body #efUpdateShell #efSystemStatus #efSystemWorkerState[data-ef-status="online"]{color:#77e8a9}
+html body #efUpdateShell #efSystemStatus #efSystemWorkerState[data-ef-status="error"]{color:#ff91a3}
+html body #efUpdateShell #efSystemStatus #efSystemWorkerState[data-ef-status="checking"]{color:#ffdfa0}
+html body #efUpdateShell #efSystemStatus #efSystemStatusRefresh{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:30px;padding:6px 9px;border-radius:8px;border:1px solid var(--ef-border,#347ba5);background:var(--ef-panel2,#0c2742);color:var(--ef-text,#e5f5ff);font-size:12px;font-weight:750;cursor:pointer}
+html body #efUpdateShell #efSystemStatus #efSystemStatusRefresh:hover{border-color:var(--ef-accent,#23bdf4)}
+html body #efUpdateShell #efSystemStatus #efSystemStatusRefresh:disabled{cursor:progress;opacity:.62}
+html body #efUpdateShell #efSystemStatus .ef-ctrl-status-note{margin:12px 2px 3px!important;font-size:12px!important;line-height:1.45!important;color:var(--ef-muted,#99b9d5)!important}
+html body #efUpdateShell #efSystemStatus .ef-ctrl-status-checked{display:block;margin:8px 2px 1px;color:var(--ef-muted,#94b5cf);font-size:11px;letter-spacing:.02em}
+@media(max-width:700px){html body #efUpdateShell #efSystemStatus .ef-ctrl-status-list span{font-size:14px}html body #efUpdateShell #efSystemStatus .ef-ctrl-status-list strong{font-size:14px}}
